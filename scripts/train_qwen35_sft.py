@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 os.environ.setdefault("UNSLOTH_RETURN_LOGITS", "1")
+os.environ.setdefault("UNSLOTH_CE_LOSS_TARGET_GB", "0.5")
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TARGET_MODULES = (
