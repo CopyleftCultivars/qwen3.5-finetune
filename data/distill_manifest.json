@@ -1,0 +1,34 @@
+{
+  "format": "qwen35_distill_corpus_v1",
+  "provenance": "Adapted from qwen3-finetune's F6/F7 rationale corpus. Its curated teacher source uses legacy thinking/response markers; this builder preserves those teacher rationales as <think> blocks.",
+  "source": {
+    "conversation_file": "data/sources/gemma4/hf_dataset/train.jsonl",
+    "conversation_rows": 3998,
+    "conversation_sha256": "ec4262b38d9a32d54e154e9a3df97f603e6e671ec105004793a26b68ae4f3e08",
+    "teacher_rationale_file": "data/sources/teacher_distill_qwen3-8b.jsonl",
+    "teacher_rationale_rows": 871,
+    "teacher_rationale_sha256": "9e25e19d781405778159d42abb3fe86f21f00e4e2109105ef64c9ccfbe2a7357"
+  },
+  "builder": {
+    "script": "prepare_dataset_v3.py",
+    "split": 0.9,
+    "seed": 42,
+    "minimum_output_chars": 10,
+    "maximum_instruction_plus_output_chars": 8192,
+    "sft_format": "bare-letter"
+  },
+  "train": {
+    "file": "data/train_distill.jsonl",
+    "rows": 6437,
+    "sha256": "125846612d35344b1ba072ee8f76df8691ce036473be8c38ff9ac764153f119c",
+    "think_rows": 3148,
+    "nonempty_rationale_rows": 3148
+  },
+  "validation": {
+    "file": "data/val_distill.jsonl",
+    "rows": 716,
+    "sha256": "d3f627c2d88dc8661595d13685107086a7d41792a9e9013cd5c7b18b0fecbd27",
+    "think_rows": 336,
+    "nonempty_rationale_rows": 336
+  }
+}
