@@ -6,6 +6,7 @@ import argparse
 import json
 import os
 import time
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -37,6 +38,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--lora-alpha", type=int, default=64)
     parser.add_argument("--lora-dropout", type=float, default=0.025)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--run-name", default="qwen35-2b-distill-rationale")
+    parser.add_argument("--eval-strategy", choices=("no", "steps", "epoch"), default="no")
+    parser.add_argument(
+        "--fail-on-truncation",
+        action="store_true",
+        help="Fail if any rendered example exceeds --max-seq-len instead of silently truncating its target.",
+    )
     parser.add_argument("--wandb", action="store_true")
     return parser.parse_args()
 
@@ -95,15 +103,35 @@ def render_chat(row: dict[str, Any]) -> str:
     )
 
 
-def build_dataset(rows: list[dict[str, Any]], tokenizer, max_seq_len: int):
+def build_dataset(
+    rows: list[dict[str, Any]], tokenizer, max_seq_len: int, fail_on_truncation: bool
+):
     from datasets import Dataset
 
-    dataset = Dataset.from_dict({"text": [render_chat(row) for row in rows]})
+    texts = [render_chat(row) for row in rows]
+    lengths: list[int] = []
+    for start in range(0, len(texts), 32):
+        encoded = tokenizer(texts[start:start + 32], truncation=False, padding=False)
+        lengths.extend(len(input_ids) for input_ids in encoded["input_ids"])
+    truncated = sum(length > max_seq_len for length in lengths)
+    if fail_on_truncation and truncated:
+        longest = max(lengths, default=0)
+        raise ValueError(
+            f"{truncated} rendered examples exceed max_seq_len={max_seq_len} "
+            f"(longest={longest}); increase the context or shorten those examples"
+        )
+
+    dataset = Dataset.from_dict({"text": texts})
 
     def tokenize(batch: dict[str, list[str]]) -> dict[str, Any]:
         return tokenizer(batch["text"], truncation=True, max_length=max_seq_len, padding=False)
 
-    return dataset.map(tokenize, batched=True, remove_columns=["text"])
+    tokenized = dataset.map(tokenize, batched=True, remove_columns=["text"])
+    return tokenized, {
+        "rows": len(texts),
+        "max_input_tokens": max(lengths, default=0),
+        "rows_over_max_seq_len": truncated,
+    }
 
 
 def latest_checkpoint(output_dir: Path) -> str | None:
@@ -176,9 +204,18 @@ def main() -> int:
     tokenizer.eos_token = eos_token
     tokenizer.eos_token_id = eos_id
 
-    train_dataset = build_dataset(train_rows, tokenizer, args.max_seq_len)
-    val_dataset = build_dataset(val_rows, tokenizer, args.max_seq_len)
-    print(f"tokenized train={len(train_dataset)} validation={len(val_dataset)}", flush=True)
+    train_dataset, train_token_stats = build_dataset(
+        train_rows, tokenizer, args.max_seq_len, args.fail_on_truncation
+    )
+    val_dataset, val_token_stats = build_dataset(
+        val_rows, tokenizer, args.max_seq_len, args.fail_on_truncation
+    )
+    print(
+        f"tokenized train={len(train_dataset)} validation={len(val_dataset)} "
+        f"max_tokens={max(train_token_stats['max_input_tokens'], val_token_stats['max_input_tokens'])} "
+        f"truncated={train_token_stats['rows_over_max_seq_len'] + val_token_stats['rows_over_max_seq_len']}",
+        flush=True,
+    )
 
     from trl import SFTConfig, SFTTrainer
 
@@ -195,13 +232,13 @@ def main() -> int:
         logging_steps=10,
         save_strategy="epoch",
         save_total_limit=2,
-        eval_strategy="no",
+        eval_strategy=args.eval_strategy,
         optim="adamw_8bit",
         lr_scheduler_type="cosine",
         weight_decay=0.01,
         seed=args.seed,
         report_to="wandb" if args.wandb else "none",
-        run_name="qwen35-2b-distill-rationale",
+        run_name=args.run_name,
         packing=False,
     )
     trainer = SFTTrainer(
@@ -233,11 +270,16 @@ def main() -> int:
         "validation_data": str(args.val_data),
         "train_rows": len(train_rows),
         "validation_rows": len(val_rows),
+        "train_rows_by_source": dict(sorted(Counter(row.get("source", "unspecified") for row in train_rows).items())),
+        "validation_rows_by_source": dict(sorted(Counter(row.get("source", "unspecified") for row in val_rows).items())),
+        "train_token_stats": train_token_stats,
+        "validation_token_stats": val_token_stats,
         "dtype": "bfloat16; Unsloth may retain selected Qwen3.5 layers in float32",
         "load_in_4bit": False,
         "target_modules": list(DEFAULT_TARGET_MODULES),
         "trainable_parameters": trainable_params,
         "epochs": args.epochs,
+        "evaluation_strategy": args.eval_strategy,
         "batch_size": args.batch_size,
         "gradient_accumulation_steps": args.grad_accum,
         "global_step": trainer.state.global_step,
@@ -245,6 +287,8 @@ def main() -> int:
         "peak_cuda_memory_mib": round(torch.cuda.max_memory_allocated() / 2**20, 1),
         "loss_first": losses[0] if losses else None,
         "loss_last": losses[-1] if losses else None,
+        "eval_loss_first": next((entry["eval_loss"] for entry in trainer.state.log_history if "eval_loss" in entry), None),
+        "eval_loss_last": next((entry["eval_loss"] for entry in reversed(trainer.state.log_history) if "eval_loss" in entry), None),
         "train_result": str(train_result),
     }
     metrics_path = args.output_dir / "training_metrics.json"

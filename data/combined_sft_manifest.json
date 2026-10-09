@@ -1,0 +1,79 @@
+{
+  "format": "qwen35_combined_sft_v1",
+  "base_model": "Qwen/Qwen3.5-2B",
+  "seed": 42,
+  "teacher_split": {
+    "fraction": 0.9,
+    "grouped_by": "_source_question_id (keeps answer-order variants together)",
+    "rows": 871,
+    "source_question_groups": 857,
+    "train_rows": 783,
+    "validation_rows": 88,
+    "train_groups": 771,
+    "validation_groups": 86
+  },
+  "sources": {
+    "teacher_rationales": {
+      "file": "data/sources/teacher_distill_qwen3-8b.jsonl",
+      "rows": 871,
+      "sha256": "9e25e19d781405778159d42abb3fe86f21f00e4e2109105ef64c9ccfbe2a7357",
+      "format_conversion": "legacy thinking/response markers to Qwen3 <think> block + bare answer letter"
+    },
+    "g5_filtered_trajectories": {
+      "file": "data/sources/g5_trajectories_qwen3-8b_filtered.jsonl",
+      "rows": 131,
+      "sha256": "994efef5009417f594f9429e88abca154eb441d5f1f045b747d69288392cdb9d",
+      "preparation": "existing G6 builder; filtered train_v3 pool with eval val/dev denylist"
+    },
+    "g6_rlm_train": {
+      "file": "data/sources/g6_rlm_sft_train.jsonl",
+      "rows": 117,
+      "sha256": "dd6896f5b5517b11abbfa0e8da83367ffe27d1f6d7b2d51e2a8b4dbbf3abadd8",
+      "protocol": "Python LocalREPL code blocks, preserved verbatim"
+    },
+    "g6_rlm_validation": {
+      "file": "data/sources/g6_rlm_sft_val.jsonl",
+      "rows": 14,
+      "sha256": "a4481f188ecc7bbd320527ff10ddcdf2f6c6482951bef6762da6091e9eca1f77",
+      "protocol": "Python LocalREPL code blocks, preserved verbatim"
+    },
+    "native_tool_demos": {
+      "tool_call_examples_before_weighting": 20,
+      "tool_call_examples_by_name": {
+        "bioaccumulator_ratio": 10,
+        "regional_recipe_lookup": 10
+      },
+      "training_call_repeat_count": 4,
+      "no_call_examples": 4,
+      "format": "Cactus Qwen JSON object inside <tool_call>...</tool_call>",
+      "source": "hand-authored natural-farming examples; not benchmark questions"
+    }
+  },
+  "protocol_decision": "Keep the RLM LocalREPL grammar for RLM-prompted examples. Add separate Cactus-native examples using the JSON object inside <tool_call> tags, matching cactus-engine/src/chat_tools.h::serialize_tools_qwen and extract_qwen_tool_calls. Do not translate print(context) into a farming function call: in G6 it only prints the question supplied to the REPL.",
+  "sealed_eval_policy": "This builder reads only the pinned rationale source and the generated G6 train/validation splits. It never opens eval_freeform/test.jsonl or benchmark question/answer files. The G5 source was produced from the training pool with the existing validation/dev hash denylist.",
+  "question_overlap": {
+    "teacher_vs_rlm_exact_normalized": 0
+  },
+  "train": {
+    "file": "data/combined_sft_train.jsonl",
+    "rows": 967,
+    "rows_by_source": {
+      "cactus_native_no_call_demo": 3,
+      "cactus_native_tool_demo": 64,
+      "g6_rlm_train": 117,
+      "teacher_distill_qwen3-8b": 783
+    },
+    "sha256": "1f9b62901964e571bf9c5dc02a6f33424fd960a06eba6785772a5c77a56b0904"
+  },
+  "validation": {
+    "file": "data/combined_sft_val.jsonl",
+    "rows": 107,
+    "rows_by_source": {
+      "cactus_native_no_call_demo": 1,
+      "cactus_native_tool_demo": 4,
+      "g6_rlm_validation": 14,
+      "teacher_distill_qwen3-8b": 88
+    },
+    "sha256": "6869bb705119be789f3a107791d9ebf50a44e3d33b94e38573d2daf859b974dd"
+  }
+}
