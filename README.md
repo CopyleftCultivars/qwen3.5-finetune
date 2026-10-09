@@ -1,9 +1,9 @@
 # Qwen3.5-2B fine-tuning workspace
 
-This workspace contains the baseline LoRA training path and the rationale
-distillation corpus used before adding RLM tool-call trajectories. Training uses
-the native `Qwen/Qwen3.5-2B` checkpoint with BF16 weights and LoRA adapters.
-The model is not loaded in 4-bit.
+This workspace contains the baseline rationale LoRA path and a combined recipe
+for rationale data, RLM trajectories, and Cactus-native tool calls. Training
+uses the native `Qwen/Qwen3.5-2B` checkpoint with BF16 weights and LoRA
+adapters. The model is not loaded in 4-bit.
 
 ## Training environment
 
@@ -72,3 +72,61 @@ The regenerated split files have different hashes from the earlier workspace
 snapshots: those snapshots had empty `<think>` blocks for teacher-generated
 MCQs. This port keeps the original item counts and split seed while restoring
 the teacher rationale targets.
+
+## Build the combined rationale and tool-call corpus
+
+The combined run uses the curated 871-row Qwen3-8B teacher-rationale source in
+`data/sources/teacher_distill_qwen3-8b.jsonl`. It does not use the 6,437-row
+`train_distill.jsonl` corpus as a substitute; that corpus is a separate
+conversation/MCQ mix. The combined builder parses the legacy `thinking` /
+`response` markers into Qwen `<think>` blocks and groups answer-order variants
+by `_source_question_id` before making its 90/10 split.
+
+The G6 RLM data is rebuilt from the pinned, filtered G5 training-pool
+trajectories:
+
+```bash
+python3 rlm_slice/build_g6_sft_dataset.py \
+  --input data/sources/g5_trajectories_qwen3-8b_filtered.jsonl \
+  --train-out data/sources/g6_rlm_sft_train.jsonl \
+  --val-out data/sources/g6_rlm_sft_val.jsonl
+python3 scripts/build_combined_qwen35_sft.py
+```
+
+G6 examples retain their Python LocalREPL instructions and code blocks. The
+G6 `print(context)` action only displays the question supplied to the REPL, so
+the builder does not relabel it as a farming lookup. Separate hand-authored
+examples teach the two shared domain functions (`bioaccumulator_ratio` and
+`regional_recipe_lookup`) using Cactus's Qwen JSON form:
+
+```text
+<tool_call>
+{"name": "bioaccumulator_ratio", "arguments": {"crop": "Corn", "candidate_plant": "Comfrey"}}
+</tool_call>
+```
+
+These examples use the argument schemas from `rlm_slice/domain_tools.py`,
+include both positive calls and no-call answers, and are not drawn from any
+benchmark. Positive training examples are repeated four times so the native
+call target is not overwhelmed by the rationale and REPL rows. The manifest
+records every source hash, split count, format decision, and the resulting
+JSONL hashes in `data/combined_sft_manifest.json`.
+
+The builder reads the pinned rationale source and G6 train/validation splits.
+It does not open the sealed freeform test set or benchmark question/answer
+files. The G5 source was produced from the training pool with the established
+validation/dev hash denylist.
+
+## Train the combined model
+
+```bash
+./scripts/run_qwen35_combined_sft.sh
+```
+
+The combined recipe uses four epochs, BF16, rank 32 / alpha 64 LoRA, sequence
+length 4096, and micro-batch 1 with gradient accumulation 16. It evaluates the
+held-out validation mixture each epoch and fails rather than silently
+truncating examples that exceed the configured context. The final adapter and
+training metrics are written to
+`outputs/lora-adapter-qwen35-combined/final/` and
+`outputs/lora-adapter-qwen35-combined/training_metrics.json`.
