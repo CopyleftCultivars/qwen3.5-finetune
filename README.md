@@ -130,3 +130,6 @@ truncating examples that exceed the configured context. The final adapter and
 training metrics are written to
 `outputs/lora-adapter-qwen35-combined/final/` and
 `outputs/lora-adapter-qwen35-combined/training_metrics.json`.
+Unsloth's fused cross-entropy logits are chunked to a 0.5 GiB target by default
+to keep peak memory manageable; set `UNSLOTH_CE_LOSS_TARGET_GB` before launch to
+adjust that cap.
