@@ -1,0 +1,17 @@
+.venv/
+.venv-*/
+__pycache__/
+*.py[cod]
+*.safetensors
+*.bin
+*.pt
+*.gguf
+outputs/
+wandb/
+.env
+.chainlink/
+.claude/
+.codex/
+.agents/
+.aws/
+.mcp.json
