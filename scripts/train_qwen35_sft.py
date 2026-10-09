@@ -220,6 +220,36 @@ def main() -> int:
 
     from trl import SFTConfig, SFTTrainer
 
+    class LossOnlySFTTrainer(SFTTrainer):
+        def prediction_step(self, model, inputs, prediction_loss_only, ignore_keys=None):
+            # Unsloth's VLM prediction hook forces full vocabulary logits on for
+            # evaluation. Keep its fused, chunked loss path instead so long
+            # validation examples do not allocate the complete logits tensor.
+            inputs = self._prepare_inputs(inputs)
+            previous_logits_setting = os.environ.get("UNSLOTH_RETURN_LOGITS")
+            os.environ["UNSLOTH_RETURN_LOGITS"] = "0"
+            try:
+                try:
+                    num_items_in_batch = self._get_num_items_in_batch(
+                        [inputs], self.args.device
+                    )
+                except (AttributeError, TypeError):
+                    num_items_in_batch = None
+                with torch.no_grad():
+                    with self.compute_loss_context_manager():
+                        loss = self.compute_loss(
+                            model,
+                            inputs,
+                            return_outputs=False,
+                            num_items_in_batch=num_items_in_batch,
+                        )
+            finally:
+                if previous_logits_setting is None:
+                    os.environ.pop("UNSLOTH_RETURN_LOGITS", None)
+                else:
+                    os.environ["UNSLOTH_RETURN_LOGITS"] = previous_logits_setting
+            return loss.detach().mean(), None, None
+
     training_args = SFTConfig(
         output_dir=str(args.output_dir),
         num_train_epochs=args.epochs,
@@ -234,6 +264,7 @@ def main() -> int:
         save_strategy="epoch",
         save_total_limit=2,
         eval_strategy=args.eval_strategy,
+        prediction_loss_only=True,
         optim="adamw_8bit",
         lr_scheduler_type="cosine",
         weight_decay=0.01,
@@ -242,7 +273,7 @@ def main() -> int:
         run_name=args.run_name,
         packing=False,
     )
-    trainer = SFTTrainer(
+    trainer = LossOnlySFTTrainer(
         model=model,
         processing_class=tokenizer,
         train_dataset=train_dataset,
