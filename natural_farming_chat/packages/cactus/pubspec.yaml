@@ -1,0 +1,46 @@
+name: cactus
+description: "Build AI apps with Cactus"
+version: 1.3.0
+homepage: https://cactuscompute.com
+repository: https://github.com/cactus-compute/cactus-flutter
+
+environment:
+  sdk: '>=3.3.3 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  ffi: ^2.1.4
+  http: ^1.5.0
+  path_provider: ^2.1.5
+  archive: ^4.0.7
+  device_info_plus: ^11.5.0
+  shared_preferences: ^2.5.3
+  package_info_plus: ^8.3.1
+  uuid: ^4.5.1
+  objectbox: ^5.0.0
+  objectbox_flutter_libs: ^5.0.1
+  flat_buffers: ^23.5.26
+  path: ^1.9.1
+  record: ^6.1.1
+  permission_handler: ^12.0.1
+  android_id: ^0.4.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.7.1
+  build_version: ^2.1.2
+  objectbox_generator: any
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        ffiPlugin: true
+      ios:
+        ffiPlugin: true
+      macos:
+        ffiPlugin: true

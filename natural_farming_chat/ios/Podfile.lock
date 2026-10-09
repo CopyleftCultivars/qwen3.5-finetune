@@ -1,0 +1,47 @@
+PODS:
+  - cactus (0.0.3):
+    - cactus/Core (= 0.0.3)
+    - cactus/Util (= 0.0.3)
+    - Flutter
+  - cactus/Core (0.0.3):
+    - Flutter
+  - cactus/Util (0.0.3):
+    - Flutter
+  - Flutter (1.0.0)
+  - ObjectBox (5.1.1)
+  - objectbox_flutter_libs (0.0.1):
+    - Flutter
+    - ObjectBox (= 5.1.1)
+  - permission_handler_apple (9.3.0):
+    - Flutter
+
+DEPENDENCIES:
+  - cactus (from `.symlinks/plugins/cactus/ios`)
+  - Flutter (from `Flutter`)
+  - objectbox_flutter_libs (from `.symlinks/plugins/objectbox_flutter_libs/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+
+SPEC REPOS:
+  trunk:
+    - ObjectBox
+
+EXTERNAL SOURCES:
+  cactus:
+    :path: ".symlinks/plugins/cactus/ios"
+  Flutter:
+    :path: Flutter
+  objectbox_flutter_libs:
+    :path: ".symlinks/plugins/objectbox_flutter_libs/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
+
+SPEC CHECKSUMS:
+  cactus: 3a45194976ca75ebf33aa3f3bbc2fe3fa6b99453
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  ObjectBox: 26871f7cce80a8bd2e610bf944aeaded730f6925
+  objectbox_flutter_libs: 28e7bd5ae78e831f141679c8a6e31632453b959f
+  permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
+
+PODFILE CHECKSUM: 2385be2e5a80d6df82f8db19e069df55a356ad0a
+
+COCOAPODS: 1.17.0

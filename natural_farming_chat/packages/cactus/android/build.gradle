@@ -1,0 +1,41 @@
+group = "com.cactus.example"
+version = "0.0.1"
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: "com.android.library"
+
+android {
+    namespace = "com.cactus.example"
+    compileSdk = 35
+    ndkVersion = rootProject.ext.has("ndkVersion") ? rootProject.ext.get("ndkVersion") : "26.1.10909125"
+
+    sourceSets {
+        main.jniLibs.srcDirs += ['src/main/jniLibs']
+    }
+
+    defaultConfig {
+        minSdk = 21
+    }
+  
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+}

@@ -1,0 +1,1956 @@
+[
+  {
+    "Country": "Africa",
+    "Region": "Sahel Region",
+    "Plants": [
+      "Pennisetum glaucum (Pearl Millet)",
+      "Sorghum bicolor (Sorghum)",
+      "Vigna unguiculata (Cowpea)",
+      "Citrullus lanatus (Watermelon)",
+      "Adansonia digitata (Baobab)",
+      "Ziziphus mauritiana (Jujube)",
+      "Parkia biglobosa (African Locust Bean)",
+      "Capsicum annuum (Chili Pepper)",
+      "Hibiscus sabdariffa (Roselle)",
+      "Balanites aegyptiaca (Desert Date)",
+      "Acacia senegal (Gum Arabic Tree)",
+      "Amaranthus caudatus (Amaranth)"
+    ]
+  },
+  {
+    "Country": "Albania",
+    "Plants": [
+      "Olea europaea (Olive)",
+      "Vitis vinifera (Grape)",
+      "Citrus sinensis (Orange)",
+      "Ficus carica (Fig)",
+      "Punica granatum (Pomegranate)",
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Prunus dulcis (Almond)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Triticum aestivum (Wheat)"
+    ]
+  },
+  {
+    "Country": "Argentina",
+    "Plants": [
+      "Avena sativa (Oat)",
+      "Citrus sinensis (Orange)",
+      "Glycine max (Soybean)",
+      "Helianthus annuus (Sunflower)",
+      "Hordeum vulgare (Barley)",
+      "Malus domestica (Apple)",
+      "Medicago sativa (Alfalfa)",
+      "Prunus persica (Peach)",
+      "Solanum tuberosum (Potato)",
+      "Triticum aestivum (Wheat)",
+      "Vitis vinifera (Grape)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "Argentina",
+    "Region": "Pampas",
+    "Plants": [
+      "Glycine max (Soybean)",
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Helianthus annuus (Sunflower)",
+      "Hordeum vulgare (Barley)",
+      "Avena sativa (Oat)",
+      "Medicago sativa (Alfalfa)",
+      "Vitis vinifera (Grape)",
+      "Solanum tuberosum (Potato)",
+      "Phaseolus vulgaris (Bean)",
+      "Prunus persica (Peach)",
+      "Malus domestica (Apple)"
+    ]
+  },
+  {
+    "Country": "Australia",
+    "Region": "New South Wales",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Vitis vinifera (Grape)",
+      "Citrus sinensis (Orange)",
+      "Malus domestica (Apple)",
+      "Prunus persica (Peach)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Solanum tuberosum (Potato)",
+      "Brassica napus (Canola)",
+      "Gossypium hirsutum (Cotton)",
+      "Medicago sativa (Alfalfa)"
+    ]
+  },
+  {
+    "Country": "Austria",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Solanum tuberosum (Potato)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Vitis vinifera (Grape)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Prunus domestica (Plum)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Cucumis sativus (Cucumber)"
+    ]
+  },
+  {
+    "Country": "Bangladesh",
+    "Plants": [
+      "Oryza sativa (Rice)",
+      "Mangifera indica (Mango)",
+      "Musa spp. (Banana)",
+      "Cocos nucifera (Coconut)",
+      "Jute spp. (Jute)",
+      "Citrus reticulata (Mandarin Orange)",
+      "Ananas comosus (Pineapple)",
+      "Carica papaya (Papaya)",
+      "Capsicum annuum (Chili Pepper)",
+      "Zingiber officinale (Ginger)",
+      "Allium cepa (Onion)",
+      "Allium sativum (Garlic)"
+    ]
+  },
+  {
+    "Country": "Belarus",
+    "Plants": [
+      "Solanum tuberosum (Potato)",
+      "Hordeum vulgare (Barley)",
+      "Triticum aestivum (Wheat)",
+      "Secale cereale (Rye)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Pisum sativum (Pea)",
+      "Vaccinium myrtillus (Bilberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)"
+    ]
+  },
+  {
+    "Country": "Belgium",
+    "Plants": [
+      "Solanum tuberosum (Potato)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Zea mays (Corn)",
+      "Pisum sativum (Pea)",
+      "Phaseolus vulgaris (Common Bean)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)"
+    ]
+  },
+  {
+    "Country": "Brazil",
+    "Region": "Minas Gerais",
+    "Plants": [
+      "Coffea arabica (Coffee)",
+      "Citrus sinensis (Orange)",
+      "Musa spp. (Banana)",
+      "Zea mays (Corn)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Phaseolus vulgaris (Bean)",
+      "Saccharum officinarum (Sugarcane)",
+      "Theobroma cacao (Cacao)",
+      "Euterpe oleracea (Açaí)",
+      "Manihot esculenta (Cassava)",
+      "Ananas comosus (Pineapple)"
+    ]
+  },
+  {
+    "Country": "Bulgaria",
+    "Plants": [
+      "Rosa damascena (Damask Rose)",
+      "Lavandula angustifolia (Lavender)",
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Helianthus annuus (Sunflower)",
+      "Solanum tuberosum (Potato)",
+      "Vitis vinifera (Grape)",
+      "Malus domestica (Apple)",
+      "Prunus domestica (Plum)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Capsicum annuum (Bell Pepper)"
+    ]
+  },
+  {
+    "Country": "Canada",
+    "Plants": [
+      "Picea glauca (White Spruce)",
+      "Acer saccharum (Sugar Maple)",
+      "Vaccinium myrtilloides (Canadian Blueberry)",
+      "Glycine max (Soybean)",
+      "Zea mays (Corn)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Linum usitatissimum (Flax)",
+      "Brassica napus (Canola)",
+      "Solanum tuberosum (Potato)",
+      "Allium cepa (Onion)",
+      "Rubus idaeus (Raspberry)"
+    ]
+  },
+  {
+    "Country": "Canada",
+    "Region": "Ontario",
+    "Plants": [
+      "Zea mays (Corn)",
+      "Glycine max (Soybean)",
+      "Triticum aestivum (Wheat)",
+      "Solanum tuberosum (Potato)",
+      "Malus domestica (Apple)",
+      "Vitis vinifera (Grape)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Phaseolus vulgaris (Bean)",
+      "Brassica oleracea (Cabbage)"
+    ]
+  },
+  {
+    "Country": "Canada",
+    "Region": "Quebec",
+    "Plants": [
+      "Picea glauca (White Spruce)",
+      "Acer saccharum (Sugar Maple)",
+      "Vaccinium myrtilloides (Canadian Blueberry)",
+      "Glycine max (Soybean)",
+      "Zea mays (Corn)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Linum usitatissimum (Flax)",
+      "Brassica napus (Canola)",
+      "Solanum tuberosum (Potato)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)"
+    ]
+  },
+  {
+    "Country": "Chile",
+    "Plants": [
+      "Vitis vinifera (Grape)",
+      "Malus domestica (Apple)",
+      "Prunus avium (Sweet Cherry)",
+      "Citrus reticulata (Mandarin)",
+      "Olea europaea (Olive)",
+      "Juglans regia (Walnut)",
+      "Zea mays (Corn)",
+      "Triticum aestivum (Wheat)",
+      "Solanum tuberosum (Potato)",
+      "Phaseolus vulgaris (Bean)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)"
+    ]
+  },
+  {
+    "Country": "China",
+    "Region": "Shandong",
+    "Plants": [
+      "Malus domestica (Apple)",
+      "Arachis hypogaea (Peanut)",
+      "Glycine max (Soybean)",
+      "Zea mays (Corn)",
+      "Triticum aestivum (Wheat)",
+      "Allium cepa (Onion)",
+      "Allium sativum (Garlic)",
+      "Capsicum annuum (Chili Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Solanum lycopersicum (Tomato)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Brassica oleracea var. capitata (Cabbage)"
+    ]
+  },
+  {
+    "Country": "China",
+    "Region": "Yunnan",
+    "Plants": [
+      "Camellia sinensis (Tea)",
+      "Oryza sativa (Rice)",
+      "Zingiber officinale (Ginger)",
+      "Dioscorea opposita (Chinese Yam)",
+      "Brassica oleracea (Kale)",
+      "Fagopyrum esculentum (Buckwheat)",
+      "Actinidia deliciosa (Kiwi)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Solanum tuberosum (Potato)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)"
+    ]
+  },
+  {
+    "Country": "Colombia",
+    "Plants": [
+      "Coffea arabica (Coffee)",
+      "Theobroma cacao (Cacao)",
+      "Musa spp. (Banana)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Persea americana (Avocado)",
+      "Ananas comosus (Pineapple)",
+      "Citrus × paradisi (Grapefruit)",
+      "Phaseolus vulgaris (Common Bean)",
+      "Zea mays (Corn)",
+      "Oryza sativa (Rice)",
+      "Manihot esculenta (Cassava)"
+    ]
+  },
+  {
+    "Country": "Croatia",
+    "Plants": [
+      "Olea europaea (Olive)",
+      "Vitis vinifera (Grape)",
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Solanum tuberosum (Potato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Solanum lycopersicum (Tomato)",
+      "Ficus carica (Fig)",
+      "Punica granatum (Pomegranate)",
+      "Citrus sinensis (Orange)",
+      "Malus domestica (Apple)"
+    ]
+  },
+  {
+    "Country": "Czech Republic",
+    "Plants": [
+      "Hordeum vulgare (Barley)",
+      "Triticum aestivum (Wheat)",
+      "Beta vulgaris (Sugar Beet)",
+      "Solanum tuberosum (Potato)",
+      "Brassica napus (Rapeseed)",
+      "Pisum sativum (Pea)",
+      "Phaseolus vulgaris (Common Bean)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Prunus domestica (Plum)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)"
+    ]
+  },
+  {
+    "Country": "Denmark",
+    "Plants": [
+      "Hordeum vulgare (Barley)",
+      "Triticum aestivum (Wheat)",
+      "Brassica napus (Rapeseed)",
+      "Solanum tuberosum (Potato)",
+      "Beta vulgaris (Sugar Beet)",
+      "Avena sativa (Oat)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Prunus avium (Cherry)",
+      "Vaccinium myrtillus (Bilberry)"
+    ]
+  },
+  {
+    "Country": "Egypt",
+    "Plants": [
+      "Allium cepa (Onion)",
+      "Citrus sinensis (Orange)",
+      "Cucumis melo (Melon)",
+      "Gossypium spp. (Cotton)",
+      "Medicago sativa (Alfalfa)",
+      "Olea europaea (Olive)",
+      "Phoenix dactylifera (Date Palm)",
+      "Punica granatum (Pomegranate)",
+      "Solanum tuberosum (Potato)",
+      "Triticum aestivum (Wheat)",
+      "Vicia faba (Fava Bean)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "Egypt",
+    "Region": "Nile Delta",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Oryza sativa (Rice)",
+      "Gossypium hirsutum (Cotton)",
+      "Medicago sativa (Alfalfa)",
+      "Solanum tuberosum (Potato)",
+      "Phaseolus vulgaris (Bean)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Allium cepa (Onion)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Citrus sinensis (Orange)"
+    ]
+  },
+  {
+    "Country": "Estonia",
+    "Plants": [
+      "Hordeum vulgare (Barley)",
+      "Triticum aestivum (Wheat)",
+      "Solanum tuberosum (Potato)",
+      "Secale cereale (Rye)",
+      "Avena sativa (Oat)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Vaccinium myrtillus (Bilberry)",
+      "Vaccinium vitis-idaea (Lingonberry)",
+      "Rubus chamaemorus (Cloudberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Malus domestica (Apple)"
+    ]
+  },
+  {
+    "Country": "Finland",
+    "Plants": [
+      "Solanum tuberosum (Potato)",
+      "Hordeum vulgare (Barley)",
+      "Avena sativa (Oat)",
+      "Triticum aestivum (Wheat)",
+      "Vaccinium myrtillus (Bilberry)",
+      "Vaccinium vitis-idaea (Lingonberry)",
+      "Rubus chamaemorus (Cloudberry)",
+      "Picea abies (Norway Spruce)",
+      "Pinus sylvestris (Scots Pine)",
+      "Betula pendula (Silver Birch)",
+      "Fragaria × ananassa (Strawberry)",
+      "Raphanus sativus (Radish)"
+    ]
+  },
+  {
+    "Country": "France",
+    "Plants": [
+      "Vitis vinifera (Grape)",
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Malus domestica (Apple)",
+      "Prunus domestica (Plum)",
+      "Lavandula angustifolia (Lavender)"
+    ]
+  },
+  {
+    "Country": "France",
+    "Region": "Bordeaux",
+    "Plants": [
+      "Vitis vinifera (Grape)",
+      "Zea mays (Corn)",
+      "Triticum aestivum (Wheat)",
+      "Helianthus annuus (Sunflower)",
+      "Solanum tuberosum (Potato)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Pisum sativum (Pea)",
+      "Fragaria × ananassa (Strawberry)",
+      "Malus domestica (Apple)",
+      "Prunus domestica (Plum)",
+      "Rubus idaeus (Raspberry)"
+    ]
+  },
+  {
+    "Country": "France",
+    "Region": "Brittany",
+    "Plants": [
+      "Brassica oleracea var. botrytis (Cauliflower)",
+      "Solanum tuberosum (Potato)",
+      "Allium cepa (Onion)",
+      "Fragaria × ananassa (Strawberry)",
+      "Malus domestica (Apple)",
+      "Rubus fruticosus (Blackberry)",
+      "Vitis vinifera (Grape)",
+      "Zea mays (Corn)",
+      "Triticum aestivum (Wheat)",
+      "Beta vulgaris (Sugar Beet)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Brassica napus (Rapeseed)"
+    ]
+  },
+  {
+    "Country": "France",
+    "Region": "Loire Valley",
+    "Plants": [
+      "Vitis vinifera (Grape)",
+      "Triticum aestivum (Wheat)",
+      "Brassica napus (Rapeseed)",
+      "Beta vulgaris (Sugar Beet)",
+      "Solanum tuberosum (Potato)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Prunus domestica (Plum)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)"
+    ]
+  },
+  {
+    "Country": "Germany",
+    "Plants": [
+      "Hordeum vulgare (Barley)",
+      "Triticum aestivum (Wheat)",
+      "Solanum tuberosum (Potato)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Malus domestica (Apple)",
+      "Vitis vinifera (Grape)",
+      "Humulus lupulus (Hops)"
+    ]
+  },
+  {
+    "Country": "Germany",
+    "Region": "Bavaria",
+    "Plants": [
+      "Hordeum vulgare (Barley)",
+      "Triticum aestivum (Wheat)",
+      "Solanum tuberosum (Potato)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Prunus domestica (Plum)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Vitis vinifera (Grape)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "Greece",
+    "Plants": [
+      "Olea europaea (Olive)",
+      "Vitis vinifera (Grape)",
+      "Citrus limon (Lemon)",
+      "Ficus carica (Fig)",
+      "Punica granatum (Pomegranate)",
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Origanum vulgare (Oregano)",
+      "Thymus spp. (Thyme)",
+      "Mentha spp. (Mint)",
+      "Allium sativum (Garlic)"
+    ]
+  },
+  {
+    "Country": "Hungary",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Helianthus annuus (Sunflower)",
+      "Papaver somniferum (Poppy)",
+      "Solanum tuberosum (Potato)",
+      "Capsicum annuum (Paprika)",
+      "Pisum sativum (Pea)",
+      "Phaseolus vulgaris (Bean)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Prunus domestica (Plum)",
+      "Vitis vinifera (Grape)"
+    ]
+  },
+  {
+    "Country": "India",
+    "Region": "Karnataka",
+    "Plants": [
+      "Oryza sativa (Rice)",
+      "Coffea arabica (Coffee)",
+      "Piper nigrum (Black Pepper)",
+      "Cocos nucifera (Coconut)",
+      "Areca catechu (Areca Nut)",
+      "Mangifera indica (Mango)",
+      "Musa spp. (Banana)",
+      "Zingiber officinale (Ginger)",
+      "Curcuma longa (Turmeric)",
+      "Triticum aestivum (Wheat)",
+      "Solanum melongena (Eggplant)",
+      "Capsicum annuum (Chili Pepper)"
+    ]
+  },
+  {
+    "Country": "India",
+    "Region": "Punjab",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Oryza sativa (Rice)",
+      "Gossypium hirsutum (Cotton)",
+      "Saccharum officinarum (Sugarcane)",
+      "Zea mays (Corn)",
+      "Brassica juncea (Mustard)",
+      "Solanum tuberosum (Potato)",
+      "Cicer arietinum (Chickpea)",
+      "Lens culinaris (Lentil)",
+      "Pisum sativum (Pea)",
+      "Vigna radiata (Mung Bean)",
+      "Vigna mungo (Urad Bean)"
+    ]
+  },
+  {
+    "Country": "Indonesia",
+    "Plants": [
+      "Oryza sativa (Rice)",
+      "Coffea arabica (Coffee)",
+      "Theobroma cacao (Cacao)",
+      "Elaeis guineensis (Oil Palm)",
+      "Cocos nucifera (Coconut)",
+      "Musa spp. (Banana)",
+      "Ananas comosus (Pineapple)",
+      "Carica papaya (Papaya)",
+      "Citrus sinensis (Orange)",
+      "Zingiber officinale (Ginger)",
+      "Vanilla planifolia (Vanilla)",
+      "Capsicum annuum (Chili Pepper)"
+    ]
+  },
+  {
+    "Country": "Iran",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Oryza sativa (Rice)",
+      "Pistacia vera (Pistachio)",
+      "Prunus dulcis (Almond)",
+      "Vitis vinifera (Grape)",
+      "Ficus carica (Fig)",
+      "Punica granatum (Pomegranate)",
+      "Cucumis sativus (Cucumber)",
+      "Solanum lycopersicum (Tomato)",
+      "Citrus sinensis (Orange)",
+      "Malus domestica (Apple)",
+      "Phoenix dactylifera (Date Palm)"
+    ]
+  },
+  {
+    "Country": "Ireland",
+    "Plants": [
+      "Solanum tuberosum (Potato)",
+      "Hordeum vulgare (Barley)",
+      "Avena sativa (Oat)",
+      "Triticum aestivum (Wheat)",
+      "Brassica napus (Rapeseed)",
+      "Beta vulgaris (Sugar Beet)",
+      "Malus domestica (Apple)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Pyrus communis (Pear)",
+      "Prunus domestica (Plum)",
+      "Vaccinium myrtillus (Bilberry)"
+    ]
+  },
+  {
+    "Country": "Italy",
+    "Plants": [
+      "Vitis vinifera (Grape)",
+      "Olea europaea (Olive)",
+      "Triticum durum (Durum Wheat)",
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis sativus (Cucumber)",
+      "Allium sativum (Garlic)",
+      "Fragaria × ananassa (Strawberry)",
+      "Citrus × limon (Lemon)"
+    ]
+  },
+  {
+    "Country": "Italy",
+    "Region": "Sicily",
+    "Plants": [
+      "Citrus × limon (Lemon)",
+      "Vitis vinifera (Grape)",
+      "Olea europaea (Olive)",
+      "Prunus dulcis (Almond)",
+      "Ficus carica (Fig)",
+      "Pistacia vera (Pistachio)",
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis melo (Melon)",
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Citrus sinensis (Orange)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "Italy",
+    "Region": "Tuscany",
+    "Plants": [
+      "Olea europaea (Olive)",
+      "Vitis vinifera (Grape)",
+      "Triticum durum (Durum Wheat)",
+      "Cynara cardunculus var. scolymus (Artichoke)",
+      "Ficus carica (Fig)",
+      "Citrus sinensis (Orange)",
+      "Prunus persica (Peach)",
+      "Pyrus communis (Pear)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Phaseolus vulgaris (Bean)"
+    ]
+  },
+  {
+    "Country": "Japan",
+    "Plants": [
+      "Actinidia deliciosa (Kiwi)",
+      "Brassica rapa var. perviridis (Komatsuna)",
+      "Camellia sinensis (Tea)",
+      "Citrus unshiu (Satsuma)",
+      "Dioscorea japonica (Japanese Yam)",
+      "Glycine max (Soybean)",
+      "Oryza sativa (Rice)",
+      "Prunus persica (Peach)",
+      "Prunus salicina (Japanese Plum)",
+      "Wasabia japonica (Wasabi)",
+      "Zingiber officinale (Ginger)"
+    ]
+  },
+  {
+    "Country": "Japan",
+    "Region": "Shikoku",
+    "Plants": [
+      "Citrus unshiu (Satsuma Mandarin)",
+      "Camellia sinensis (Tea)",
+      "Oryza sativa (Rice)",
+      "Solanum tuberosum (Potato)",
+      "Brassica rapa var. perviridis (Komatsuna)",
+      "Dioscorea japonica (Japanese Yam)",
+      "Zingiber officinale (Ginger)",
+      "Fragaria × ananassa (Strawberry)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Prunus mume (Ume)",
+      "Actinidia deliciosa (Kiwi)"
+    ]
+  },
+  {
+    "Country": "Kenya",
+    "Plants": [
+      "Coffea arabica (Coffee)",
+      "Camellia sinensis (Tea)",
+      "Zea mays (Corn)",
+      "Phaseolus vulgaris (Common Bean)",
+      "Solanum tuberosum (Potato)",
+      "Persea americana (Avocado)",
+      "Ananas comosus (Pineapple)",
+      "Mangifera indica (Mango)"
+    ]
+  },
+  {
+    "Country": "Latvia",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Solanum tuberosum (Potato)",
+      "Secale cereale (Rye)",
+      "Avena sativa (Oat)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Vaccinium myrtillus (Bilberry)",
+      "Vaccinium vitis-idaea (Lingonberry)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Malus domestica (Apple)"
+    ]
+  },
+  {
+    "Country": "Lithuania",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Solanum tuberosum (Potato)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Avena sativa (Oat)",
+      "Secale cereale (Rye)",
+      "Vaccinium myrtillus (Bilberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)"
+    ]
+  },
+  {
+    "Country": "Luxembourg",
+    "Plants": [
+      "Vitis vinifera (Grape)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Solanum tuberosum (Potato)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Prunus domestica (Plum)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Phaseolus vulgaris (Bean)"
+    ]
+  },
+  {
+    "Country": "Malaysia",
+    "Plants": [
+      "Elaeis guineensis (Oil Palm)",
+      "Hevea brasiliensis (Rubber)",
+      "Oryza sativa (Rice)",
+      "Cocos nucifera (Coconut)",
+      "Theobroma cacao (Cacao)",
+      "Musa spp. (Banana)",
+      "Durio zibethinus (Durian)",
+      "Nephelium lappaceum (Rambutan)",
+      "Carica papaya (Papaya)",
+      "Ananas comosus (Pineapple)",
+      "Citrus hystrix (Kaffir Lime)",
+      "Zingiber officinale (Ginger)"
+    ]
+  },
+  {
+    "Country": "Mexico",
+    "Plants": [
+      "Agave tequilana (Blue Agave)",
+      "Capsicum annuum (Chili Pepper)",
+      "Cucurbita pepo (Pumpkin)",
+      "Persea americana (Avocado)",
+      "Phaseolus vulgaris (Common Bean)",
+      "Solanum lycopersicum (Tomato)",
+      "Theobroma cacao (Cacao)",
+      "Vanilla planifolia (Vanilla)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "Mexico",
+    "Region": "Yucatan",
+    "Plants": [
+      "Capsicum annuum (Chili Pepper)",
+      "Zea mays (Corn)",
+      "Phaseolus vulgaris (Common Bean)",
+      "Persea americana (Avocado)",
+      "Citrus sinensis (Orange)",
+      "Mangifera indica (Mango)",
+      "Cocos nucifera (Coconut)",
+      "Carica papaya (Papaya)",
+      "Ananas comosus (Pineapple)",
+      "Vanilla planifolia (Vanilla)",
+      "Agave tequilana (Blue Agave)",
+      "Theobroma cacao (Cacao)"
+    ]
+  },
+  {
+    "Country": "Morocco",
+    "Plants": [
+      "Olea europaea (Olive)",
+      "Citrus sinensis (Orange)",
+      "Phoenix dactylifera (Date Palm)",
+      "Argania spinosa (Argan)",
+      "Vitis vinifera (Grape)",
+      "Ficus carica (Fig)",
+      "Punica granatum (Pomegranate)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Prunus dulcis (Almond)",
+      "Mentha spicata (Spearmint)"
+    ]
+  },
+  {
+    "Country": "Netherlands",
+    "Plants": [
+      "Solanum tuberosum (Potato)",
+      "Brassica oleracea var. capitata (Cabbage)",
+      "Allium cepa (Onion)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Lactuca sativa (Lettuce)",
+      "Beta vulgaris (Sugar Beet)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)"
+    ]
+  },
+  {
+    "Country": "New Zealand",
+    "Plants": [
+      "Actinidia deliciosa (Kiwi)",
+      "Avena sativa (Oat)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Fragaria × ananassa (Strawberry)",
+      "Hordeum vulgare (Barley)",
+      "Malus domestica (Apple)",
+      "Prunus domestica (Plum)",
+      "Rubus idaeus (Raspberry)",
+      "Solanum tuberosum (Potato)",
+      "Triticum aestivum (Wheat)",
+      "Vitis vinifera (Grape)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "New Zealand",
+    "Region": "Canterbury Plains",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Avena sativa (Oat)",
+      "Solanum tuberosum (Potato)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Vitis vinifera (Grape)",
+      "Actinidia deliciosa (Kiwi)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Brassica oleracea (Cabbage)",
+      "Phaseolus vulgaris (Bean)",
+      "Cucumis sativus (Cucumber)"
+    ]
+  },
+  {
+    "Country": "Nigeria",
+    "Plants": [
+      "Zea mays (Corn)",
+      "Oryza sativa (Rice)",
+      "Manihot esculenta (Cassava)",
+      "Arachis hypogaea (Peanut)",
+      "Sorghum bicolor (Sorghum)",
+      "Vigna unguiculata (Cowpea)",
+      "Capsicum annuum (Chili Pepper)",
+      "Citrullus lanatus (Watermelon)",
+      "Ipomoea batatas (Sweet Potato)",
+      "Musa spp. (Banana)",
+      "Theobroma cacao (Cacao)",
+      "Coffea arabica (Coffee)"
+    ]
+  },
+  {
+    "Country": "Norway",
+    "Plants": [
+      "Solanum tuberosum (Potato)",
+      "Hordeum vulgare (Barley)",
+      "Avena sativa (Oat)",
+      "Triticum aestivum (Wheat)",
+      "Brassica napus (Rapeseed)",
+      "Rubus chamaemorus (Cloudberry)",
+      "Vaccinium myrtillus (Bilberry)",
+      "Vaccinium vitis-idaea (Lingonberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Malus domestica (Apple)",
+      "Picea abies (Norway Spruce)",
+      "Pinus sylvestris (Scots Pine)"
+    ]
+  },
+  {
+    "Country": "Pakistan",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Oryza sativa (Rice)",
+      "Saccharum officinarum (Sugarcane)",
+      "Gossypium hirsutum (Cotton)",
+      "Mangifera indica (Mango)",
+      "Citrus sinensis (Orange)",
+      "Malus domestica (Apple)",
+      "Prunus armeniaca (Apricot)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Solanum tuberosum (Potato)",
+      "Allium cepa (Onion)",
+      "Capsicum annuum (Chili Pepper)"
+    ]
+  },
+  {
+    "Country": "Peru",
+    "Plants": [
+      "Solanum tuberosum (Potato)",
+      "Zea mays (Corn)",
+      "Capsicum annuum (Chili Pepper)",
+      "Phaseolus vulgaris (Common Bean)",
+      "Theobroma cacao (Cacao)",
+      "Coffea arabica (Coffee)",
+      "Vitis vinifera (Grape)",
+      "Citrus × aurantium (Bitter Orange)",
+      "Persea americana (Avocado)",
+      "Ananas comosus (Pineapple)",
+      "Lycopersicon esculentum (Tomato)",
+      "Erythroxylum coca (Coca)"
+    ]
+  },
+  {
+    "Country": "Peru",
+    "Region": "Andean Highlands",
+    "Plants": [
+      "Solanum tuberosum (Potato)",
+      "Chenopodium quinoa (Quinoa)",
+      "Zea mays (Corn)",
+      "Capsicum pubescens (Rocoto Pepper)",
+      "Lepidium meyenii (Maca)",
+      "Smallanthus sonchifolius (Yacon)",
+      "Oxalis tuberosa (Oca)",
+      "Ullucus tuberosus (Ulluco)",
+      "Tropaeolum tuberosum (Mashua)",
+      "Phaseolus vulgaris (Bean)",
+      "Cucurbita maxima (Squash)",
+      "Amaranthus caudatus (Amaranth)"
+    ]
+  },
+  {
+    "Country": "Philippines",
+    "Plants": [
+      "Oryza sativa (Rice)",
+      "Cocos nucifera (Coconut)",
+      "Musa spp. (Banana)",
+      "Ananas comosus (Pineapple)",
+      "Carica papaya (Papaya)",
+      "Mangifera indica (Mango)",
+      "Theobroma cacao (Cacao)",
+      "Coffea arabica (Coffee)",
+      "Saccharum officinarum (Sugarcane)",
+      "Citrus microcarpa (Calamondin)",
+      "Capsicum annuum (Chili Pepper)",
+      "Ipomoea batatas (Sweet Potato)"
+    ]
+  },
+  {
+    "Country": "Poland",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Solanum tuberosum (Potato)",
+      "Secale cereale (Rye)",
+      "Hordeum vulgare (Barley)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Malus domestica (Apple)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Prunus domestica (Plum)",
+      "Vaccinium myrtillus (Bilberry)",
+      "Pisum sativum (Pea)"
+    ]
+  },
+  {
+    "Country": "Portugal",
+    "Plants": [
+      "Olea europaea (Olive)",
+      "Vitis vinifera (Grape)",
+      "Citrus sinensis (Orange)",
+      "Prunus dulcis (Almond)",
+      "Ficus carica (Fig)",
+      "Cucumis sativus (Cucumber)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Phaseolus vulgaris (Common Bean)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Allium sativum (Garlic)",
+      "Petroselinum crispum (Parsley)"
+    ]
+  },
+  {
+    "Country": "Romania",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Helianthus annuus (Sunflower)",
+      "Solanum tuberosum (Potato)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Vitis vinifera (Grape)",
+      "Malus domestica (Apple)",
+      "Prunus domestica (Plum)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Pisum sativum (Pea)"
+    ]
+  },
+  {
+    "Country": "Russia",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Solanum tuberosum (Potato)",
+      "Linum usitatissimum (Flax)",
+      "Pisum sativum (Pea)",
+      "Raphanus sativus (Radish)"
+    ]
+  },
+  {
+    "Country": "Serbia",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Helianthus annuus (Sunflower)",
+      "Prunus domestica (Plum)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Vitis vinifera (Grape)",
+      "Solanum tuberosum (Potato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)"
+    ]
+  },
+  {
+    "Country": "Slovakia",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Solanum tuberosum (Potato)",
+      "Zea mays (Corn)",
+      "Pisum sativum (Pea)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Vitis vinifera (Grape)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Prunus domestica (Plum)",
+      "Fragaria × ananassa (Strawberry)"
+    ]
+  },
+  {
+    "Country": "Slovenia",
+    "Plants": [
+      "Vitis vinifera (Grape)",
+      "Solanum tuberosum (Potato)",
+      "Zea mays (Corn)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Prunus domestica (Plum)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)"
+    ]
+  },
+  {
+    "Country": "South Africa",
+    "Plants": [
+      "Aloe ferox (Bitter Aloe)",
+      "Aspalathus linearis (Rooibos)",
+      "Avena sativa (Oat)",
+      "Citrus sinensis (Orange)",
+      "Malus domestica (Apple)",
+      "Prunus persica (Peach)",
+      "Pyrus communis (Pear)",
+      "Solanum tuberosum (Potato)",
+      "Triticum aestivum (Wheat)",
+      "Vitis vinifera (Grape)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "South Africa",
+    "Region": "Eastern Cape",
+    "Plants": [
+      "Citrus sinensis (Orange)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Prunus persica (Peach)",
+      "Vitis vinifera (Grape)",
+      "Zea mays (Corn)",
+      "Triticum aestivum (Wheat)",
+      "Solanum tuberosum (Potato)",
+      "Phaseolus vulgaris (Bean)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Daucus carota subsp. sativus (Carrot)"
+    ]
+  },
+  {
+    "Country": "South Africa",
+    "Region": "KwaZulu-Natal",
+    "Plants": [
+      "Saccharum officinarum (Sugarcane)",
+      "Zea mays (Corn)",
+      "Citrus sinensis (Orange)",
+      "Mangifera indica (Mango)",
+      "Ananas comosus (Pineapple)",
+      "Persea americana (Avocado)",
+      "Phaseolus vulgaris (Bean)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Cucurbita pepo (Squash)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Vitis vinifera (Grape)"
+    ]
+  },
+  {
+    "Country": "South Africa",
+    "Region": "Western Cape",
+    "Plants": [
+      "Vitis vinifera (Grape)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Prunus persica (Peach)",
+      "Citrus sinensis (Orange)",
+      "Olea europaea (Olive)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Solanum tuberosum (Potato)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Brassica oleracea (Cabbage)",
+      "Phaseolus vulgaris (Bean)"
+    ]
+  },
+  {
+    "Country": "South Korea",
+    "Plants": [
+      "Oryza sativa (Rice)",
+      "Glycine max (Soybean)",
+      "Brassica rapa subsp. pekinensis (Napa Cabbage)",
+      "Allium fistulosum (Welsh Onion)",
+      "Raphanus sativus (Radish)",
+      "Capsicum annuum (Chili Pepper)",
+      "Perilla frutescens (Perilla)",
+      "Actinidia arguta (Hardy Kiwi)",
+      "Diospyros kaki (Persimmon)",
+      "Zingiber officinale (Ginger)",
+      "Camellia sinensis (Tea)",
+      "Pyrus pyrifolia (Asian Pear)"
+    ]
+  },
+  {
+    "Country": "Spain",
+    "Plants": [
+      "Olea europaea (Olive)",
+      "Vitis vinifera (Grape)",
+      "Citrus sinensis (Orange)",
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Prunus dulcis (Almond)",
+      "Ficus carica (Fig)",
+      "Punica granatum (Pomegranate)",
+      "Citrus limon (Lemon)",
+      "Allium sativum (Garlic)",
+      "Phaseolus vulgaris (Common Bean)"
+    ]
+  },
+  {
+    "Country": "Spain",
+    "Region": "Andalusia",
+    "Plants": [
+      "Olea europaea (Olive)",
+      "Vitis vinifera (Grape)",
+      "Citrus sinensis (Orange)",
+      "Prunus dulcis (Almond)",
+      "Ficus carica (Fig)",
+      "Punica granatum (Pomegranate)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Phaseolus vulgaris (Bean)",
+      "Citrullus lanatus (Watermelon)",
+      "Triticum aestivum (Wheat)"
+    ]
+  },
+  {
+    "Country": "Sweden",
+    "Plants": [
+      "Picea abies (Norway Spruce)",
+      "Pinus sylvestris (Scots Pine)",
+      "Betula pendula (Silver Birch)",
+      "Vaccinium myrtillus (Bilberry)",
+      "Vaccinium vitis-idaea (Lingonberry)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Solanum tuberosum (Potato)",
+      "Hordeum vulgare (Barley)",
+      "Triticum aestivum (Wheat)",
+      "Brassica napus (Rapeseed)",
+      "Avena sativa (Oat)"
+    ]
+  },
+  {
+    "Country": "Switzerland",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Solanum tuberosum (Potato)",
+      "Vitis vinifera (Grape)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Prunus domestica (Plum)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Rapeseed)",
+      "Cucumis sativus (Cucumber)"
+    ]
+  },
+  {
+    "Country": "Thailand",
+    "Plants": [
+      "Oryza sativa (Rice)",
+      "Cocos nucifera (Coconut)",
+      "Durio zibethinus (Durian)",
+      "Mangifera indica (Mango)",
+      "Carica papaya (Papaya)",
+      "Ananas comosus (Pineapple)",
+      "Zingiber officinale (Ginger)",
+      "Arachis hypogaea (Peanut)",
+      "Solanum melongena (Eggplant)",
+      "Capsicum annuum (Chili Pepper)",
+      "Saccharum officinarum (Sugarcane)",
+      "Citrus hystrix (Kaffir Lime)"
+    ]
+  },
+  {
+    "Country": "Turkey",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Vitis vinifera (Grape)",
+      "Ficus carica (Fig)",
+      "Prunus domestica (Plum)",
+      "Olea europaea (Olive)",
+      "Pistacia vera (Pistachio)",
+      "Corylus avellana (Hazelnut)",
+      "Citrus limon (Lemon)",
+      "Punica granatum (Pomegranate)",
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis sativus (Cucumber)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Alaska",
+    "Plants": [
+      "Vaccinium uliginosum (Bog Blueberry)",
+      "Picea sitchensis (Sitka Spruce)",
+      "Rubus chamaemorus (Cloudberry)",
+      "Betula neoalaskana (Alaska Birch)",
+      "Empetrum nigrum (Crowberry)",
+      "Vaccinium vitis-idaea (Lingonberry)",
+      "Alnus viridis (Green Alder)",
+      "Salix alaxensis (Alaska Willow)",
+      "Rubus arcticus (Arctic Raspberry)",
+      "Vaccinium oxycoccos (Small Cranberry)",
+      "Pinus contorta (Lodgepole Pine)",
+      "Abies lasiocarpa (Subalpine Fir)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Arizona",
+    "Plants": [
+      "Capsicum annuum (Chili Pepper)",
+      "Citrullus lanatus (Watermelon)",
+      "Cucumis melo (Cantaloupe)",
+      "Gossypium hirsutum (Cotton)",
+      "Medicago sativa (Alfalfa)",
+      "Persea americana (Avocado)",
+      "Phaseolus vulgaris (Bean)",
+      "Pistacia vera (Pistachio)",
+      "Solanum lycopersicum (Tomato)",
+      "Triticum aestivum (Wheat)",
+      "Vitis vinifera (Grape)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "California",
+    "Plants": [
+      "Vitis vinifera (Grape)",
+      "Prunus dulcis (Almond)",
+      "Citrus sinensis (Orange)",
+      "Fragaria × ananassa (Strawberry)",
+      "Medicago sativa (Alfalfa)",
+      "Triticum aestivum (Wheat)",
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Persea americana (Avocado)",
+      "Pistacia vera (Pistachio)",
+      "Gossypium spp. (Cotton)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Central Valley",
+    "Plants": [
+      "Prunus dulcis (Almond)",
+      "Vitis vinifera (Grape)",
+      "Citrus sinensis (Orange)",
+      "Medicago sativa (Alfalfa)",
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Solanum lycopersicum (Tomato)",
+      "Gossypium hirsutum (Cotton)",
+      "Juglans regia (Walnut)",
+      "Pistacia vera (Pistachio)",
+      "Fragaria × ananassa (Strawberry)",
+      "Daucus carota subsp. sativus (Carrot)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Cherokee Nation",
+    "Plants": [
+      "Allium tricoccum (Wild Leek)",
+      "Apios americana (Groundnut)",
+      "Asimina triloba (Pawpaw)",
+      "Cucurbita pepo (Squash)",
+      "Dioscorea villosa (Wild Yam)",
+      "Fragaria spp. (Strawberry)",
+      "Panax quinquefolius (American Ginseng)",
+      "Phaseolus vulgaris (Bean)",
+      "Rubus spp. (Blackberry)",
+      "Solanum americanum (American Nightshade)",
+      "Vaccinium spp. (Blueberry)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Colorado",
+    "Plants": [
+      "Solanum tuberosum (Potato)",
+      "Zea mays (Corn)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Phaseolus vulgaris (Bean)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Canola)",
+      "Pisum sativum (Pea)",
+      "Cucurbita pepo (Pumpkin)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Malus domestica (Apple)",
+      "Prunus persica (Peach)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Connecticut",
+    "Plants": [
+      "Malus domestica (Apple)",
+      "Vaccinium corymbosum (Blueberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Zea mays (Corn)",
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Phaseolus vulgaris (Bean)",
+      "Vitis vinifera (Grape)",
+      "Triticum aestivum (Wheat)",
+      "Brassica oleracea (Cabbage)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Florida",
+    "Plants": [
+      "Citrus sinensis (Orange)",
+      "Saccharum officinarum (Sugarcane)",
+      "Citrus × paradisi (Grapefruit)",
+      "Persea americana (Avocado)",
+      "Mangifera indica (Mango)",
+      "Carica papaya (Papaya)",
+      "Ananas comosus (Pineapple)",
+      "Cocos nucifera (Coconut)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Phaseolus vulgaris (Bean)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Georgia",
+    "Plants": [
+      "Prunus persica (Peach)",
+      "Arachis hypogaea (Peanut)",
+      "Gossypium hirsutum (Cotton)",
+      "Vaccinium corymbosum (Blueberry)",
+      "Citrus sinensis (Orange)",
+      "Zea mays (Corn)",
+      "Vitis vinifera (Grape)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Phaseolus vulgaris (Bean)",
+      "Ipomoea batatas (Sweet Potato)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Hawaii",
+    "Plants": [
+      "Ananas comosus (Pineapple)",
+      "Coffea arabica (Coffee)",
+      "Macadamia integrifolia (Macadamia Nut)",
+      "Saccharum officinarum (Sugarcane)",
+      "Musa spp. (Banana)",
+      "Cocos nucifera (Coconut)",
+      "Carica papaya (Papaya)",
+      "Theobroma cacao (Cacao)",
+      "Vanilla planifolia (Vanilla)",
+      "Psidium guajava (Guava)",
+      "Mangifera indica (Mango)",
+      "Passiflora edulis (Passion Fruit)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Hopi Reservation",
+    "Plants": [
+      "Agave spp. (Agave)",
+      "Amaranthus spp. (Amaranth)",
+      "Capsicum annuum (Chili Pepper)",
+      "Chenopodium berlandieri (Pitseed Goosefoot)",
+      "Cucurbita pepo (Squash)",
+      "Helianthus annuus (Sunflower)",
+      "Nicotiana rustica (Tobacco)",
+      "Opuntia spp. (Prickly Pear)",
+      "Phaseolus vulgaris (Bean)",
+      "Prosopis glandulosa (Mesquite)",
+      "Yucca spp. (Yucca)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Idaho",
+    "Plants": [
+      "Solanum tuberosum (Potato)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Beta vulgaris (Sugar Beet)",
+      "Zea mays (Corn)",
+      "Malus domestica (Apple)",
+      "Prunus persica (Peach)",
+      "Vitis vinifera (Grape)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Medicago sativa (Alfalfa)",
+      "Pisum sativum (Pea)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Kentucky",
+    "Plants": [
+      "Zea mays (Corn)",
+      "Glycine max (Soybean)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Nicotiana tabacum (Tobacco)",
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Phaseolus vulgaris (Bean)",
+      "Cucurbita pepo (Pumpkin)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Brassica oleracea (Cabbage)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Maine",
+    "Plants": [
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Fragaria × ananassa (Strawberry)",
+      "Glycine max (Soybean)",
+      "Malus domestica (Apple)",
+      "Phaseolus vulgaris (Bean)",
+      "Rubus idaeus (Raspberry)",
+      "Solanum tuberosum (Potato)",
+      "Triticum aestivum (Wheat)",
+      "Vaccinium angustifolium (Lowbush Blueberry)",
+      "Vitis vinifera (Grape)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Maryland",
+    "Plants": [
+      "Zea mays (Corn)",
+      "Glycine max (Soybean)",
+      "Triticum aestivum (Wheat)",
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Phaseolus vulgaris (Bean)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Malus domestica (Apple)",
+      "Vitis vinifera (Grape)",
+      "Prunus persica (Peach)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Mississippi",
+    "Plants": [
+      "Gossypium hirsutum (Cotton)",
+      "Zea mays (Corn)",
+      "Glycine max (Soybean)",
+      "Oryza sativa (Rice)",
+      "Ipomoea batatas (Sweet Potato)",
+      "Vaccinium corymbosum (Blueberry)",
+      "Malus domestica (Apple)",
+      "Prunus persica (Peach)",
+      "Capsicum annuum (Bell Pepper)",
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis sativus (Cucumber)",
+      "Phaseolus vulgaris (Bean)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Montana",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Beta vulgaris (Sugar Beet)",
+      "Pisum sativum (Pea)",
+      "Lens culinaris (Lentil)",
+      "Brassica napus (Canola)",
+      "Linum usitatissimum (Flax)",
+      "Solanum tuberosum (Potato)",
+      "Prunus padus (Chokecherry)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Vaccinium myrtillus (Bilberry)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Napa Valley",
+    "Plants": [
+      "Vitis vinifera (Grape)",
+      "Olea europaea (Olive)",
+      "Prunus dulcis (Almond)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Malus domestica (Apple)",
+      "Pyrus communis (Pear)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Phaseolus vulgaris (Bean)",
+      "Cucurbita pepo (Squash)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Navajo Nation",
+    "Plants": [
+      "Agave spp. (Agave)",
+      "Amaranthus spp. (Amaranth)",
+      "Capsicum annuum (Chili Pepper)",
+      "Chenopodium berlandieri (Pitseed Goosefoot)",
+      "Cucurbita pepo (Squash)",
+      "Helianthus annuus (Sunflower)",
+      "Nicotiana rustica (Tobacco)",
+      "Opuntia spp. (Prickly Pear)",
+      "Phaseolus vulgaris (Bean)",
+      "Prosopis glandulosa (Mesquite)",
+      "Yucca spp. (Yucca)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Nevada",
+    "Plants": [
+      "Solanum tuberosum (Potato)",
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Medicago sativa (Alfalfa)",
+      "Hordeum vulgare (Barley)",
+      "Brassica napus (Canola)",
+      "Allium cepa (Onion)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Cucurbita pepo (Squash)",
+      "Capsicum annuum (Bell Pepper)",
+      "Lactuca sativa (Lettuce)",
+      "Beta vulgaris (Beet)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "New Jersey",
+    "Plants": [
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Fragaria × ananassa (Strawberry)",
+      "Malus domestica (Apple)",
+      "Phaseolus vulgaris (Bean)",
+      "Pisum sativum (Pea)",
+      "Prunus persica (Peach)",
+      "Rubus idaeus (Raspberry)",
+      "Solanum lycopersicum (Tomato)",
+      "Vaccinium corymbosum (Blueberry)",
+      "Vitis vinifera (Grape)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "New Mexico",
+    "Plants": [
+      "Capsicum annuum (Chili Pepper)",
+      "Zea mays (Corn)",
+      "Phaseolus vulgaris (Pinto Bean)",
+      "Cucurbita pepo (Pumpkin)",
+      "Allium cepa (Onion)",
+      "Pistacia vera (Pistachio)",
+      "Juglans regia (Walnut)",
+      "Prunus persica (Peach)",
+      "Vitis vinifera (Grape)",
+      "Solanum lycopersicum (Tomato)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Persea americana (Avocado)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Oklahoma",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Gossypium hirsutum (Cotton)",
+      "Glycine max (Soybean)",
+      "Arachis hypogaea (Peanut)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Phaseolus vulgaris (Bean)",
+      "Ipomoea batatas (Sweet Potato)",
+      "Cucurbita pepo (Squash)",
+      "Daucus carota subsp. sativus (Carrot)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Oregon",
+    "Plants": [
+      "Vitis vinifera (Grape)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Pyrus communis (Pear)",
+      "Malus domestica (Apple)",
+      "Prunus avium (Sweet Cherry)",
+      "Corylus avellana (Hazelnut)",
+      "Solanum tuberosum (Potato)",
+      "Zea mays (Corn)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Brassica napus (Canola)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Pine Ridge Reservation",
+    "Plants": [
+      "Amorpha canescens (Leadplant)",
+      "Andropogon gerardii (Big Bluestem)",
+      "Asclepias syriaca (Common Milkweed)",
+      "Bouteloua curtipendula (Side-Oats Grama)",
+      "Cucurbita pepo (Squash)",
+      "Echinacea purpurea (Purple Coneflower)",
+      "Helianthus annuus (Sunflower)",
+      "Panicum virgatum (Switchgrass)",
+      "Phaseolus vulgaris (Bean)",
+      "Rudbeckia hirta (Black-Eyed Susan)",
+      "Symphyotrichum novae-angliae (New England Aster)",
+      "Zea mays (Corn)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Rhode Island",
+    "Plants": [
+      "Malus domestica (Apple)",
+      "Vaccinium corymbosum (Blueberry)",
+      "Zea mays (Corn)",
+      "Cucurbita pepo (Pumpkin)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Bell Pepper)",
+      "Cucumis sativus (Cucumber)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Phaseolus vulgaris (Bean)",
+      "Vitis vinifera (Grape)",
+      "Triticum aestivum (Wheat)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Silicon Valley",
+    "Plants": [
+      "Solanum lycopersicum (Tomato)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Brassica oleracea var. sabellica (Kale)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Lactuca sativa (Lettuce)",
+      "Spinacia oleracea (Spinach)",
+      "Beta vulgaris (Beet)",
+      "Allium cepa (Onion)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Phaseolus vulgaris (Bean)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "South Dakota",
+    "Plants": [
+      "Zea mays (Corn)",
+      "Glycine max (Soybean)",
+      "Triticum aestivum (Wheat)",
+      "Helianthus annuus (Sunflower)",
+      "Hordeum vulgare (Barley)",
+      "Avena sativa (Oat)",
+      "Solanum tuberosum (Potato)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Canola)",
+      "Pisum sativum (Pea)",
+      "Linum usitatissimum (Flax)",
+      "Phaseolus vulgaris (Bean)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Texas",
+    "Plants": [
+      "Gossypium hirsutum (Cotton)",
+      "Zea mays (Corn)",
+      "Solanum lycopersicum (Tomato)",
+      "Capsicum annuum (Chili Pepper)",
+      "Citrus sinensis (Orange)",
+      "Vitis vinifera (Grape)",
+      "Triticum aestivum (Wheat)",
+      "Sorghum bicolor (Sorghum)",
+      "Phaseolus vulgaris (Bean)",
+      "Cucurbita pepo (Squash)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Persea americana (Avocado)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Utah",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Solanum tuberosum (Potato)",
+      "Beta vulgaris (Sugar Beet)",
+      "Hordeum vulgare (Barley)",
+      "Prunus persica (Peach)",
+      "Malus domestica (Apple)",
+      "Cucumis sativus (Cucumber)",
+      "Capsicum annuum (Bell Pepper)",
+      "Phaseolus vulgaris (Bean)",
+      "Vitis vinifera (Grape)",
+      "Medicago sativa (Alfalfa)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Vermont",
+    "Plants": [
+      "Malus domestica (Apple)",
+      "Vaccinium angustifolium (Lowbush Blueberry)",
+      "Acer saccharum (Sugar Maple)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Canola)",
+      "Zea mays (Corn)",
+      "Cucurbita pepo (Pumpkin)",
+      "Fragaria × ananassa (Strawberry)",
+      "Rubus idaeus (Raspberry)",
+      "Vitis vinifera (Grape)",
+      "Solanum tuberosum (Potato)",
+      "Daucus carota subsp. sativus (Carrot)"
+    ]
+  },
+  {
+    "Country": "USA",
+    "Region": "Wisconsin",
+    "Plants": [
+      "Malus domestica (Apple)",
+      "Vaccinium corymbosum (Blueberry)",
+      "Zea mays (Corn)",
+      "Glycine max (Soybean)",
+      "Triticum aestivum (Wheat)",
+      "Hordeum vulgare (Barley)",
+      "Rubus idaeus (Raspberry)",
+      "Fragaria × ananassa (Strawberry)",
+      "Vitis vinifera (Grape)",
+      "Beta vulgaris (Sugar Beet)",
+      "Brassica napus (Canola)",
+      "Cucurbita pepo (Pumpkin)"
+    ]
+  },
+  {
+    "Country": "Ukraine",
+    "Plants": [
+      "Triticum aestivum (Wheat)",
+      "Zea mays (Corn)",
+      "Helianthus annuus (Sunflower)",
+      "Hordeum vulgare (Barley)",
+      "Beta vulgaris (Sugar Beet)",
+      "Solanum tuberosum (Potato)",
+      "Brassica napus (Rapeseed)",
+      "Pisum sativum (Pea)",
+      "Vicia faba (Fava Bean)",
+      "Allium cepa (Onion)",
+      "Daucus carota subsp. sativus (Carrot)",
+      "Cucumis sativus (Cucumber)"
+    ]
+  },
+  {
+    "Country": "Vietnam",
+    "Plants": [
+      "Oryza sativa (Rice)",
+      "Coffea arabica (Coffee)",
+      "Camellia sinensis (Tea)",
+      "Theobroma cacao (Cacao)",
+      "Piper nigrum (Black Pepper)",
+      "Zingiber officinale (Ginger)",
+      "Cocos nucifera (Coconut)",
+      "Musa spp. (Banana)",
+      "Citrus × aurantiifolia (Lime)",
+      "Durio zibethinus (Durian)",
+      "Carica papaya (Papaya)",
+      "Ananas comosus (Pineapple)"
+    ]
+  },
+  {
+    "Country": "Vietnam",
+    "Region": "Mekong Delta",
+    "Plants": [
+      "Oryza sativa (Rice)",
+      "Nelumbo nucifera (Lotus)",
+      "Cocos nucifera (Coconut)",
+      "Durio zibethinus (Durian)",
+      "Carica papaya (Papaya)",
+      "Mangifera indica (Mango)",
+      "Psidium guajava (Guava)",
+      "Ananas comosus (Pineapple)",
+      "Citrus × aurantiifolia (Lime)",
+      "Vigna radiata (Mung Bean)",
+      "Capsicum annuum (Chili Pepper)",
+      "Solanum melongena (Eggplant)"
+    ]
+  }
+]

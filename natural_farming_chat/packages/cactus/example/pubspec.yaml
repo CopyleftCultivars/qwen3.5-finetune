@@ -1,0 +1,26 @@
+name: cactus_example
+description: Example app for the `cactus` library.
+publish_to: "none"
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cactus:
+    path: ../
+  read_pdf_text: ^0.3.1
+  file_picker: ^10.3.3
+  image_picker: ^1.0.0
+  path_provider: ^2.1.0
+  path: ^1.8.3
+  record: ^6.1.1
+  shared_preferences: ^2.2.0
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
