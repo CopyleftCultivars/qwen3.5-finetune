@@ -1,0 +1,5 @@
+[submodule "vendor/cactus-sdk"]
+	path = vendor/cactus-sdk
+	url = git@github.com:CopyleftCultivars/cactus.git
+	branch = qwen35-rotary-fix
+	shallow = true
