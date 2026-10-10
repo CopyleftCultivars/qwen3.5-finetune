@@ -508,6 +508,12 @@ Make multiple iterations if necessary.''';
     // Remove Qwen3 thinking tags and content
     cleaned = cleaned.replaceAll(RegExp(r'<think>.*?</think>', dotAll: true), '');
 
+    // Remove native tool-call blocks -- the model may emit these when it
+    // decides mid-answer that it needs a tool; callers that care about tool
+    // calls read them from CactusCompletionResult.toolCalls before this
+    // cleaning step runs, so the user-facing text never shows the raw JSON.
+    cleaned = cleaned.replaceAll(RegExp(r'<tool_call>.*?</tool_call>', dotAll: true), '');
+
     // Remove prompt structure tags
     cleaned = cleaned.replaceAll(RegExp(r'\[/?CONTEXT\]'), '');
     cleaned = cleaned.replaceAll(RegExp(r'\[/?QUESTION\]'), '');

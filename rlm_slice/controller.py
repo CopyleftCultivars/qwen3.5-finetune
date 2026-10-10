@@ -23,6 +23,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Any
 
+from rlm_slice.domain_tools import TOOL_DEFINITIONS, TOOL_REGISTRY
 from rlm_slice.model_host import DecodeStats, ModelHost
 from rlm_slice.multi_tool_context import build_multi_tool_context
 from rlm_slice.retrieval import DEFAULT_K, retrieve
@@ -33,11 +34,12 @@ from rlm_slice.rlm_arm import (
     repl_telemetry,
     reset_server_stats,
 )
+from rlm_slice.tool_call_parser import extract_tool_calls, strip_tool_calls
 
 DEFAULT_MAX_TRACE_TOKENS = 256
 LETTERS = ("A", "B", "C", "D")
 
-ARMS = ("A", "B", "C", "R", "M", "N")
+ARMS = ("A", "B", "C", "R", "M", "N", "T")
 
 
 @dataclass
@@ -452,7 +454,100 @@ def arm_n(
     return _arm_multi_tool(host, item, "N", top_k=None, max_trace_tokens=max_trace_tokens, query_mode=query_mode)
 
 
-ARM_FUNCS = {"A": arm_a, "B": arm_b, "C": arm_c, "R": arm_r, "M": arm_m, "N": arm_n}
+# -- Arm T (model-initiated tool call) -------------------------------------
+#
+# Unlike Arms R/M/N (controller always decides, always retrieves before the
+# model ever runs), this arm gives the model the domain tool definitions
+# directly and lets it decide whether to call one -- the harness counterpart
+# of natural_farming_chat's `main.dart:_generateWithTools` two-phase pattern:
+# Phase 1 generates with tools and may emit Cactus's native `<tool_call>`
+# JSON; if it does, Phase 2 executes the named tool and generates again
+# WITHOUT tools so the model must synthesize an answer from the result,
+# mirroring Dart's own "generate again without tools" comment exactly.
+#
+# Arm B already established the 0.6B champion cannot reliably self-initiate a
+# tool call via the `rlm` package's REPL protocol (sec.6.3). This arm re-tests
+# that question for the Qwen3.5 model actually trained for it (qwen3.5-finetune
+# #4), using the SAME signal format the production app and the on-device
+# engine already parse (`<tool_call>{"name":...,"arguments":{...}}</tool_call>`),
+# rather than Arm B's separate REPL protocol.
+
+
+def arm_t(
+    host: ModelHost,
+    item: dict[str, Any],
+    max_trace_tokens: int = DEFAULT_MAX_TRACE_TOKENS,
+) -> ArmResult:
+    """Model-initiated tool call, depth-1 (sec.3.2 extension, qwen3.5-finetune #6)."""
+    host.take_stats()
+    stats = DecodeStats()
+    notes: list[str] = []
+    question = _question_text(item)
+
+    messages = [{"role": "user", "content": question}]
+    raw, _ = host.generate_chat(
+        messages, max_new_tokens=max_trace_tokens, enable_thinking=True, tools=TOOL_DEFINITIONS
+    )
+    visible = strip_tool_calls(raw).strip()
+    calls = extract_tool_calls(raw)
+
+    if not calls:
+        trace, truncated = host.scorer.extract_trace(visible)
+        if not trace.strip():
+            notes.append("empty_trace:fell_back_to_bare_2pass")
+            _raw, trace, truncated, _n = host.generate_trace(item, max_trace_tokens=max_trace_tokens)
+        return _finalize(host, item, "T", trace, truncated, passes=1, stats=stats, notes=notes)
+
+    if len(calls) > 1:
+        # This harness scores one trace per item; the domain tools aren't
+        # composable in sequence, so only the first call is executed. Noted
+        # rather than silently dropped, same principle as every other arm's
+        # degradation bookkeeping.
+        notes.append(f"multiple_tool_calls:{len(calls)}:only_first_executed")
+    name, arguments = calls[0]["name"], calls[0]["arguments"]
+
+    fn = TOOL_REGISTRY.get(name)
+    if fn is None:
+        notes.append(f"unknown_tool:{name}")
+        trace, truncated = host.scorer.extract_trace(visible)
+        if not trace.strip():
+            notes.append("empty_trace:fell_back_to_bare_2pass")
+            _raw, trace, truncated, _n = host.generate_trace(item, max_trace_tokens=max_trace_tokens)
+        row = _finalize(host, item, "T", trace, truncated, passes=1, stats=stats, notes=notes)
+        row.stats["tool_fired"] = name
+        return row
+
+    try:
+        result = fn(**arguments)
+    except TypeError as exc:
+        notes.append(f"tool_call_bad_arguments:{name}:{exc}")
+        result = {"error": str(exc)}
+
+    tool_succeeded = isinstance(result, dict) and "error" not in result
+    if not tool_succeeded:
+        notes.append(f"tool_call_failed:{name}")
+    # Same "[name] result" convention as MultiToolContext.as_context(), for
+    # one model-named call instead of the controller's batch-selected set.
+    tool_block = f"[{name}] {result}"
+
+    phase2_messages = [
+        {"role": "user", "content": question},
+        {"role": "assistant", "content": visible or "(tool call only, no text)"},
+        {"role": "user", "content": f"Tool result:\n{tool_block}\n\nUsing this, answer the question."},
+    ]
+    synthesis_raw, _ = host.generate_chat(phase2_messages, max_new_tokens=max_trace_tokens, enable_thinking=True)
+    trace, truncated = host.scorer.extract_trace(synthesis_raw)
+    if not trace.strip():
+        notes.append("empty_synthesis:fell_back_to_bare_2pass")
+        _raw, trace, truncated, _n = host.generate_trace(item, max_trace_tokens=max_trace_tokens)
+
+    row = _finalize(host, item, "T", trace, truncated, passes=2, stats=stats, notes=notes)
+    row.stats["tool_fired"] = name
+    row.stats["tool_succeeded"] = tool_succeeded
+    return row
+
+
+ARM_FUNCS = {"A": arm_a, "B": arm_b, "C": arm_c, "R": arm_r, "M": arm_m, "N": arm_n, "T": arm_t}
 
 
 def run_arm(arm: str, host: ModelHost, item: dict[str, Any], **kwargs: Any) -> ArmResult:
