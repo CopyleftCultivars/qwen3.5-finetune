@@ -30,6 +30,20 @@ android {
         versionName = flutter.versionName
     }
 
+    flavorDimensions += "model"
+    productFlavors {
+        create("production") {
+            dimension = "model"
+            manifestPlaceholders["appLabel"] = "Natural Farming Chat"
+        }
+        create("qwen35") {
+            dimension = "model"
+            applicationIdSuffix = ".qwen35"
+            versionNameSuffix = "-qwen35"
+            manifestPlaceholders["appLabel"] = "Natural Farming Chat (Qwen3.5)"
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
