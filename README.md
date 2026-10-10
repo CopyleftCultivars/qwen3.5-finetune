@@ -130,7 +130,45 @@ truncating examples that exceed the configured context. The final adapter and
 training metrics are written to
 `outputs/lora-adapter-qwen35-combined/final/` and
 `outputs/lora-adapter-qwen35-combined/training_metrics.json`.
-Unsloth's fused cross-entropy logits are chunked to a 0.5 GiB target by default
-to keep peak memory manageable; set `UNSLOTH_CE_LOSS_TARGET_GB` before launch to
-adjust that cap. Validation computes loss through the same chunked path without
-retaining full vocabulary logits.
+Unsloth's fused cross-entropy logits are chunked to a 0.25 GiB target by default
+to keep peak memory manageable on the 12 GB training GPU; set
+`UNSLOTH_CE_LOSS_TARGET_GB` before launch to adjust that cap. Validation
+computes loss through the same chunked path without retaining full vocabulary
+logits.
+
+## Evaluate the combined adapter on the 210-item ladder
+
+After training, score the local HF adapter against the graded 210-row benchmark
+with the same system prompt, question prompt, 16-token greedy decode limit, and
+answer extraction as the Flutter ladder harness:
+
+```bash
+../localllm-qwen3.5/retry-evidence/q1-isolated/venv/bin/python \
+  scripts/run_natural_fertilizers_ladder.py \
+  --benchmark ../benchmark-workspace/benchmarks/natural_fertilizers/natural_fertilizers_benchmark_v1_graded.jsonl
+```
+
+The result is written incrementally to
+`outputs/natural_fertilizers_qwen35_combined_210.json`. The gold answer is only
+used for scoring and is not included in the model prompt.
+
+## Convert the adapter to Cactus CQ weights
+
+Once training is complete, run the local Cactus converter with the adapter:
+
+```bash
+../localllm-qwen3.5/retry-evidence/q1-isolated/venv/bin/python \
+  scripts/merge_qwen35_lora_for_cactus.py
+QWEN35_MERGED_MODEL_DIR=outputs/qwen35-combined-merged \
+  ./scripts/run_cactus_qwen35_combined_convert.sh
+```
+
+The command writes INT4 CQ weights and a conversion manifest to
+`outputs/qwen35-combined-cactus-cq4/`. The merge runs in the training Python
+environment so the Cactus CLI does not need its own `peft` installation. Cactus
+uses `--weights-only`: its current local toolchain emits CQ weights while the
+graph builder is being rewritten, so this conversion does not produce a
+runnable bundle for the Flutter app or Pixel 7.
+
+The completed training, conversion, and ladder results are recorded in
+[`results/QWEN35_COMBINED_RUN_2026-10-09.md`](results/QWEN35_COMBINED_RUN_2026-10-09.md).

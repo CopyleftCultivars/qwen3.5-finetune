@@ -149,19 +149,36 @@ class ModelHost:
         messages: list[dict[str, str]],
         max_new_tokens: int = 256,
         enable_thinking: bool = True,
+        tools: list[dict[str, Any]] | None = None,
     ) -> tuple[str, int]:
-        """Free-form greedy chat generation, for Arms B/C and the HTTP surface.
+        """Free-form greedy chat generation, for Arms B/C/T and the HTTP surface.
+
+        `tools`, when given, is passed straight to the tokenizer's own chat
+        template (HF's standard `apply_chat_template(tools=...)` hook) so the
+        model sees tool availability the same documented way any HF
+        tool-calling-capable chat model does -- this is a pure prompt-text
+        convention, not a Cactus- or engine-specific feature, so it needs no
+        native binding. Pass plain function-schema dicts (the `TOOL_DEFINITIONS`
+        shape from `rlm_slice.domain_tools`); this method wraps each into the
+        OpenAI/HF `{"type": "function", "function": {...}}` envelope the
+        template expects.
 
         Returns (text, n_new_tokens).
         """
         import torch
 
         torch.manual_seed(self.seed)
+        template_kwargs: dict[str, Any] = {}
+        if tools:
+            template_kwargs["tools"] = [
+                tool if "function" in tool else {"type": "function", "function": tool} for tool in tools
+            ]
         prompt = self.tokenizer.apply_chat_template(
             messages,
             tokenize=False,
             add_generation_prompt=True,
             enable_thinking=enable_thinking,
+            **template_kwargs,
         )
         return self.generate_raw(prompt, max_new_tokens=max_new_tokens)
 
