@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:cactus/cactus.dart' as cactus;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show appFlavor;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'services/model_service.dart';
 import 'services/plant_lookup_service.dart';
@@ -56,17 +57,17 @@ class ChatMessage {
 
   /// Convert to JSON for persistence
   Map<String, dynamic> toJson() => {
-        'content': content,
-        'isUser': isUser,
-        'timestamp': timestamp.toIso8601String(),
-      };
+    'content': content,
+    'isUser': isUser,
+    'timestamp': timestamp.toIso8601String(),
+  };
 
   /// Create from JSON
   factory ChatMessage.fromJson(Map<String, dynamic> json) => ChatMessage(
-        content: json['content'] as String,
-        isUser: json['isUser'] as bool,
-        timestamp: DateTime.parse(json['timestamp'] as String),
-      );
+    content: json['content'] as String,
+    isUser: json['isUser'] as bool,
+    timestamp: DateTime.parse(json['timestamp'] as String),
+  );
 }
 
 /// Main chat screen
@@ -231,39 +232,50 @@ class _ChatScreenState extends State<ChatScreen> {
         },
       );
 
-      // Initialize the dedicated embedding model (31% of init) -- backs our
-      // own tool_router.dart (chainlink #177), NOT Cactus's native routing.
-      // If this fails for any reason, ModelService._routeTools fails open
-      // to the full tool list, so a failure here is non-fatal to the rest
-      // of app init; only log and continue.
-      setState(() {
-        _initProgress = 0.69;
-        _initStatus = 'Loading embedding model for tool routing...';
-      });
+      if (appFlavor == 'qwen35') {
+        // A second CactusLM context can fail on this device/engine. The Qwen3.5
+        // flavor uses the full local tool list when the embedding router is off.
+        print('[TOOL_ROUTER] Skipping embedding model for qwen35 flavor');
+        setState(() {
+          _initProgress = 1.0;
+          _initStatus = 'Local tools ready';
+        });
+      } else {
+        // Initialize the dedicated embedding model for tool routing.
+        setState(() {
+          _initProgress = 0.69;
+          _initStatus = 'Loading embedding model for tool routing...';
+        });
 
-      try {
-        await _embeddingService.initialize(
-          onProgress: (progress, status) {
-            setState(() {
-              _initProgress = 0.69 + (progress * 0.31);
-              _initStatus = status;
-            });
-          },
-        );
-      } catch (e) {
-        print('[TOOL_ROUTER] embedding model init failed, tool routing will fail open: $e');
+        try {
+          await _embeddingService.initialize(
+            onProgress: (progress, status) {
+              setState(() {
+                _initProgress = 0.69 + (progress * 0.31);
+                _initStatus = status;
+              });
+            },
+          );
+        } catch (e) {
+          print(
+            '[TOOL_ROUTER] embedding model init failed, tool routing will fail open: $e',
+          );
+        }
       }
 
       setState(() {
         _isInitialized = true;
         // Only add welcome message if no history was loaded
         if (_messages.isEmpty) {
-          _messages.add(ChatMessage(
-            content: 'Hello! I\'m your Natural Farming assistant. '
-                'Ask me anything about organic farming, composting, '
-                'fermented plant juice, or nutrient requirements for plants.',
-            isUser: false,
-          ));
+          _messages.add(
+            ChatMessage(
+              content:
+                  'Hello! I\'m your Natural Farming assistant. '
+                  'Ask me anything about organic farming, composting, '
+                  'fermented plant juice, or nutrient requirements for plants.',
+              isUser: false,
+            ),
+          );
         }
       });
     } catch (e) {
@@ -295,10 +307,12 @@ class _ChatScreenState extends State<ChatScreen> {
       _saveChatHistory();
     } catch (e) {
       setState(() {
-        _messages.add(ChatMessage(
-          content: 'Sorry, I encountered an error: $e',
-          isUser: false,
-        ));
+        _messages.add(
+          ChatMessage(
+            content: 'Sorry, I encountered an error: $e',
+            isUser: false,
+          ),
+        );
         _isLoading = false;
       });
       _saveChatHistory();
@@ -347,7 +361,9 @@ class _ChatScreenState extends State<ChatScreen> {
     print('[TOOL_DEBUG] _generateWithTools started for: $question');
 
     final history = _buildConversationHistory();
-    print('[TOOL_DEBUG] Conversation history: ${history.length} turns, ${history.fold<int>(0, (sum, m) => sum + m.content.length)} chars');
+    print(
+      '[TOOL_DEBUG] Conversation history: ${history.length} turns, ${history.fold<int>(0, (sum, m) => sum + m.content.length)} chars',
+    );
 
     // Phase 1: Generate with tools available
     final result = await _modelService.generateCompletionWithTools(
@@ -357,7 +373,9 @@ class _ChatScreenState extends State<ChatScreen> {
     );
 
     print('[TOOL_DEBUG] hasToolCalls: ${result.hasToolCalls}');
-    print('[TOOL_DEBUG] Response preview: ${result.response.substring(0, result.response.length.clamp(0, 100))}...');
+    print(
+      '[TOOL_DEBUG] Response preview: ${result.response.substring(0, result.response.length.clamp(0, 100))}...',
+    );
 
     // If no tool calls, return the response directly
     if (!result.hasToolCalls) {
@@ -381,7 +399,9 @@ class _ChatScreenState extends State<ChatScreen> {
       conversationHistory: phase2History,
     );
 
-    print('[TOOL_DEBUG] Synthesis complete (${synthesis.response.length} chars)');
+    print(
+      '[TOOL_DEBUG] Synthesis complete (${synthesis.response.length} chars)',
+    );
     return synthesis.response;
   }
 
@@ -400,10 +420,12 @@ class _ChatScreenState extends State<ChatScreen> {
   void _clearHistory() {
     setState(() {
       _messages.clear();
-      _messages.add(ChatMessage(
-        content: 'Chat cleared. How can I help you?',
-        isUser: false,
-      ));
+      _messages.add(
+        ChatMessage(
+          content: 'Chat cleared. How can I help you?',
+          isUser: false,
+        ),
+      );
     });
     _saveChatHistory();
   }
@@ -442,9 +464,7 @@ class _ChatScreenState extends State<ChatScreen> {
       drawer: _buildDrawer(),
       body: Column(
         children: [
-          Expanded(
-            child: _buildMessageList(),
-          ),
+          Expanded(child: _buildMessageList()),
           _buildInputArea(),
         ],
       ),
@@ -459,18 +479,11 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.eco,
-                size: 80,
-                color: Colors.green,
-              ),
+              const Icon(Icons.eco, size: 80, color: Colors.green),
               const SizedBox(height: 24),
               const Text(
                 'Natural Farming Chat',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 32),
               LinearProgressIndicator(value: _initProgress),
@@ -504,10 +517,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 SizedBox(height: 8),
                 Text(
                   'Natural Farming AI',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   '100% Local • Privacy First',
@@ -535,10 +545,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: EdgeInsets.all(16.0),
             child: Text(
               'Democratizing access to farming knowledge',
-              style: TextStyle(
-                fontStyle: FontStyle.italic,
-                fontSize: 12,
-              ),
+              style: TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
             ),
           ),
         ],
@@ -586,7 +593,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     borderSide: BorderSide.none,
                   ),
                   filled: true,
-                  fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  fillColor: Theme.of(
+                    context,
+                  ).colorScheme.surfaceContainerHighest,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 12,

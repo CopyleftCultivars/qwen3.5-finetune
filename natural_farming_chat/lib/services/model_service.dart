@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:archive/archive_io.dart';
 import 'package:cactus/cactus.dart';
 import 'package:ffi/ffi.dart';
+import 'package:flutter/services.dart' show appFlavor;
 import 'package:path_provider/path_provider.dart';
 
 import 'embedding_service.dart';
@@ -20,18 +21,19 @@ class ModelService {
   /// Default maximum tokens for completions (increased from 512 to prevent truncation)
   static const int defaultMaxTokens = 2048;
 
-  // Cactus INT4 bundle converted from the distill-v2-rationale checkpoint
-  // (promoted champion, chainlink #163 -- beat v5clean +5.7pp on-device on
-  // the natural_fertilizers MCQ ladder, 0.8381 vs 0.7810). Calibrated GPTQ-
-  // Hessian conversion (chainlink #165); the transpiled component format
-  // (components/manifest.json) required by the Cactus SDK v2.0 engine.
-  // Hosted on HuggingFace (previously moved to GitHub Releases after the HF
-  // Xet CDN was found throttling downloads for the v5 bundle -- moved back
-  // per owner's request; re-verify download behavior before relying on this).
-  static const String modelSlug = 'qwen3-nf-distill-v2-cact-int4-ios';
-
-  static const String _modelDownloadUrl =
+  // Keep the production Qwen3 model and experimental Qwen3.5 bundle isolated
+  // by Android flavor. Qwen3.5 is staged locally until a hosted bundle is set up.
+  static const String _productionModelSlug =
+      'qwen3-nf-distill-v2-cact-int4-ios';
+  static const String _qwen35ModelSlug = 'qwen35-combined-cq4';
+  static const String _qwen35StagingPath =
+      '/data/local/tmp/qwen35-combined-cq4';
+  static const String _productionModelDownloadUrl =
       'https://huggingface.co/CopyleftCultivars/localNFchatbot-cactus/resolve/main/qwen3-distill-v2-calibrated-cact-int4-ios.zip';
+
+  static bool get _isQwen35Flavor => appFlavor == 'qwen35';
+  static String get modelSlug =>
+      _isQwen35Flavor ? _qwen35ModelSlug : _productionModelSlug;
   static const String systemPrompt = '''
 You are a helpful farming assistant specializing in natural farming practices.
 Answer questions based on the provided context. If you don't know the answer,
@@ -47,7 +49,8 @@ say so honestly. Provide practical, actionable advice when possible.''';
         properties: {
           'plant': ToolParameter(
             type: 'string',
-            description: 'Common name or scientific name of the plant (e.g., Tomato, Okra, Solanum lycopersicum)',
+            description:
+                'Common name or scientific name of the plant (e.g., Tomato, Okra, Solanum lycopersicum)',
             required: true,
           ),
         },
@@ -179,9 +182,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
     // NOTE: semantic tool filtering disabled - it tries to generate embeddings
     // using the chat model which causes hangs. With 3 tools, keyword-based
     // filtering could help but isn't critical yet.
-    _lm = CactusLM(
-      enableToolFiltering: false,
-    );
+    _lm = CactusLM(enableToolFiltering: false);
 
     try {
       final appDocDir = await getApplicationDocumentsDirectory();
@@ -193,24 +194,55 @@ say so honestly. Provide practical, actionable advice when possible.''';
         return;
       }
 
-      // Clean up any partial download before starting fresh
+      // The Qwen3.5 bundle is staged locally until it is hosted. Validate it
+      // before replacing an incomplete private copy.
+      final qwen35StagingFolder = Directory(_qwen35StagingPath);
+      if (_isQwen35Flavor) {
+        for (final requiredPath in [
+          'config.txt',
+          'vocab.txt',
+          'components/manifest.json',
+        ]) {
+          if (!await File(
+            '${qwen35StagingFolder.path}/$requiredPath',
+          ).exists()) {
+            throw ModelServiceException(
+              'Qwen3.5 bundle is missing $requiredPath under '
+              '${qwen35StagingFolder.path}. Stage outputs/qwen35-combined-cactus-cq4 there with adb push.',
+            );
+          }
+        }
+      }
+
+      // Clean up any partial download/copy before starting fresh.
       if (await modelFolder.exists()) {
         await modelFolder.delete(recursive: true);
       }
-
       await modelFolder.create(recursive: true);
 
-      // Download zip
+      if (_isQwen35Flavor) {
+        await _copyQwen35Bundle(
+          source: qwen35StagingFolder,
+          destination: modelFolder,
+          onProgress: onProgress,
+        );
+        return;
+      }
+
+      // Production Qwen3 bundle download.
       final zipPath = '${appDocDir.path}/models/$modelSlug.zip';
       final client = HttpClient();
       try {
         onProgress(0.0, 'Starting download...');
-        final request = await client.getUrl(Uri.parse(_modelDownloadUrl));
+        final request = await client.getUrl(
+          Uri.parse(_productionModelDownloadUrl),
+        );
         final response = await request.close();
 
         if (response.statusCode != 200) {
           throw ModelServiceException(
-              'Download failed: HTTP ${response.statusCode}');
+            'Download failed: HTTP ${response.statusCode}',
+          );
         }
 
         final contentLength = response.contentLength;
@@ -258,10 +290,55 @@ say so honestly. Provide practical, actionable advice when possible.''';
     }
   }
 
+  Future<void> _copyQwen35Bundle({
+    required Directory source,
+    required Directory destination,
+    required void Function(double progress, String status) onProgress,
+  }) async {
+    final files = <File>[];
+    await for (final entity in source.list(
+      recursive: true,
+      followLinks: false,
+    )) {
+      if (entity is File) files.add(entity);
+    }
+
+    if (!files.any((file) => file.path.endsWith('.weights'))) {
+      throw ModelServiceException(
+        'Qwen3.5 bundle has no .weights files under ${source.path}.',
+      );
+    }
+
+    final configFile = File('${source.path}/config.txt');
+    files.removeWhere((file) => file.path == configFile.path);
+    files.add(configFile); // Copy the completion marker last.
+
+    var totalBytes = 0;
+    for (final file in files) {
+      totalBytes += await file.length();
+    }
+
+    var copiedBytes = 0;
+    for (final file in files) {
+      final relativePath = file.path.substring(source.path.length + 1);
+      final destinationFile = File('${destination.path}/$relativePath');
+      await destinationFile.parent.create(recursive: true);
+      final fileBytes = await file.length();
+      await file.copy(destinationFile.path);
+      copiedBytes += fileBytes;
+      onProgress(
+        totalBytes == 0 ? 1.0 : copiedBytes / totalBytes,
+        'Copied ${copiedBytes ~/ (1024 * 1024)} MB of the Qwen3.5 model...',
+      );
+    }
+  }
+
   /// Initialize the model for inference
   Future<void> initializeModel() async {
     if (_lm == null) {
-      throw ModelServiceException('Model not downloaded. Call downloadModel first.');
+      throw ModelServiceException(
+        'Model not downloaded. Call downloadModel first.',
+      );
     }
 
     if (_isInitialized) return;
@@ -287,7 +364,9 @@ say so honestly. Provide practical, actionable advice when possible.''';
         Platform.isAndroid ? 'libcactus.so' : 'cactus.framework/cactus',
       );
       final getLastError = lib
-          .lookup<NativeFunction<Pointer<Utf8> Function()>>('cactus_get_last_error')
+          .lookup<NativeFunction<Pointer<Utf8> Function()>>(
+            'cactus_get_last_error',
+          )
           .asFunction<Pointer<Utf8> Function()>();
       final ptr = getLastError();
       if (ptr.address == 0) return '(no error message)';
@@ -305,7 +384,9 @@ say so honestly. Provide practical, actionable advice when possible.''';
     List<ChatMessage>? conversationHistory,
   }) async {
     if (!_isInitialized) {
-      throw ModelServiceException('Model not initialized. Call initializeModel first.');
+      throw ModelServiceException(
+        'Model not initialized. Call initializeModel first.',
+      );
     }
 
     final systemContent = _buildSystemContent(context, agenticMode);
@@ -340,7 +421,9 @@ say so honestly. Provide practical, actionable advice when possible.''';
     bool agenticMode = false,
   }) async {
     if (!_isInitialized) {
-      throw ModelServiceException('Model not initialized. Call initializeModel first.');
+      throw ModelServiceException(
+        'Model not initialized. Call initializeModel first.',
+      );
     }
 
     final systemContent = _buildSystemContent(context, agenticMode);
@@ -368,17 +451,22 @@ say so honestly. Provide practical, actionable advice when possible.''';
     EmbeddingService? embeddingService,
   }) async {
     if (!_isInitialized) {
-      throw ModelServiceException('Model not initialized. Call initializeModel first.');
+      throw ModelServiceException(
+        'Model not initialized. Call initializeModel first.',
+      );
     }
 
     final systemContent = _buildSystemContentForTools(context);
-    final effectiveTools = tools ?? await _routeTools(question, embeddingService);
+    final effectiveTools =
+        tools ?? await _routeTools(question, embeddingService);
 
     print('[TOOL_DEBUG] generateCompletionWithTools called');
     print('[TOOL_DEBUG] Question: $question');
     print('[TOOL_DEBUG] Context length: ${context?.length ?? 0}');
     print('[TOOL_DEBUG] History turns: ${conversationHistory?.length ?? 0}');
-    print('[TOOL_DEBUG] Available tools: ${effectiveTools.map((t) => t.name).toList()}');
+    print(
+      '[TOOL_DEBUG] Available tools: ${effectiveTools.map((t) => t.name).toList()}',
+    );
 
     final messages = [
       ChatMessage(content: systemContent, role: 'system'),
@@ -452,7 +540,9 @@ say so honestly. Provide practical, actionable advice when possible.''';
         embedFn: embeddingService.generateEmbedding,
       );
       final selectedNames = routing.selected(topK: 2).toSet();
-      final selected = farmingTools.where((t) => selectedNames.contains(t.name)).toList();
+      final selected = farmingTools
+          .where((t) => selectedNames.contains(t.name))
+          .toList();
       return selected.isEmpty ? farmingTools : selected;
     } catch (e) {
       // Routing is a refinement, not a requirement -- if embedding
@@ -506,13 +596,19 @@ Make multiple iterations if necessary.''';
     var cleaned = response;
 
     // Remove Qwen3 thinking tags and content
-    cleaned = cleaned.replaceAll(RegExp(r'<think>.*?</think>', dotAll: true), '');
+    cleaned = cleaned.replaceAll(
+      RegExp(r'<think>.*?</think>', dotAll: true),
+      '',
+    );
 
     // Remove native tool-call blocks -- the model may emit these when it
     // decides mid-answer that it needs a tool; callers that care about tool
     // calls read them from CactusCompletionResult.toolCalls before this
     // cleaning step runs, so the user-facing text never shows the raw JSON.
-    cleaned = cleaned.replaceAll(RegExp(r'<tool_call>.*?</tool_call>', dotAll: true), '');
+    cleaned = cleaned.replaceAll(
+      RegExp(r'<tool_call>.*?</tool_call>', dotAll: true),
+      '',
+    );
 
     // Remove prompt structure tags
     cleaned = cleaned.replaceAll(RegExp(r'\[/?CONTEXT\]'), '');
@@ -589,13 +685,13 @@ Make multiple iterations if necessary.''';
     int maxTokens = defaultMaxTokens,
   }) async {
     if (!_isInitialized) {
-      throw ModelServiceException('Model not initialized. Call initialize first.');
+      throw ModelServiceException(
+        'Model not initialized. Call initialize first.',
+      );
     }
 
     // Use simple completion for prompt-based generation
-    final messages = [
-      ChatMessage(content: prompt, role: 'user'),
-    ];
+    final messages = [ChatMessage(content: prompt, role: 'user')];
 
     final streamedResult = await _lm!.generateCompletionStream(
       messages: messages,
@@ -628,7 +724,9 @@ Make multiple iterations if necessary.''';
     int maxTokens = 512,
   }) async {
     if (!_isInitialized) {
-      throw ModelServiceException('Model not initialized. Call initializeModel first.');
+      throw ModelServiceException(
+        'Model not initialized. Call initializeModel first.',
+      );
     }
 
     final messages = [
@@ -664,10 +762,7 @@ class CompletionResult {
   final String response;
   final double tokensPerSecond;
 
-  CompletionResult({
-    required this.response,
-    required this.tokensPerSecond,
-  });
+  CompletionResult({required this.response, required this.tokensPerSecond});
 }
 
 /// Result from a completion request with tool calling support
