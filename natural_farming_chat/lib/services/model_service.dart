@@ -411,6 +411,12 @@ say so honestly. Provide practical, actionable advice when possible.''';
     return CompletionResult(
       response: cleanedResponse,
       tokensPerSecond: result.tokensPerSecond,
+      rawResponse: result.response,
+      timeToFirstTokenMs: result.timeToFirstTokenMs,
+      totalTimeMs: result.totalTimeMs,
+      prefillTokens: result.prefillTokens,
+      decodeTokens: result.decodeTokens,
+      totalTokens: result.totalTokens,
     );
   }
 
@@ -500,6 +506,13 @@ say so honestly. Provide practical, actionable advice when possible.''';
       response: cleanedResponse,
       tokensPerSecond: result.tokensPerSecond,
       toolCalls: result.toolCalls,
+      availableTools: effectiveTools.map((tool) => tool.name).toList(),
+      rawResponse: result.response,
+      timeToFirstTokenMs: result.timeToFirstTokenMs,
+      totalTimeMs: result.totalTimeMs,
+      prefillTokens: result.prefillTokens,
+      decodeTokens: result.decodeTokens,
+      totalTokens: result.totalTokens,
     );
   }
 
@@ -761,8 +774,23 @@ Make multiple iterations if necessary.''';
 class CompletionResult {
   final String response;
   final double tokensPerSecond;
+  final String rawResponse;
+  final double timeToFirstTokenMs;
+  final double totalTimeMs;
+  final int prefillTokens;
+  final int decodeTokens;
+  final int totalTokens;
 
-  CompletionResult({required this.response, required this.tokensPerSecond});
+  CompletionResult({
+    required this.response,
+    required this.tokensPerSecond,
+    this.rawResponse = '',
+    this.timeToFirstTokenMs = 0,
+    this.totalTimeMs = 0,
+    this.prefillTokens = 0,
+    this.decodeTokens = 0,
+    this.totalTokens = 0,
+  });
 }
 
 /// Result from a completion request with tool calling support
@@ -770,11 +798,25 @@ class CompletionResultWithTools {
   final String response;
   final double tokensPerSecond;
   final List<ToolCall> toolCalls;
+  final List<String> availableTools;
+  final String rawResponse;
+  final double timeToFirstTokenMs;
+  final double totalTimeMs;
+  final int prefillTokens;
+  final int decodeTokens;
+  final int totalTokens;
 
   CompletionResultWithTools({
     required this.response,
     required this.tokensPerSecond,
     required this.toolCalls,
+    this.availableTools = const [],
+    this.rawResponse = '',
+    this.timeToFirstTokenMs = 0,
+    this.totalTimeMs = 0,
+    this.prefillTokens = 0,
+    this.decodeTokens = 0,
+    this.totalTokens = 0,
   });
 
   /// Whether the model requested any tool calls
