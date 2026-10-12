@@ -136,6 +136,7 @@ class BioaccumulatorRatioService {
 
   Map<String, dynamic>? _findCrop(String name) {
     final nameL = name.trim().toLowerCase();
+    if (nameL.isEmpty) return null;
     for (final row in _crops) {
       final cropName = (row['Crop'] as String?)?.toLowerCase();
       final sciName = (row['Scientific Name'] as String?)?.toLowerCase();
@@ -150,6 +151,7 @@ class BioaccumulatorRatioService {
 
   Map<String, dynamic>? _findPlant(String name) {
     final nameL = name.trim().toLowerCase();
+    if (nameL.isEmpty) return null;
     final byCommon = _plantLookupService.byCommonName;
     final bySci = _plantLookupService.byScientificName;
 

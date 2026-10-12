@@ -168,6 +168,8 @@ def _mid(bounds: tuple[float, float]) -> float:
 
 def _find_crop(name: str) -> dict[str, Any] | None:
     name_l = name.strip().lower()
+    if not name_l:
+        return None
     rows = load_crop_requirements()
     for row in rows:
         if str(row.get("Crop", "")).lower() == name_l or str(row.get("Scientific Name", "")).lower() == name_l:
@@ -180,6 +182,8 @@ def _find_crop(name: str) -> dict[str, Any] | None:
 
 def _find_plant(name: str) -> dict[str, Any] | None:
     name_l = name.strip().lower()
+    if not name_l:
+        return None
     rows = load_plant_mineral_profiles()
     for row in rows:
         if str(row.get("common_name", "")).lower() == name_l or str(row.get("scientific_name", "")).lower() == name_l:
@@ -192,10 +196,19 @@ def _find_plant(name: str) -> dict[str, Any] | None:
 
 def _best_mineral_mid(plant_row: dict[str, Any], mineral_key: str) -> float | None:
     """Richest-part mid-range value for one mineral, ppm (max across plant parts)."""
+    parts = plant_row.get("parts")
+    if not isinstance(parts, dict):
+        return None
+
     best: float | None = None
-    for part_data in plant_row.get("parts", {}).values():
-        mineral = part_data.get("minerals", {}).get(mineral_key)
-        if not mineral:
+    for part_data in parts.values():
+        if not isinstance(part_data, dict):
+            continue
+        minerals = part_data.get("minerals")
+        if not isinstance(minerals, dict):
+            continue
+        mineral = minerals.get(mineral_key)
+        if not isinstance(mineral, dict):
             continue
         try:
             mid = (float(mineral["min"]) + float(mineral["max"])) / 2.0
@@ -223,7 +236,9 @@ def bioaccumulator_ratio(crop: str, candidate_plant: str) -> dict[str, Any]:
     if plant_row is None:
         return {"error": f"no plant matching {candidate_plant!r} in plant_mineral_profiles.json"}
 
-    npk = crop_row.get("NPK Requirements", {})
+    npk = crop_row.get("NPK Requirements")
+    if not isinstance(npk, dict):
+        npk = {}
     ratios: dict[str, float] = {}
     not_comparable: list[str] = []
     for req_key, mineral_key in _NUTRIENT_MAP.items():
@@ -233,7 +248,10 @@ def bioaccumulator_ratio(crop: str, candidate_plant: str) -> dict[str, Any]:
             not_comparable.append(mineral_key)
             continue
         crop_mid = _mid(crop_bounds)
-        ratios[mineral_key] = round(plant_mid / crop_mid, 3) if crop_mid else None
+        if crop_mid == 0:
+            not_comparable.append(mineral_key)
+            continue
+        ratios[mineral_key] = round(plant_mid / crop_mid, 3)
     not_comparable.append("nitrogen")  # never tracked by the mineral-profile source
 
     return {

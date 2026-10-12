@@ -26,21 +26,65 @@ void main() {
       expect(service.cropCount, 97);
     });
 
-    test('Corn x Okra ratio is positive, not negative (regression: no leading -? in range regex)', () {
-      // Corn's Phosphorus requirement is "30-70" -- the exact string that
-      // triggered the GPU-side bug (chainlink #175): a `-?\d+` regex misreads
-      // the range separator as a unary minus, giving [30, -70] instead of
-      // [30, 70], which would make every ratio negative here.
+    test('Corn x Okra matches hand-calculated P/K golden values', () {
+      // Okra P midpoint is 3465 and Corn P midpoint is 50. Okra K midpoint
+      // is 17350 and Corn K midpoint is 90. Seed values with only one bound
+      // are excluded, so the complete fruit values are used.
       final result = service.compute('Corn', 'Okra');
       expect(result.success, isTrue);
-      expect(result.ratios['phosphorus'], isNotNull);
-      expect(result.ratios['phosphorus'], greaterThan(0));
-      expect(result.ratios['potassium'], greaterThan(0));
+      expect(result.ratios, {'phosphorus': 69.3, 'potassium': 192.778});
+      expect(result.notComparable, ['nitrogen']);
+      expect(result.unitCaveat, contains('relative signal'));
+      expect(
+        result.unitCaveat,
+        contains('not a unit-equivalent dosing calculation'),
+      );
     });
 
-    test('nitrogen is always reported not-comparable', () {
-      final result = service.compute('Corn', 'Okra');
-      expect(result.notComparable, contains('nitrogen'));
+    test('richest complete tissue-part midpoint is selected', () {
+      // Garlic root has the richest complete P midpoint (3055); leaf has the
+      // richest complete K midpoint (13615.5).
+      final result = service.compute('Corn', 'Garlic');
+      expect(result.success, isTrue);
+      expect(result.ratios, {'phosphorus': 61.1, 'potassium': 151.283});
+    });
+
+    test('single-value crop requirements use that value as the midpoint', () {
+      final result = service.compute('Anise', 'Garlic');
+      expect(result.success, isTrue);
+      expect(result.ratios, {'phosphorus': 76.375, 'potassium': 226.925});
+    });
+
+    test('common and scientific names resolve to canonical names', () {
+      final result = service.compute('Zea mays', 'Abelmoschus esculentus');
+      expect(result.success, isTrue);
+      expect(result.crop, 'Corn');
+      expect(result.candidatePlant, 'Okra');
+    });
+
+    test(
+      'plant with no complete P/K values reports each as not-comparable',
+      () {
+        final result = service.compute('Corn', 'Sunset Hibiscus');
+        expect(result.success, isTrue);
+        expect(result.ratios, isEmpty);
+        expect(result.notComparable, ['phosphorus', 'potassium', 'nitrogen']);
+        expect(result.toMessage(), contains('No comparable nutrients found.'));
+      },
+    );
+
+    test('uninitialized service returns an error result', () {
+      final uninitialized = BioaccumulatorRatioService(
+        plantLookupService: plantLookupService,
+      );
+      final result = uninitialized.compute('Corn', 'Okra');
+      expect(result.success, isFalse);
+      expect(result.errorMessage, contains('not initialized'));
+    });
+
+    test('blank names do not fall through to the first database record', () {
+      expect(service.compute('  ', 'Okra').success, isFalse);
+      expect(service.compute('Corn', '  ').success, isFalse);
     });
 
     test('unknown crop returns an error result', () {
