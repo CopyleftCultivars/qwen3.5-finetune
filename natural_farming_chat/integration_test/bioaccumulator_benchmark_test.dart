@@ -94,6 +94,7 @@ void main() {
   testWidgets(
     'Bioaccumulator benchmark $runMode / $runSplit / trial $runTrial',
     (tester) async {
+      CactusConfig.isTelemetryEnabled = false;
       expect(['decision', 'app_e2e'].contains(runMode), isTrue,
           reason: 'BIOACCUMULATOR_MODE must be decision or app_e2e');
       expect(['development', 'validation', 'test'].contains(runSplit), isTrue,
@@ -533,8 +534,8 @@ void main() {
         print('[BIOACCUMULATOR] checkpoint: ${checkpointFile.path}');
         // ignore: avoid_print
         print('[BIOACCUMULATOR] results: ${resultsFile.path}');
-        // Give the host runner time to pull the private app files after Flutter exits.
-        await Future.delayed(const Duration(minutes: 2));
+        // Keep the app alive briefly so the host runner can snapshot private result files.
+        await Future.delayed(const Duration(seconds: 10));
       } finally {
         modelService.dispose();
       }
