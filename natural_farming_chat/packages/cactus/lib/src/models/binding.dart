@@ -43,6 +43,25 @@ typedef CactusCompleteDart = int Function(
     Pointer<Uint8> pcmBuffer,
     int pcmBufferSize);
 
+typedef CactusPrefillNative = Int32 Function(
+    CactusModel model,
+    Pointer<Utf8> messagesJson,
+    Pointer<Utf8> responseBuffer,
+    Size bufferSize,
+    Pointer<Utf8> optionsJson,
+    Pointer<Utf8> toolsJson,
+    Pointer<Uint8> pcmBuffer,
+    Size pcmBufferSize);
+typedef CactusPrefillDart = int Function(
+    CactusModel model,
+    Pointer<Utf8> messagesJson,
+    Pointer<Utf8> responseBuffer,
+    int bufferSize,
+    Pointer<Utf8> optionsJson,
+    Pointer<Utf8> toolsJson,
+    Pointer<Uint8> pcmBuffer,
+    int pcmBufferSize);
+
 typedef CactusDestroyNative = Void Function(CactusModel model);
 typedef CactusDestroyDart = void Function(CactusModel model);
 

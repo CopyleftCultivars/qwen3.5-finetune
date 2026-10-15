@@ -27,6 +27,10 @@ final cactusComplete = cactusLib
     .lookup<NativeFunction<CactusCompleteNative>>('cactus_complete')
     .asFunction<CactusCompleteDart>();
 
+final cactusPrefill = cactusLib
+    .lookup<NativeFunction<CactusPrefillNative>>('cactus_prefill')
+    .asFunction<CactusPrefillDart>();
+
 final cactusDestroy = cactusLib
     .lookup<NativeFunction<CactusDestroyNative>>('cactus_destroy')
     .asFunction<CactusDestroyDart>();

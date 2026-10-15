@@ -33,6 +33,10 @@ const String runContextStrategy = String.fromEnvironment(
   'BIOACCUMULATOR_CONTEXT_STRATEGY',
   defaultValue: 'full_history',
 );
+const String runKvCacheStrategy = String.fromEnvironment(
+  'BIOACCUMULATOR_KV_CACHE_STRATEGY',
+  defaultValue: 'reset_each_decision',
+);
 const int turnTimeoutSeconds = int.fromEnvironment(
   'BIOACCUMULATOR_TURN_TIMEOUT_SECONDS',
   defaultValue: 300,
@@ -58,6 +62,10 @@ const Set<String> contextStrategies = {
   'bounded_history',
   'structured_state',
   'trim_tool_results',
+};
+const Set<String> kvCacheStrategies = {
+  'reset_each_decision',
+  'prefill_system_reuse',
 };
 
 const int boundedHistoryMessageLimit = 2;
@@ -604,6 +612,14 @@ void main() {
           reason: 'BIOACCUMULATOR_SPLIT must be a frozen dataset split');
       expect(contextStrategies.contains(runContextStrategy), isTrue,
           reason: 'BIOACCUMULATOR_CONTEXT_STRATEGY must be one of ${contextStrategies.join(', ')}');
+      expect(kvCacheStrategies.contains(runKvCacheStrategy), isTrue,
+          reason: 'BIOACCUMULATOR_KV_CACHE_STRATEGY must be one of ${kvCacheStrategies.join(', ')}');
+      expect(
+        runKvCacheStrategy != 'prefill_system_reuse' ||
+            (runMode == 'decision' && runContextStrategy == 'full_history'),
+        isTrue,
+        reason: 'prefill_system_reuse requires decision mode and full_history',
+      );
 
       final docs = await getApplicationDocumentsDirectory();
       final inputFile =
@@ -654,6 +670,8 @@ void main() {
         'run_mode': runMode,
         'split': runSplit,
         'trial': runTrial,
+        'kv_cache_strategy': runKvCacheStrategy,
+        'kv_cache_strategy_version': 'cactus-prefix-pilot-v1',
         'model_slug': ModelService.modelSlug,
         'scenario_sha256': scenarioSha256,
         'tool_schema_sha256': sha256Text(toolSchemaJson),
@@ -714,6 +732,7 @@ void main() {
         'tool_schema_sha256': stableMetadata['tool_schema_sha256'],
         'app_data_sha256': stableMetadata['app_data_sha256'],
         'prompt': stableMetadata['prompt'],
+        'kv_cache_strategy': stableMetadata['kv_cache_strategy'],
         'timing_budget_seconds': stableMetadata['timing_budget_seconds'],
         'device': stableMetadata['device'],
         'inference_settings': stableMetadata['inference_settings'],
@@ -867,6 +886,33 @@ void main() {
           final toolResultSummaries = <int, String>{};
           var scenarioInterrupted = false;
 
+          if (runMode == 'decision') {
+            modelService.resetInferenceContext();
+            if (runKvCacheStrategy == 'prefill_system_reuse') {
+              final prefillWatch = Stopwatch()..start();
+              final prefill =
+                  await modelService.prefillToolDecisionPrefixForBenchmark();
+              prefillWatch.stop();
+              final prefills = asStringMap(
+                checkpoint['kv_cache_prefills'] ?? <String, dynamic>{},
+              );
+              prefills[caseId] = {
+                'host_wall_ms': prefillWatch.elapsedMicroseconds / 1000.0,
+                'prefix': 'fixed decision system message plus fixed tool catalog',
+                'tool_schema_sha256': stableMetadata['tool_schema_sha256'],
+                'tool_count': ModelService.farmingTools.length,
+                'native': prefill,
+              };
+              checkpoint['kv_cache_prefills'] = prefills;
+              await saveCheckpoint(checkpointFile, checkpoint);
+              if (prefill['success'] != true) {
+                final prefillError =
+                    prefill['error']?.toString() ?? 'unknown error';
+                throw StateError('Native cactus_prefill failed: $prefillError');
+              }
+            }
+          }
+
           for (final rawTurn in turns) {
             final turn = asStringMap(rawTurn);
             final turnNumber = (turn['turn'] as num).toInt();
@@ -924,6 +970,9 @@ void main() {
                 'conversation_before': history.map(serializeMessage).toList(),
                 'mode': runMode,
                 'context_strategy': runContextStrategy,
+                'kv_cache_strategy': runKvCacheStrategy,
+                'decision_reset_before_completion':
+                    runKvCacheStrategy == 'reset_each_decision',
                 'status': 'running',
                 'errors': <String>[],
                 'latency': <String, dynamic>{},
@@ -969,6 +1018,8 @@ void main() {
                   context: promptContext.context,
                   conversationHistory: promptContext.history,
                   tools: runMode == 'decision' ? ModelService.farmingTools : null,
+                  resetContextBeforeTools:
+                      runKvCacheStrategy == 'reset_each_decision',
                 );
                 await for (final chunk in streamed.stream) {
                   progress.addChunk(chunk);

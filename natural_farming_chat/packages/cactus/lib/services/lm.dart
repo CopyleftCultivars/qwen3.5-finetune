@@ -85,7 +85,8 @@ class CactusLM {
 
   Future<CactusCompletionResult> generateCompletion({
     required List<ChatMessage> messages,
-    CactusCompletionParams? params
+    CactusCompletionParams? params,
+    bool resetContextBeforeTools = true,
   }) async {
     return await _handleLock.synchronized(() async {
       CactusCompletionParams completionParams = params ?? defaultCompletionParams;
@@ -95,7 +96,7 @@ class CactusLM {
 
       if (currentHandle != null) {
         if(completionParams.tools != null) {
-          reset();
+          if (resetContextBeforeTools) reset();
           List<CactusTool>? toolsToUse = completionParams.tools;
           if (enableToolFiltering && completionParams.tools != null && completionParams.tools!.isNotEmpty) {
             toolsToUse = await _filterTools(messages, completionParams.tools!);
@@ -146,9 +147,35 @@ class CactusLM {
     });
   }
 
+  /// Pre-fill an exact message prefix into the native KV cache.
+  /// The caller owns cache reset and must pass a prefix matching the beginning
+  /// of the subsequent completion, including its tools and options.
+  Future<Map<String, dynamic>> prefill({
+    required List<ChatMessage> messages,
+    CactusCompletionParams? params,
+  }) async {
+    return await _handleLock.synchronized(() async {
+      final completionParams = params ?? defaultCompletionParams;
+      final model =
+          params?.model ?? _lastInitializedModel ?? defaultInitParams.model;
+      final currentHandle = await _getValidatedHandle(model: model);
+      if (currentHandle == null) {
+        throw Exception('Context not initialized');
+      }
+      final quantization = (await Supabase.getModel(model))?.quantization ?? 8;
+      return await CactusContext.prefill(
+        currentHandle,
+        messages,
+        completionParams,
+        quantization,
+      );
+    });
+  }
+
   Future<CactusStreamedCompletionResult> generateCompletionStream({
     required List<ChatMessage> messages,
     CactusCompletionParams? params,
+    bool resetContextBeforeTools = true,
   }) async {
     CactusCompletionParams completionParams = params ?? defaultCompletionParams;
     final model = params?.model ?? _lastInitializedModel ?? defaultInitParams.model;
@@ -157,7 +184,7 @@ class CactusLM {
 
     if (currentHandle != null) {
       if(completionParams.tools != null) {
-        reset();
+        if (resetContextBeforeTools) reset();
         List<CactusTool>? toolsToUse = completionParams.tools;
         if (enableToolFiltering && toolsToUse != null && toolsToUse.isNotEmpty) {
           toolsToUse = await _filterTools(messages, toolsToUse);
