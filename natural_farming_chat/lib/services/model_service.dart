@@ -411,6 +411,8 @@ say so honestly. Provide practical, actionable advice when possible.''';
     return CompletionResult(
       response: cleanedResponse,
       tokensPerSecond: result.tokensPerSecond,
+      prefillTokensPerSecond: result.prefillTokensPerSecond,
+      decodeTokensPerSecond: result.decodeTokensPerSecond,
       rawResponse: result.response,
       timeToFirstTokenMs: result.timeToFirstTokenMs,
       totalTimeMs: result.totalTimeMs,
@@ -445,6 +447,162 @@ say so honestly. Provide practical, actionable advice when possible.''';
     );
 
     return streamedResult.stream;
+  }
+
+  Map<String, dynamic> _bioaccumulatorPromptProfile({
+    required String systemContent,
+    required String question,
+    String? context,
+    List<ChatMessage>? conversationHistory,
+    List<CactusTool>? tools,
+  }) {
+    final charsByRole = <String, int>{};
+    final messagesByRole = <String, int>{};
+    var historyChars = 0;
+    var historyTurnCount = 0;
+    for (final message in conversationHistory ?? const <ChatMessage>[]) {
+      final role = message.role.toString();
+      final length = message.content.length;
+      charsByRole[role] = (charsByRole[role] ?? 0) + length;
+      messagesByRole[role] = (messagesByRole[role] ?? 0) + 1;
+      historyChars += length;
+      if (role == 'user') historyTurnCount += 1;
+    }
+    charsByRole['system'] = (charsByRole['system'] ?? 0) + systemContent.length;
+    charsByRole['user'] = (charsByRole['user'] ?? 0) + question.length;
+    messagesByRole['system'] = (messagesByRole['system'] ?? 0) + 1;
+    messagesByRole['user'] = (messagesByRole['user'] ?? 0) + 1;
+    return {
+      'schema_version': 'bioaccumulator_prompt_profile_v1',
+      'message_count': (conversationHistory?.length ?? 0) + 2,
+      'history_message_count': conversationHistory?.length ?? 0,
+      'history_turn_count': historyTurnCount,
+      'history_turn_count_definition': 'user_messages_in_conversation_history',
+      'history_chars': historyChars,
+      'prompt_content_chars': historyChars + systemContent.length + question.length,
+      'system_content_chars': systemContent.length,
+      'provided_context_chars': context?.length ?? 0,
+      'current_user_chars': question.length,
+      'message_counts_by_role': messagesByRole,
+      'message_chars_by_role': charsByRole,
+      'tool_count': tools?.length ?? 0,
+      'tool_names': tools?.map((tool) => tool.name).toList() ?? const <String>[],
+    };
+  }
+
+  /// Stream a completion while retaining the final native timing and token metrics.
+  Future<CompletionStreamResult<CompletionResult>> generateCompletionStreamWithMetrics({
+    required String question,
+    String? context,
+    bool agenticMode = false,
+    List<ChatMessage>? conversationHistory,
+  }) async {
+    if (!_isInitialized) {
+      throw ModelServiceException(
+        'Model not initialized. Call initializeModel first.',
+      );
+    }
+
+    final systemContent = _buildSystemContent(context, agenticMode);
+    final messages = [
+      ChatMessage(content: systemContent, role: 'system'),
+      if (conversationHistory != null) ...conversationHistory,
+      ChatMessage(content: question, role: 'user'),
+    ];
+    final promptProfile = _bioaccumulatorPromptProfile(
+      systemContent: systemContent,
+      question: question,
+      context: context,
+      conversationHistory: conversationHistory,
+    );
+    final streamed = await _lm!.generateCompletionStream(
+      messages: messages,
+      params: CactusCompletionParams(maxTokens: defaultMaxTokens),
+    );
+
+    return CompletionStreamResult<CompletionResult>(
+      stream: streamed.stream,
+      result: streamed.result.then((result) {
+        if (!result.success) {
+          throw ModelServiceException('Generation failed: ${result.response}');
+        }
+        return CompletionResult(
+          response: _cleanResponse(result.response),
+          tokensPerSecond: result.tokensPerSecond,
+          prefillTokensPerSecond: result.prefillTokensPerSecond,
+          decodeTokensPerSecond: result.decodeTokensPerSecond,
+          promptProfile: promptProfile,
+          rawResponse: result.response,
+          timeToFirstTokenMs: result.timeToFirstTokenMs,
+          totalTimeMs: result.totalTimeMs,
+          prefillTokens: result.prefillTokens,
+          decodeTokens: result.decodeTokens,
+          totalTokens: result.totalTokens,
+        );
+      }),
+    );
+  }
+
+  /// Stream a tool decision and retain the parsed calls and native metrics.
+  Future<CompletionStreamResult<CompletionResultWithTools>> generateCompletionWithToolsStream({
+    required String question,
+    String? context,
+    List<CactusTool>? tools,
+    List<ChatMessage>? conversationHistory,
+    EmbeddingService? embeddingService,
+  }) async {
+    if (!_isInitialized) {
+      throw ModelServiceException(
+        'Model not initialized. Call initializeModel first.',
+      );
+    }
+
+    final systemContent = _buildSystemContentForTools(context);
+    final effectiveTools =
+        tools ?? await _routeTools(question, embeddingService);
+    final messages = [
+      ChatMessage(content: systemContent, role: 'system'),
+      if (conversationHistory != null) ...conversationHistory,
+      ChatMessage(content: question, role: 'user'),
+    ];
+    final promptProfile = _bioaccumulatorPromptProfile(
+      systemContent: systemContent,
+      question: question,
+      context: context,
+      conversationHistory: conversationHistory,
+      tools: effectiveTools,
+    );
+    final streamed = await _lm!.generateCompletionStream(
+      messages: messages,
+      params: CactusCompletionParams(
+        maxTokens: defaultMaxTokens,
+        tools: effectiveTools,
+      ),
+    );
+
+    return CompletionStreamResult<CompletionResultWithTools>(
+      stream: streamed.stream,
+      result: streamed.result.then((result) {
+        if (!result.success) {
+          throw ModelServiceException('Generation failed: ${result.response}');
+        }
+        return CompletionResultWithTools(
+          response: _cleanResponse(result.response),
+          tokensPerSecond: result.tokensPerSecond,
+          toolCalls: result.toolCalls,
+          prefillTokensPerSecond: result.prefillTokensPerSecond,
+          decodeTokensPerSecond: result.decodeTokensPerSecond,
+          promptProfile: promptProfile,
+          availableTools: effectiveTools.map((tool) => tool.name).toList(),
+          rawResponse: result.response,
+          timeToFirstTokenMs: result.timeToFirstTokenMs,
+          totalTimeMs: result.totalTimeMs,
+          prefillTokens: result.prefillTokens,
+          decodeTokens: result.decodeTokens,
+          totalTokens: result.totalTokens,
+        );
+      }),
+    );
   }
 
   /// Generate a completion with tool calling support
@@ -506,6 +664,8 @@ say so honestly. Provide practical, actionable advice when possible.''';
       response: cleanedResponse,
       tokensPerSecond: result.tokensPerSecond,
       toolCalls: result.toolCalls,
+      prefillTokensPerSecond: result.prefillTokensPerSecond,
+      decodeTokensPerSecond: result.decodeTokensPerSecond,
       availableTools: effectiveTools.map((tool) => tool.name).toList(),
       rawResponse: result.response,
       timeToFirstTokenMs: result.timeToFirstTokenMs,
@@ -774,6 +934,9 @@ Make multiple iterations if necessary.''';
 class CompletionResult {
   final String response;
   final double tokensPerSecond;
+  final double prefillTokensPerSecond;
+  final double decodeTokensPerSecond;
+  final Map<String, dynamic> promptProfile;
   final String rawResponse;
   final double timeToFirstTokenMs;
   final double totalTimeMs;
@@ -784,6 +947,9 @@ class CompletionResult {
   CompletionResult({
     required this.response,
     required this.tokensPerSecond,
+    this.prefillTokensPerSecond = 0.0,
+    this.decodeTokensPerSecond = 0.0,
+    this.promptProfile = const <String, dynamic>{},
     this.rawResponse = '',
     this.timeToFirstTokenMs = 0,
     this.totalTimeMs = 0,
@@ -798,6 +964,9 @@ class CompletionResultWithTools {
   final String response;
   final double tokensPerSecond;
   final List<ToolCall> toolCalls;
+  final double prefillTokensPerSecond;
+  final double decodeTokensPerSecond;
+  final Map<String, dynamic> promptProfile;
   final List<String> availableTools;
   final String rawResponse;
   final double timeToFirstTokenMs;
@@ -810,6 +979,9 @@ class CompletionResultWithTools {
     required this.response,
     required this.tokensPerSecond,
     required this.toolCalls,
+    this.prefillTokensPerSecond = 0.0,
+    this.decodeTokensPerSecond = 0.0,
+    this.promptProfile = const <String, dynamic>{},
     this.availableTools = const [],
     this.rawResponse = '',
     this.timeToFirstTokenMs = 0,
@@ -819,7 +991,6 @@ class CompletionResultWithTools {
     this.totalTokens = 0,
   });
 
-  /// Whether the model requested any tool calls
   bool get hasToolCalls => toolCalls.isNotEmpty;
 }
 
@@ -831,4 +1002,12 @@ class ModelServiceException implements Exception {
 
   @override
   String toString() => 'ModelServiceException: $message';
+}
+
+/// Stream chunks during inference and expose the completed native result.
+class CompletionStreamResult<T> {
+  final Stream<String> stream;
+  final Future<T> result;
+
+  CompletionStreamResult({required this.stream, required this.result});
 }

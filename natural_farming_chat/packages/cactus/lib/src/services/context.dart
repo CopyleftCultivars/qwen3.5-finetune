@@ -131,7 +131,12 @@ Future<CactusCompletionResult> _completionInIsolate(
         final totalTimeMs =
             (jsonResponse['total_time_ms'] as num?)?.toDouble() ?? 0.0;
         final tokensPerSecond =
+            (jsonResponse['decode_tps'] as num?)?.toDouble() ??
             (jsonResponse['tokens_per_second'] as num?)?.toDouble() ?? 0.0;
+        final prefillTokensPerSecond =
+            (jsonResponse['prefill_tps'] as num?)?.toDouble() ?? 0.0;
+        final decodeTokensPerSecond =
+            (jsonResponse['decode_tps'] as num?)?.toDouble() ?? tokensPerSecond;
         final prefillTokens = jsonResponse['prefill_tokens'] as int? ?? 0;
         final decodeTokens = jsonResponse['decode_tokens'] as int? ?? 0;
         final totalTokens = jsonResponse['total_tokens'] as int? ?? 0;
@@ -152,6 +157,8 @@ Future<CactusCompletionResult> _completionInIsolate(
           timeToFirstTokenMs: timeToFirstTokenMs,
           totalTimeMs: totalTimeMs,
           tokensPerSecond: tokensPerSecond,
+          prefillTokensPerSecond: prefillTokensPerSecond,
+          decodeTokensPerSecond: decodeTokensPerSecond,
           prefillTokens: prefillTokens,
           decodeTokens: decodeTokens,
           totalTokens: totalTokens,

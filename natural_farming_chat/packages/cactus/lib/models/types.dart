@@ -61,6 +61,8 @@ class CactusCompletionResult {
   final double timeToFirstTokenMs;
   final double totalTimeMs;
   final double tokensPerSecond;
+  final double prefillTokensPerSecond;
+  final double decodeTokensPerSecond;
   final int prefillTokens;
   final int decodeTokens;
   final int totalTokens;
@@ -72,6 +74,8 @@ class CactusCompletionResult {
     required this.timeToFirstTokenMs,
     required this.totalTimeMs,
     required this.tokensPerSecond,
+    this.prefillTokensPerSecond = 0.0,
+    this.decodeTokensPerSecond = 0.0,
     required this.prefillTokens,
     required this.decodeTokens,
     required this.totalTokens,

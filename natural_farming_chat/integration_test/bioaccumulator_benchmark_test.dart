@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -28,6 +29,22 @@ const String runTrial = String.fromEnvironment(
   'BIOACCUMULATOR_TRIAL',
   defaultValue: '1',
 );
+const String runContextStrategy = String.fromEnvironment(
+  'BIOACCUMULATOR_CONTEXT_STRATEGY',
+  defaultValue: 'full_history',
+);
+const int turnTimeoutSeconds = int.fromEnvironment(
+  'BIOACCUMULATOR_TURN_TIMEOUT_SECONDS',
+  defaultValue: 300,
+);
+const int startupTimeoutSeconds = int.fromEnvironment(
+  'BIOACCUMULATOR_STARTUP_TIMEOUT_SECONDS',
+  defaultValue: 300,
+);
+const int runTimeoutSeconds = int.fromEnvironment(
+  'BIOACCUMULATOR_RUN_TIMEOUT_SECONDS',
+  defaultValue: 21600,
+);
 
 Map<String, dynamic> asStringMap(dynamic value) =>
     (value as Map).map((key, item) => MapEntry(key.toString(), item));
@@ -36,12 +53,388 @@ String sha256Text(String value) => sha256.convert(utf8.encode(value)).toString()
 
 String checkpointKey(String caseId, int turn) => '$caseId::$turn';
 
+const Set<String> contextStrategies = {
+  'full_history',
+  'bounded_history',
+  'structured_state',
+  'trim_tool_results',
+};
+
+const int boundedHistoryMessageLimit = 2;
+
+class PromptContextSelection {
+  final List<ChatMessage>? history;
+  final String? context;
+  final Map<String, dynamic> profile;
+
+  const PromptContextSelection({
+    required this.history,
+    required this.context,
+    required this.profile,
+  });
+}
+
+List<String> matchingNames(String text, Iterable<String> vocabulary) {
+  final candidates = <({String name, int start, int end})>[];
+  final ordered = vocabulary.toSet().toList()
+    ..sort((a, b) => b.length.compareTo(a.length));
+  for (final name in ordered) {
+    if (name.trim().isEmpty) continue;
+    final pattern = RegExp(RegExp.escape(name), caseSensitive: false);
+    for (final match in pattern.allMatches(text)) {
+      final start = match.start;
+      final end = match.end;
+      final before = start == 0 ? '' : text[start - 1];
+      final after = end == text.length ? '' : text[end];
+      bool isWord(String value) =>
+          value.isNotEmpty && RegExp(r'[A-Za-z0-9]').hasMatch(value);
+      if (isWord(before) || isWord(after)) continue;
+      candidates.add((name: name, start: start, end: end));
+    }
+  }
+  candidates.sort((a, b) {
+    final byStart = a.start.compareTo(b.start);
+    if (byStart != 0) return byStart;
+    return b.name.length.compareTo(a.name.length);
+  });
+  final selected = <({String name, int start, int end})>[];
+  for (final candidate in candidates) {
+    if (selected.any(
+      (other) => candidate.start < other.end && candidate.end > other.start,
+    )) {
+      continue;
+    }
+    selected.add(candidate);
+  }
+  selected.sort((a, b) => a.start.compareTo(b.start));
+  final names = <String>[];
+  for (final candidate in selected) {
+    if (!names.any(
+      (name) => name.toLowerCase() == candidate.name.toLowerCase(),
+    )) {
+      names.add(candidate.name);
+    }
+  }
+  return names;
+}
+
+({List<String> crops, List<String> plants}) entityMentionsIn(
+  String text,
+  List<String> cropVocabulary,
+  List<String> plantVocabulary,
+) {
+  var crops = matchingNames(text, cropVocabulary);
+  var plants = matchingNames(text, plantVocabulary);
+  final mentionsCrop = RegExp(
+    r'\b(crop|vegetable|fruit|bed|requirements)\b',
+    caseSensitive: false,
+  ).hasMatch(text);
+  final mentionsPlant = RegExp(
+    r'\b(plant|tissue|sample|accumulator|species|growing)\b',
+    caseSensitive: false,
+  ).hasMatch(text);
+  bool sameName(String left, String right) =>
+      left.toLowerCase() == right.toLowerCase();
+  if (mentionsCrop && !mentionsPlant) {
+    plants = plants
+        .where((plant) => !crops.any((crop) => sameName(crop, plant)))
+        .toList();
+  } else if (mentionsPlant && !mentionsCrop) {
+    crops = crops
+        .where((crop) => !plants.any((plant) => sameName(crop, plant)))
+        .toList();
+  } else if (mentionsCrop && mentionsPlant) {
+    final plantSpecific = plants
+        .where((plant) => !crops.any((crop) => sameName(plant, crop)))
+        .toList();
+    if (plantSpecific.isNotEmpty) plants = plantSpecific;
+  }
+  return (crops: crops, plants: plants);
+}
+
+List<String> _uniqueInOrder(Iterable<String> values) {
+  final result = <String>[];
+  for (final value in values) {
+    if (!result.any(
+      (existing) => existing.toLowerCase() == value.toLowerCase(),
+    )) {
+      result.add(value);
+    }
+  }
+  return result;
+}
+
+String? compactToolResult(Map<String, dynamic> result) {
+  final toolName = result['tool_name']?.toString() ?? 'tool';
+  final success = result['success'] == true;
+  final raw = result['result']?.toString().trim() ?? '';
+  if (toolName == 'bioaccumulator_ratio' && success) {
+    final header = RegExp(
+      r'^Bioaccumulator ratio:\s*(.+?)\s+vs\.\s+(.+)$',
+      multiLine: true,
+    ).firstMatch(raw);
+    final ratios = <String>[];
+    for (final match in RegExp(
+      r'^\s*(phosphorus|potassium):\s*([^\n]+)$',
+      caseSensitive: false,
+      multiLine: true,
+    ).allMatches(raw)) {
+      ratios.add('${match.group(1)!.toLowerCase()}=${match.group(2)!.trim()}');
+    }
+    final notComparable = RegExp(
+      r'^Not comparable:\s*([^\n]+)$',
+      caseSensitive: false,
+      multiLine: true,
+    ).firstMatch(raw)?.group(1)?.trim();
+    final entities = header == null
+        ? ''
+        : '${header.group(1)} vs ${header.group(2)}';
+    return 'Completed bioaccumulator comparison: $entities; '
+        '${ratios.join('; ')}'
+        '${notComparable == null ? '' : '; not comparable: $notComparable'}. '
+        'Relative signal, not a fertilizer dose.';
+  }
+  final normalized = raw.replaceAll(RegExp(r'\s+'), ' ');
+  final excerpt = normalized.length <= 240
+      ? normalized
+      : '${normalized.substring(0, 237)}...';
+  return 'Earlier $toolName result (${success ? 'success' : 'error'}): $excerpt';
+}
+
+String? compactTurnToolResults(Map<String, dynamic> record) {
+  final rawResults = record['tool_results'];
+  if (rawResults is! List || rawResults.isEmpty) return null;
+  final summaries = rawResults
+      .whereType<Map>()
+      .map((value) => compactToolResult(asStringMap(value)))
+      .whereType<String>()
+      .toList();
+  return summaries.isEmpty ? null : summaries.join('\n');
+}
+
+PromptContextSelection selectPromptContext({
+  required List<ChatMessage> history,
+  required Map<int, String> toolResultSummaries,
+  required String currentQuestion,
+  required List<String> cropNames,
+  required List<String> cropScientificNames,
+  required List<String> plantNames,
+}) {
+  final originalChars = history.fold<int>(
+    0,
+    (total, message) => total + message.content.length,
+  );
+  var selectedHistory = List<ChatMessage>.of(history);
+  String? context;
+  if (runContextStrategy == 'bounded_history' &&
+      selectedHistory.length > boundedHistoryMessageLimit) {
+    selectedHistory = selectedHistory.sublist(
+      selectedHistory.length - boundedHistoryMessageLimit,
+    );
+  } else if (runContextStrategy == 'trim_tool_results') {
+    selectedHistory = [
+      for (var index = 0; index < history.length; index++)
+        toolResultSummaries.containsKey(index)
+            ? ChatMessage(
+                content: toolResultSummaries[index]!,
+                role: history[index].role,
+              )
+            : history[index],
+    ];
+  } else if (runContextStrategy == 'structured_state') {
+    final userTexts =
+        history
+            .where((message) => message.role == 'user')
+            .map((message) => message.content)
+            .toList()
+          ..add(currentQuestion);
+    final cropVocabulary = [...cropNames, ...cropScientificNames];
+    final observedEntities = userTexts
+        .map((text) => entityMentionsIn(text, cropVocabulary, plantNames))
+        .toList();
+    final cropMentions = _uniqueInOrder(
+      observedEntities.expand((entities) => entities.crops),
+    );
+    final plantMentions = _uniqueInOrder(
+      observedEntities.expand((entities) => entities.plants),
+    );
+    final currentEntities = entityMentionsIn(
+      currentQuestion,
+      cropVocabulary,
+      plantNames,
+    );
+    final currentCrops = currentEntities.crops;
+    final currentPlants = currentEntities.plants;
+    final assistantMessages = history
+        .where((message) => message.role == 'assistant')
+        .toList();
+    final priorClarification = assistantMessages.isEmpty
+        ? null
+        : assistantMessages.last;
+    final clarifiedSlot = priorClarification == null
+        ? null
+        : _clarificationSlot(priorClarification.content);
+    final activeCrops = clarifiedSlot == 'crop' && currentCrops.length == 1
+        ? currentCrops
+        : currentCrops.isNotEmpty
+        ? currentCrops
+        : cropMentions;
+    final activePlants =
+        clarifiedSlot == 'candidate_plant' && currentPlants.length == 1
+        ? currentPlants
+        : currentPlants.isNotEmpty
+        ? currentPlants
+        : plantMentions;
+    final isComparisonRequest = RegExp(
+      r'\b(compare|comparison|bioaccumulat\w*|ratio|against|P/K|phosphorus|potassium)\b',
+      caseSensitive: false,
+    ).hasMatch(currentQuestion);
+    final unresolved = <String>[];
+    if (isComparisonRequest || clarifiedSlot != null) {
+      if (activeCrops.isEmpty || activeCrops.length > 1) {
+        unresolved.add('crop');
+      }
+      if (activePlants.isEmpty || activePlants.length > 1) {
+        unresolved.add('candidate_plant');
+      }
+    }
+    final correctionMessages = userTexts
+        .where(
+          (text) => RegExp(
+            r'\b(correction|correct(?:ion)?|actually|instead|i meant|rather than)\b',
+            caseSensitive: false,
+          ).hasMatch(text),
+        )
+        .toList();
+    final completedResults = toolResultSummaries.values
+        .toList()
+        .reversed
+        .toList();
+    final lines = <String>[
+      'Conversation state derived from prior user messages and actual tool results:',
+      'crop: ${activeCrops.isEmpty ? 'unknown' : activeCrops.join(' | ')}',
+      'candidate_plant: ${activePlants.isEmpty ? 'unknown' : activePlants.join(' | ')}',
+      'unresolved slots: ${unresolved.isEmpty ? 'none identified' : unresolved.join(', ')}',
+      'corrections: ${correctionMessages.isEmpty ? 'none identified' : correctionMessages.take(3).join(' | ')}',
+      'completed tool results: ${completedResults.isEmpty ? 'none' : completedResults.take(3).join(' | ')}',
+      'Use the latest explicit correction; ask about unresolved or ambiguous slots before calculating.',
+    ];
+    context = lines.join('\n');
+    selectedHistory = <ChatMessage>[];
+  }
+  final selectedChars = selectedHistory.fold<int>(
+    0,
+    (total, message) => total + message.content.length,
+  );
+  return PromptContextSelection(
+    history: selectedHistory.isEmpty ? null : selectedHistory,
+    context: context,
+    profile: {
+      'strategy': runContextStrategy,
+      'history_message_count_before': history.length,
+      'history_message_count_used': selectedHistory.length,
+      'history_chars_before': originalChars,
+      'history_chars_used': selectedChars,
+      'context_chars_added': context?.length ?? 0,
+      'tool_result_messages_transformed':
+          runContextStrategy == 'trim_tool_results'
+          ? toolResultSummaries.length
+          : 0,
+      'tool_results_carried_in_state': runContextStrategy == 'structured_state'
+          ? toolResultSummaries.length
+          : 0,
+      if (runContextStrategy == 'bounded_history')
+        'bounded_history_message_limit': boundedHistoryMessageLimit,
+    },
+  );
+}
+
+String? _clarificationSlot(String text) {
+  final asks = RegExp(
+    r'\b(which|what|specify|provide|tell me|name)\b',
+    caseSensitive: false,
+  ).hasMatch(text);
+  if (!asks) return null;
+  if (RegExp(
+    r'\b(crop|vegetable|fruit)\b',
+    caseSensitive: false,
+  ).hasMatch(text)) {
+    return 'crop';
+  }
+  if (RegExp(
+    r'\b(plant|species|accumulator|candidate)\b',
+    caseSensitive: false,
+  ).hasMatch(text)) {
+    return 'candidate_plant';
+  }
+  return null;
+}
+
+void appendHistoryTurn(
+  List<ChatMessage> history,
+  Map<int, String> toolResultSummaries,
+  String user,
+  String assistant, {
+  String? toolResultSummary,
+}) {
+  final assistantIndex = history.length + 1;
+  history.add(ChatMessage(content: user, role: 'user'));
+  history.add(ChatMessage(content: assistant, role: 'assistant'));
+  if (toolResultSummary != null) {
+    toolResultSummaries[assistantIndex] = toolResultSummary;
+  }
+}
+
 Future<void> saveCheckpoint(File file, Map<String, dynamic> checkpoint) async {
   await file.parent.create(recursive: true);
   final temporary = File('${file.path}.tmp');
   checkpoint['updated_at_utc'] = DateTime.now().toUtc().toIso8601String();
   await temporary.writeAsString(jsonEncode(checkpoint), flush: true);
   await temporary.rename(file.path);
+}
+
+void printLifecycleEvent(
+  String stage,
+  String status, {
+  String? launchId,
+  Map<String, dynamic> details = const <String, dynamic>{},
+}) {
+  final event = <String, dynamic>{
+    'stage': stage,
+    'status': status,
+    if (launchId != null) 'launch_id': launchId,
+    'timestamp_utc': DateTime.now().toUtc().toIso8601String(),
+    if (details.isNotEmpty) 'details': details,
+  };
+  // ignore: avoid_print
+  print('[BIOACCUMULATOR_LIFECYCLE] ${jsonEncode(event)}');
+}
+
+Future<void> recordLifecycleEvent(
+  Map<String, dynamic> checkpoint,
+  File checkpointFile,
+  String stage,
+  String status, {
+  Map<String, dynamic> details = const <String, dynamic>{},
+}) async {
+  final events = (checkpoint['lifecycle_events'] as List?) ?? <dynamic>[];
+  final event = <String, dynamic>{
+    'stage': stage,
+    'status': status,
+    if (checkpoint['app_launch_id'] is String)
+      'launch_id': checkpoint['app_launch_id'],
+    'timestamp_utc': DateTime.now().toUtc().toIso8601String(),
+    if (details.isNotEmpty) 'details': details,
+  };
+  events.add(event);
+  checkpoint['lifecycle_events'] = events;
+  await saveCheckpoint(checkpointFile, checkpoint);
+  // ignore: avoid_print
+  print('[BIOACCUMULATOR_LIFECYCLE] ${jsonEncode(event)}');
+}
+
+Future<void> saveResults(File resultsFile, Map<String, dynamic> checkpoint) async {
+  await resultsFile.writeAsString(jsonEncode(checkpoint), flush: true);
 }
 
 Map<String, dynamic> serializeToolResult(ToolResult result) => {
@@ -61,18 +454,125 @@ Map<String, dynamic> nativeMetrics({
   required double timeToFirstTokenMs,
   required double totalTimeMs,
   required double tokensPerSecond,
+  required double prefillTokensPerSecond,
+  required double decodeTokensPerSecond,
   required int prefillTokens,
   required int decodeTokens,
   required int totalTokens,
-}) => {
-      'wall_time_ms': wallTimeMs,
-      'time_to_first_token_ms': timeToFirstTokenMs,
-      'cactus_total_time_ms': totalTimeMs,
-      'tokens_per_second': tokensPerSecond,
-      'prefill_tokens': prefillTokens,
-      'decode_tokens': decodeTokens,
-      'total_tokens': totalTokens,
+  required Map<String, dynamic> promptProfile,
+  double? firstStreamChunkMs,
+  int streamChunkCount = 0,
+  int streamOutputChars = 0,
+}) {
+  final estimatedPrefillMs = prefillTokensPerSecond > 0
+      ? prefillTokens * 1000.0 / prefillTokensPerSecond
+      : null;
+  final estimatedDecodeMs = decodeTokensPerSecond > 0
+      ? decodeTokens * 1000.0 / decodeTokensPerSecond
+      : null;
+  return {
+    'metrics_schema_version': 2,
+    'wall_time_ms': wallTimeMs,
+    'time_to_first_token_ms': timeToFirstTokenMs,
+    'cactus_total_time_ms': totalTimeMs,
+    'wall_minus_cactus_total_ms': wallTimeMs - totalTimeMs,
+    'tokens_per_second': tokensPerSecond,
+    'prefill_tokens_per_second': prefillTokensPerSecond,
+    'decode_tokens_per_second': decodeTokensPerSecond,
+    'prefill_tokens': prefillTokens,
+    'decode_tokens': decodeTokens,
+    'total_tokens': totalTokens,
+    'native_prefill_duration_estimate_ms': estimatedPrefillMs,
+    'native_decode_duration_estimate_ms': estimatedDecodeMs,
+    'ttft_minus_prefill_duration_estimate_ms': estimatedPrefillMs == null
+        ? null
+        : timeToFirstTokenMs - estimatedPrefillMs,
+    'first_stream_chunk_minus_ttft_ms': firstStreamChunkMs == null
+        ? null
+        : firstStreamChunkMs - timeToFirstTokenMs,
+    'prompt_profile': promptProfile,
+    'first_stream_chunk_ms': firstStreamChunkMs,
+    'stream_chunk_count': streamChunkCount,
+    'stream_output_chars': streamOutputChars,
+  };
+}
+
+class InferenceProgressReporter {
+  final String stage;
+  final Stopwatch watch;
+  final Map<String, dynamic> checkpoint;
+  final Map<String, dynamic> turnRecord;
+  final File checkpointFile;
+  late final Timer _heartbeat;
+  Future<void> _pendingWrites = Future<void>.value();
+  int _streamChunkCount = 0;
+  int _streamOutputChars = 0;
+  double? _firstStreamChunkMs;
+  bool _finished = false;
+
+  InferenceProgressReporter({
+    required this.stage,
+    required this.watch,
+    required this.checkpoint,
+    required this.turnRecord,
+    required this.checkpointFile,
+  }) {
+    _heartbeat = Timer.periodic(const Duration(seconds: 30), (timer) {
+      if (_finished) {
+        timer.cancel();
+      } else {
+        _queueWrite();
+      }
+    });
+  }
+
+  void addChunk(String chunk) {
+    if (_finished) return;
+    _firstStreamChunkMs ??= watch.elapsedMicroseconds / 1000.0;
+    _streamChunkCount += 1;
+    _streamOutputChars += chunk.length;
+    if (_streamChunkCount == 1 || _streamChunkCount % 64 == 0) {
+      _queueWrite();
+    }
+  }
+
+  double? get firstStreamChunkMs => _firstStreamChunkMs;
+  int get streamChunkCount => _streamChunkCount;
+  int get streamOutputChars => _streamOutputChars;
+
+  Future<void> finish({String state = 'complete'}) async {
+    _finished = true;
+    _heartbeat.cancel();
+    _queueWrite(stateOverride: state);
+    await _pendingWrites;
+  }
+
+  void _queueWrite({String? stateOverride}) {
+    final state = stateOverride ??
+        (_firstStreamChunkMs == null
+            ? 'waiting_for_first_chunk'
+            : 'generating');
+    final progress = <String, dynamic>{
+      'stage': stage,
+      'state': state,
+      'elapsed_ms': watch.elapsedMicroseconds / 1000.0,
+      'first_stream_chunk_ms': _firstStreamChunkMs,
+      'stream_chunk_count': _streamChunkCount,
+      'stream_output_chars': _streamOutputChars,
+      'updated_at_utc': DateTime.now().toUtc().toIso8601String(),
     };
+    _pendingWrites = _pendingWrites.then((_) async {
+      turnRecord['inference_progress'] = progress;
+      await saveCheckpoint(checkpointFile, checkpoint);
+      // ignore: avoid_print
+      print('[BIOACCUMULATOR_PROGRESS] ${jsonEncode(progress)}');
+    }).catchError((Object error) {
+      // Keep a progress-write error visible without hiding the native completion.
+      // ignore: avoid_print
+      print('[BIOACCUMULATOR_PROGRESS_ERROR] $error');
+    });
+  }
+}
 
 Future<void> markInterrupted(
   Map<String, dynamic> checkpoint,
@@ -94,11 +594,16 @@ void main() {
   testWidgets(
     'Bioaccumulator benchmark $runMode / $runSplit / trial $runTrial',
     (tester) async {
+      final appStartupStartedAt = DateTime.now().toUtc().toIso8601String();
+      final appLaunchId = appStartupStartedAt;
+      printLifecycleEvent('app_startup', 'started', launchId: appLaunchId);
       CactusConfig.isTelemetryEnabled = false;
       expect(['decision', 'app_e2e'].contains(runMode), isTrue,
           reason: 'BIOACCUMULATOR_MODE must be decision or app_e2e');
       expect(['development', 'validation', 'test'].contains(runSplit), isTrue,
           reason: 'BIOACCUMULATOR_SPLIT must be a frozen dataset split');
+      expect(contextStrategies.contains(runContextStrategy), isTrue,
+          reason: 'BIOACCUMULATOR_CONTEXT_STRATEGY must be one of ${contextStrategies.join(', ')}');
 
       final docs = await getApplicationDocumentsDirectory();
       final inputFile =
@@ -129,6 +634,17 @@ void main() {
       final plantAsset = await rootBundle.loadString(
         'assets/plant_data/plant_mineral_profiles.json',
       );
+      final cropRows = (jsonDecode(cropAsset) as List).cast<Map>();
+      final cropNames = cropRows
+          .map((row) => row['Crop']?.toString() ?? '')
+          .where((name) => name.trim().isNotEmpty)
+          .toSet()
+          .toList();
+      final cropScientificNames = cropRows
+          .map((row) => row['Scientific Name']?.toString() ?? '')
+          .where((name) => name.trim().isNotEmpty)
+          .toSet()
+          .toList();
       final appCommit = hostMetadata['app_commit']?.toString() ?? 'unknown';
       final modelHash =
           hostMetadata['model_artifact_sha256']?.toString() ?? 'unknown';
@@ -148,6 +664,14 @@ void main() {
         'prompt': {
           'base_system_prompt_sha256': sha256Text(ModelService.systemPrompt),
           'path': 'ModelService.generateCompletionWithTools production prompt',
+          'context_strategy': runContextStrategy,
+          'context_strategy_version': 'context-strategies-v1',
+          'context_strategy_parameters': {
+            if (runContextStrategy == 'bounded_history')
+              'max_history_messages': boundedHistoryMessageLimit,
+            if (runContextStrategy == 'structured_state')
+              'state_builder': 'dialogue-and-actual-tool-results-v1',
+          },
         },
         'inference_settings': {
           'max_tokens': ModelService.defaultMaxTokens,
@@ -156,6 +680,11 @@ void main() {
           'top_p': null,
           'completion_mode': 'local',
           'model_slug': ModelService.modelSlug,
+        },
+        'timing_budget_seconds': {
+          'startup': startupTimeoutSeconds,
+          'turn': turnTimeoutSeconds,
+          'run': runTimeoutSeconds,
         },
         'execution': {
           'device_os': Platform.operatingSystem,
@@ -184,6 +713,8 @@ void main() {
         'scenario_manifest_sha256': stableMetadata['scenario_manifest_sha256'],
         'tool_schema_sha256': stableMetadata['tool_schema_sha256'],
         'app_data_sha256': stableMetadata['app_data_sha256'],
+        'prompt': stableMetadata['prompt'],
+        'timing_budget_seconds': stableMetadata['timing_budget_seconds'],
         'device': stableMetadata['device'],
         'inference_settings': stableMetadata['inference_settings'],
       };
@@ -227,29 +758,113 @@ void main() {
       }
       final turnRecords = asStringMap(checkpoint['turns'] ?? <String, dynamic>{});
       checkpoint['turns'] = turnRecords;
+      checkpoint['app_launch_id'] = appLaunchId;
       await saveCheckpoint(checkpointFile, checkpoint);
+      await recordLifecycleEvent(
+        checkpoint,
+        checkpointFile,
+        'app_startup',
+        'started',
+        details: {'started_at_utc': appStartupStartedAt},
+      );
+      await recordLifecycleEvent(
+        checkpoint,
+        checkpointFile,
+        'app_startup',
+        'complete',
+        details: {'started_at_utc': appStartupStartedAt},
+      );
 
       try {
-        await modelService.downloadModel(onProgress: (progress, status) {
-          if (status.contains('complete') || progress >= 0.99) {
-            // ignore: avoid_print
-            print('[BIOACCUMULATOR] model: $status ($progress)');
-          }
-        });
-        await modelService.initializeModel();
-        await plantLookup.initialize();
-        await regionPlants.initialize();
-        await ratioService.initialize();
-        await recipeLookup.initialize();
+        var initializationStage = 'model_download';
+        try {
+          await recordLifecycleEvent(
+            checkpoint,
+            checkpointFile,
+            initializationStage,
+            'started',
+          );
+          await modelService.downloadModel(onProgress: (progress, status) {
+            if (status.contains('complete') || progress >= 0.99) {
+              // ignore: avoid_print
+              print('[BIOACCUMULATOR] model: $status ($progress)');
+            }
+          });
+          await recordLifecycleEvent(
+            checkpoint,
+            checkpointFile,
+            initializationStage,
+            'complete',
+          );
+
+          initializationStage = 'model_initialization';
+          await recordLifecycleEvent(
+            checkpoint,
+            checkpointFile,
+            initializationStage,
+            'started',
+          );
+          await modelService.initializeModel();
+          await recordLifecycleEvent(
+            checkpoint,
+            checkpointFile,
+            initializationStage,
+            'complete',
+          );
+
+          initializationStage = 'tool_service_initialization';
+          await recordLifecycleEvent(
+            checkpoint,
+            checkpointFile,
+            initializationStage,
+            'started',
+          );
+          await plantLookup.initialize();
+          await regionPlants.initialize();
+          await ratioService.initialize();
+          await recipeLookup.initialize();
+          await recordLifecycleEvent(
+            checkpoint,
+            checkpointFile,
+            initializationStage,
+            'complete',
+          );
+        } catch (error) {
+          final message = error.toString();
+          await recordLifecycleEvent(
+            checkpoint,
+            checkpointFile,
+            initializationStage,
+            'failed',
+            details: {'error': message},
+          );
+          checkpoint['run_status'] = 'incomplete_or_interrupted';
+          checkpoint['run_failure'] = {
+            'classification':
+                initializationStage == 'tool_service_initialization'
+                    ? 'tool_service_initialization_failure'
+                    : initializationStage == 'model_download'
+                        ? 'model_download_failure'
+                        : 'model_initialization_failure',
+            'stage': initializationStage,
+            'error': message,
+          };
+          await saveCheckpoint(checkpointFile, checkpoint);
+          await saveResults(resultsFile, checkpoint);
+          rethrow;
+        }
 
         var completedTurns = 0;
         var interruptedTurns = 0;
-        var errors = 0;
+        var decisionGenerationErrors = 0;
+        var synthesisGenerationErrors = 0;
+        var toolExecutionErrors = 0;
 
         for (final scenario in scenarios) {
           final caseId = scenario['case_id'].toString();
           final turns = (scenario['turns'] as List).cast<Map>();
           final history = <ChatMessage>[];
+          final toolResultSummaries = <int, String>{};
           var scenarioInterrupted = false;
 
           for (final rawTurn in turns) {
@@ -265,15 +880,22 @@ void main() {
 
             if (record['status'] == 'complete') {
               final answer = record['final_answer']?.toString() ?? '';
-              history.add(ChatMessage(content: turn['user'].toString(), role: 'user'));
-              history.add(ChatMessage(content: answer, role: 'assistant'));
+              appendHistoryTurn(
+                history,
+                toolResultSummaries,
+                turn['user'].toString(),
+                answer,
+                toolResultSummary: compactTurnToolResults(record),
+              );
               completedTurns += 1;
               continue;
             }
             if (record['status'] == 'interrupted' ||
+                record['status'] == 'timed_out' ||
                 record['decision_status'] == 'started' ||
                 record['synthesis_status'] == 'started') {
-              if (record['status'] != 'interrupted') {
+              if (record['status'] != 'interrupted' &&
+                  record['status'] != 'timed_out') {
                 final phase = record['decision_status'] == 'started'
                     ? 'decision generation'
                     : 'final-answer generation';
@@ -301,6 +923,7 @@ void main() {
                 'final_answer_constraints': turn['final_answer_constraints'],
                 'conversation_before': history.map(serializeMessage).toList(),
                 'mode': runMode,
+                'context_strategy': runContextStrategy,
                 'status': 'running',
                 'errors': <String>[],
                 'latency': <String, dynamic>{},
@@ -323,13 +946,36 @@ void main() {
                   DateTime.now().toUtc().toIso8601String();
               await saveCheckpoint(checkpointFile, checkpoint);
               final watch = Stopwatch()..start();
+              final progress = InferenceProgressReporter(
+                stage: 'decision',
+                watch: watch,
+                checkpoint: checkpoint,
+                turnRecord: record,
+                checkpointFile: checkpointFile,
+              );
               try {
-                final result = await modelService.generateCompletionWithTools(
+                final promptContext = selectPromptContext(
+                  history: history,
+                  toolResultSummaries: toolResultSummaries,
+                  currentQuestion: turn['user'].toString(),
+                  cropNames: cropNames,
+                  cropScientificNames: cropScientificNames,
+                  plantNames: plantLookup.allPlantNames,
+                );
+                record['decision_context_profile'] = promptContext.profile;
+                await saveCheckpoint(checkpointFile, checkpoint);
+                final streamed = await modelService.generateCompletionWithToolsStream(
                   question: turn['user'].toString(),
-                  conversationHistory: history.isEmpty ? null : history,
+                  context: promptContext.context,
+                  conversationHistory: promptContext.history,
                   tools: runMode == 'decision' ? ModelService.farmingTools : null,
                 );
+                await for (final chunk in streamed.stream) {
+                  progress.addChunk(chunk);
+                }
+                final result = await streamed.result;
                 watch.stop();
+                await progress.finish();
                 decision = {
                   'cleaned_response': result.response,
                   'native_response': result.rawResponse,
@@ -340,9 +986,15 @@ void main() {
                     timeToFirstTokenMs: result.timeToFirstTokenMs,
                     totalTimeMs: result.totalTimeMs,
                     tokensPerSecond: result.tokensPerSecond,
+                    prefillTokensPerSecond: result.prefillTokensPerSecond,
+                    decodeTokensPerSecond: result.decodeTokensPerSecond,
                     prefillTokens: result.prefillTokens,
                     decodeTokens: result.decodeTokens,
                     totalTokens: result.totalTokens,
+                    promptProfile: result.promptProfile,
+                    firstStreamChunkMs: progress.firstStreamChunkMs,
+                    streamChunkCount: progress.streamChunkCount,
+                    streamOutputChars: progress.streamOutputChars,
                   ),
                 };
                 record['decision'] = decision;
@@ -352,6 +1004,7 @@ void main() {
                 await saveCheckpoint(checkpointFile, checkpoint);
               } catch (error) {
                 watch.stop();
+                await progress.finish(state: 'failed');
                 final message = error.toString();
                 record['decision_status'] = 'failed';
                 record['latency']['decision_wall_ms'] =
@@ -360,13 +1013,14 @@ void main() {
                 record['errors'] = [...priorErrors, message];
                 record['final_answer'] = 'Sorry, I encountered an error: $message';
                 record['status'] = 'complete';
-                errors += 1;
+                decisionGenerationErrors += 1;
                 await saveCheckpoint(checkpointFile, checkpoint);
-                history.add(ChatMessage(content: turn['user'].toString(), role: 'user'));
-                history.add(ChatMessage(
-                  content: record['final_answer'].toString(),
-                  role: 'assistant',
-                ));
+                appendHistoryTurn(
+                  history,
+                  toolResultSummaries,
+                  turn['user'].toString(),
+                  record['final_answer'].toString(),
+                );
                 completedTurns += 1;
                 continue;
               }
@@ -407,10 +1061,14 @@ void main() {
                   finalAnswer = 'Sorry, I encountered an error: $message';
                   record['final_answer'] = finalAnswer;
                   record['status'] = 'complete';
-                  errors += 1;
+                  toolExecutionErrors += 1;
                   await saveCheckpoint(checkpointFile, checkpoint);
-                  history.add(ChatMessage(content: turn['user'].toString(), role: 'user'));
-                  history.add(ChatMessage(content: finalAnswer, role: 'assistant'));
+                  appendHistoryTurn(
+                    history,
+                    toolResultSummaries,
+                    turn['user'].toString(),
+                    finalAnswer,
+                  );
                   completedTurns += 1;
                   continue;
                 }
@@ -435,13 +1093,40 @@ void main() {
                     DateTime.now().toUtc().toIso8601String();
                 await saveCheckpoint(checkpointFile, checkpoint);
                 final synthesisWatch = Stopwatch()..start();
+                final progress = InferenceProgressReporter(
+                  stage: 'synthesis',
+                  watch: synthesisWatch,
+                  checkpoint: checkpoint,
+                  turnRecord: record,
+                  checkpointFile: checkpointFile,
+                );
                 try {
-                  final synthesis = await modelService.generateCompletion(
-                    question: turn['user'].toString(),
-                    context: record['tool_result_context'].toString(),
-                    conversationHistory: history.isEmpty ? null : history,
+                  final promptContext = selectPromptContext(
+                    history: history,
+                    toolResultSummaries: toolResultSummaries,
+                    currentQuestion: turn['user'].toString(),
+                    cropNames: cropNames,
+                    cropScientificNames: cropScientificNames,
+                    plantNames: plantLookup.allPlantNames,
                   );
+                  promptContext.profile['tool_result_context_chars'] =
+                      record['tool_result_context'].toString().length;
+                  record['synthesis_context_profile'] = promptContext.profile;
+                  final synthesisContext = promptContext.context == null
+                      ? record['tool_result_context'].toString()
+                      : '${record['tool_result_context']}\n\n${promptContext.context}';
+                  await saveCheckpoint(checkpointFile, checkpoint);
+                  final streamed = await modelService.generateCompletionStreamWithMetrics(
+                    question: turn['user'].toString(),
+                    context: synthesisContext,
+                    conversationHistory: promptContext.history,
+                  );
+                  await for (final chunk in streamed.stream) {
+                    progress.addChunk(chunk);
+                  }
+                  final synthesis = await streamed.result;
                   synthesisWatch.stop();
+                  await progress.finish();
                   finalAnswer = synthesis.response;
                   record['synthesis'] = {
                     'cleaned_response': synthesis.response,
@@ -451,9 +1136,17 @@ void main() {
                       timeToFirstTokenMs: synthesis.timeToFirstTokenMs,
                       totalTimeMs: synthesis.totalTimeMs,
                       tokensPerSecond: synthesis.tokensPerSecond,
+                      prefillTokensPerSecond:
+                          synthesis.prefillTokensPerSecond,
+                      decodeTokensPerSecond:
+                          synthesis.decodeTokensPerSecond,
                       prefillTokens: synthesis.prefillTokens,
                       decodeTokens: synthesis.decodeTokens,
                       totalTokens: synthesis.totalTokens,
+                      promptProfile: synthesis.promptProfile,
+                      firstStreamChunkMs: progress.firstStreamChunkMs,
+                      streamChunkCount: progress.streamChunkCount,
+                      streamOutputChars: progress.streamOutputChars,
                     ),
                   };
                   record['synthesis_status'] = 'complete';
@@ -462,6 +1155,7 @@ void main() {
                   await saveCheckpoint(checkpointFile, checkpoint);
                 } catch (error) {
                   synthesisWatch.stop();
+                  await progress.finish(state: 'failed');
                   final message = error.toString();
                   record['synthesis_status'] = 'failed';
                   record['latency']['synthesis_wall_ms'] =
@@ -469,15 +1163,17 @@ void main() {
                   final priorErrors = (record['errors'] as List?) ?? const [];
                   record['errors'] = [...priorErrors, message];
                   finalAnswer = 'Sorry, I encountered an error: $message';
-                  errors += 1;
+                  synthesisGenerationErrors += 1;
                   record['final_answer'] = finalAnswer;
                   record['status'] = 'complete';
                   await saveCheckpoint(checkpointFile, checkpoint);
-                  history.add(ChatMessage(
-                    content: turn['user'].toString(),
-                    role: 'user',
-                  ));
-                  history.add(ChatMessage(content: finalAnswer, role: 'assistant'));
+                  appendHistoryTurn(
+                    history,
+                    toolResultSummaries,
+                    turn['user'].toString(),
+                    finalAnswer,
+                    toolResultSummary: compactTurnToolResults(record),
+                  );
                   completedTurns += 1;
                   continue;
                 }
@@ -487,15 +1183,23 @@ void main() {
             record['final_answer'] = finalAnswer;
             record['status'] = 'complete';
             await saveCheckpoint(checkpointFile, checkpoint);
-            history.add(ChatMessage(content: turn['user'].toString(), role: 'user'));
-            history.add(ChatMessage(content: finalAnswer, role: 'assistant'));
+            appendHistoryTurn(
+              history,
+              toolResultSummaries,
+              turn['user'].toString(),
+              finalAnswer,
+              toolResultSummary: compactTurnToolResults(record),
+            );
             completedTurns += 1;
 
             if (completedTurns % 5 == 0) {
               // ignore: avoid_print
               print(
                 '[BIOACCUMULATOR] $completedTurns turns checkpointed; '
-                'errors=$errors, interrupted=$interruptedTurns',
+                'decision_errors=$decisionGenerationErrors, '
+                'synthesis_errors=$synthesisGenerationErrors, '
+                'tool_errors=$toolExecutionErrors, '
+                'interrupted=$interruptedTurns',
               );
             }
           }
@@ -525,11 +1229,15 @@ void main() {
           'expected_turn_count': expectedTurnCount,
           'checkpointed_turn_count': allTurnRecords.length,
           'turn_status_counts': statusCounts,
-          'generation_errors_this_launch': errors,
+          'generation_errors_this_launch':
+              decisionGenerationErrors + synthesisGenerationErrors,
+          'decision_generation_errors_this_launch': decisionGenerationErrors,
+          'synthesis_generation_errors_this_launch': synthesisGenerationErrors,
+          'tool_execution_errors_this_launch': toolExecutionErrors,
           'interrupted_turns_this_launch': interruptedTurns,
         };
         await saveCheckpoint(checkpointFile, checkpoint);
-        await resultsFile.writeAsString(jsonEncode(checkpoint), flush: true);
+        await saveResults(resultsFile, checkpoint);
         // ignore: avoid_print
         print('[BIOACCUMULATOR] checkpoint: ${checkpointFile.path}');
         // ignore: avoid_print
@@ -537,7 +1245,30 @@ void main() {
         // Keep the app alive briefly so the host runner can snapshot private result files.
         await Future.delayed(const Duration(seconds: 10));
       } finally {
-        modelService.dispose();
+        await recordLifecycleEvent(
+          checkpoint,
+          checkpointFile,
+          'app_teardown',
+          'started',
+        );
+        try {
+          modelService.dispose();
+          await recordLifecycleEvent(
+            checkpoint,
+            checkpointFile,
+            'app_teardown',
+            'complete',
+          );
+        } catch (error) {
+          await recordLifecycleEvent(
+            checkpoint,
+            checkpointFile,
+            'app_teardown',
+            'failed',
+            details: {'error': error.toString()},
+          );
+        }
+        await saveResults(resultsFile, checkpoint);
       }
     },
     timeout: const Timeout(Duration(hours: 48)),
