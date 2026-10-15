@@ -66,6 +66,11 @@ const Set<String> contextStrategies = {
 const Set<String> kvCacheStrategies = {
   'reset_each_decision',
   'prefill_system_reuse',
+  'prefill_tool_schema_mismatch',
+};
+const Set<String> prefillKvCacheStrategies = {
+  'prefill_system_reuse',
+  'prefill_tool_schema_mismatch',
 };
 
 const int boundedHistoryMessageLimit = 2;
@@ -615,10 +620,10 @@ void main() {
       expect(kvCacheStrategies.contains(runKvCacheStrategy), isTrue,
           reason: 'BIOACCUMULATOR_KV_CACHE_STRATEGY must be one of ${kvCacheStrategies.join(', ')}');
       expect(
-        runKvCacheStrategy != 'prefill_system_reuse' ||
+        !prefillKvCacheStrategies.contains(runKvCacheStrategy) ||
             (runMode == 'decision' && runContextStrategy == 'full_history'),
         isTrue,
-        reason: 'prefill_system_reuse requires decision mode and full_history',
+        reason: 'prefill cache strategies require decision mode and full_history',
       );
 
       final docs = await getApplicationDocumentsDirectory();
@@ -888,18 +893,34 @@ void main() {
 
           if (runMode == 'decision') {
             modelService.resetInferenceContext();
-            if (runKvCacheStrategy == 'prefill_system_reuse') {
+            if (prefillKvCacheStrategies.contains(runKvCacheStrategy)) {
+              final schemaMismatch = runKvCacheStrategy == 'prefill_tool_schema_mismatch';
+              final prefillTools = ModelService.benchmarkPrefillTools(
+                mismatchToolSchema: schemaMismatch,
+              );
+              final prefillToolSchemaSha256 =
+                  sha256Text(jsonEncode(prefillTools.map((tool) => tool.toJson()).toList()));
+              final completionToolSchemaSha256 = sha256Text(
+                jsonEncode(ModelService.farmingTools.map((tool) => tool.toJson()).toList()),
+              );
               final prefillWatch = Stopwatch()..start();
               final prefill =
-                  await modelService.prefillToolDecisionPrefixForBenchmark();
+                  await modelService.prefillToolDecisionPrefixForBenchmark(
+                mismatchToolSchema: schemaMismatch,
+              );
               prefillWatch.stop();
               final prefills = asStringMap(
                 checkpoint['kv_cache_prefills'] ?? <String, dynamic>{},
               );
               prefills[caseId] = {
                 'host_wall_ms': prefillWatch.elapsedMicroseconds / 1000.0,
-                'prefix': 'fixed decision system message plus fixed tool catalog',
+                'prefix': schemaMismatch
+                    ? 'fixed decision system message plus npk_lookup description suffixed with (intentional cache-miss probe)'
+                    : 'fixed decision system message plus fixed tool catalog',
                 'tool_schema_sha256': stableMetadata['tool_schema_sha256'],
+                'prefill_tool_schema_sha256': prefillToolSchemaSha256,
+                'completion_tool_schema_sha256': completionToolSchemaSha256,
+                'tool_schema_match': prefillToolSchemaSha256 == completionToolSchemaSha256,
                 'tool_count': ModelService.farmingTools.length,
                 'native': prefill,
               };

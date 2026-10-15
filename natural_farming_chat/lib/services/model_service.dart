@@ -490,6 +490,47 @@ say so honestly. Provide practical, actionable advice when possible.''';
     };
   }
 
+  Map<String, dynamic> _bioaccumulatorPromptProfile({
+    required String systemContent,
+    required String question,
+    String? context,
+    List<ChatMessage>? conversationHistory,
+    List<CactusTool>? tools,
+  }) {
+    final charsByRole = <String, int>{};
+    final messagesByRole = <String, int>{};
+    var historyChars = 0;
+    var historyTurnCount = 0;
+    for (final message in conversationHistory ?? const <ChatMessage>[]) {
+      final role = message.role.toString();
+      final length = message.content.length;
+      charsByRole[role] = (charsByRole[role] ?? 0) + length;
+      messagesByRole[role] = (messagesByRole[role] ?? 0) + 1;
+      historyChars += length;
+      if (role == 'user') historyTurnCount += 1;
+    }
+    charsByRole['system'] = (charsByRole['system'] ?? 0) + systemContent.length;
+    charsByRole['user'] = (charsByRole['user'] ?? 0) + question.length;
+    messagesByRole['system'] = (messagesByRole['system'] ?? 0) + 1;
+    messagesByRole['user'] = (messagesByRole['user'] ?? 0) + 1;
+    return {
+      'schema_version': 'bioaccumulator_prompt_profile_v1',
+      'message_count': (conversationHistory?.length ?? 0) + 2,
+      'history_message_count': conversationHistory?.length ?? 0,
+      'history_turn_count': historyTurnCount,
+      'history_turn_count_definition': 'user_messages_in_conversation_history',
+      'history_chars': historyChars,
+      'prompt_content_chars': historyChars + systemContent.length + question.length,
+      'system_content_chars': systemContent.length,
+      'provided_context_chars': context?.length ?? 0,
+      'current_user_chars': question.length,
+      'message_counts_by_role': messagesByRole,
+      'message_chars_by_role': charsByRole,
+      'tool_count': tools?.length ?? 0,
+      'tool_names': tools?.map((tool) => tool.name).toList() ?? const <String>[],
+    };
+  }
+
   /// Stream a completion while retaining the final native timing and token metrics.
   Future<CompletionStreamResult<CompletionResult>> generateCompletionStreamWithMetrics({
     required String question,
@@ -618,7 +659,24 @@ say so honestly. Provide practical, actionable advice when possible.''';
   }
 
   /// Prime the fixed decision system/tool prefix used by the Pixel pilot.
-  Future<Map<String, dynamic>> prefillToolDecisionPrefixForBenchmark() async {
+  static List<CactusTool> benchmarkPrefillTools({
+    bool mismatchToolSchema = false,
+  }) {
+    if (!mismatchToolSchema) return farmingTools;
+    return farmingTools.asMap().entries.map((entry) {
+      final tool = entry.value;
+      if (entry.key != 0) return tool;
+      return CactusTool(
+        name: tool.name,
+        description: '${tool.description} (intentional cache-miss probe)',
+        parameters: tool.parameters,
+      );
+    }).toList();
+  }
+
+  Future<Map<String, dynamic>> prefillToolDecisionPrefixForBenchmark({
+    bool mismatchToolSchema = false,
+  }) async {
     if (!_isInitialized) {
       throw ModelServiceException(
         'Model not initialized. Call initializeModel first.',
@@ -630,7 +688,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
       ],
       params: CactusCompletionParams(
         maxTokens: defaultMaxTokens,
-        tools: farmingTools,
+        tools: benchmarkPrefillTools(mismatchToolSchema: mismatchToolSchema),
       ),
     );
   }
