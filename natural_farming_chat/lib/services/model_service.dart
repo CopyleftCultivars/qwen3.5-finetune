@@ -550,6 +550,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
     List<CactusTool>? tools,
     List<ChatMessage>? conversationHistory,
     EmbeddingService? embeddingService,
+    bool resetContextBeforeTools = true,
   }) async {
     if (!_isInitialized) {
       throw ModelServiceException(
@@ -578,6 +579,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
         maxTokens: defaultMaxTokens,
         tools: effectiveTools,
       ),
+      resetContextBeforeTools: resetContextBeforeTools,
     );
 
     return CompletionStreamResult<CompletionResultWithTools>(
@@ -605,6 +607,34 @@ say so honestly. Provide practical, actionable advice when possible.''';
     );
   }
 
+  /// Benchmark-only context control for matched cache reuse runs.
+  void resetInferenceContext() {
+    if (!_isInitialized) {
+      throw ModelServiceException(
+        'Model not initialized. Call initializeModel first.',
+      );
+    }
+    _lm!.reset();
+  }
+
+  /// Prime the fixed decision system/tool prefix used by the Pixel pilot.
+  Future<Map<String, dynamic>> prefillToolDecisionPrefixForBenchmark() async {
+    if (!_isInitialized) {
+      throw ModelServiceException(
+        'Model not initialized. Call initializeModel first.',
+      );
+    }
+    return await _lm!.prefill(
+      messages: [
+        ChatMessage(content: _buildSystemContentForTools(null), role: 'system'),
+      ],
+      params: CactusCompletionParams(
+        maxTokens: defaultMaxTokens,
+        tools: farmingTools,
+      ),
+    );
+  }
+
   /// Generate a completion with tool calling support
   /// Returns both the response and any tool calls the model wants to make
   Future<CompletionResultWithTools> generateCompletionWithTools({
@@ -613,6 +643,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
     List<CactusTool>? tools,
     List<ChatMessage>? conversationHistory,
     EmbeddingService? embeddingService,
+    bool resetContextBeforeTools = true,
   }) async {
     if (!_isInitialized) {
       throw ModelServiceException(
@@ -645,6 +676,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
         maxTokens: defaultMaxTokens,
         tools: effectiveTools,
       ),
+      resetContextBeforeTools: resetContextBeforeTools,
     );
 
     print('[TOOL_DEBUG] Generation success: ${result.success}');

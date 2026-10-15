@@ -73,6 +73,67 @@ Future<(int?, String)> _initContextInIsolate(
   }
 }
 
+Future<Map<String, dynamic>> _prefillInIsolate(
+    Map<String, dynamic> params) async {
+  final handle = params['handle'] as int;
+  final messagesJson = params['messagesJson'] as String;
+  final optionsJson = params['optionsJson'] as String;
+  final toolsJson = params['toolsJson'] as String?;
+  final bufferSize = params['bufferSize'] as int;
+
+  final responseBuffer = calloc<Uint8>(bufferSize);
+  final messagesJsonC = messagesJson.toNativeUtf8(allocator: calloc);
+  final optionsJsonC = optionsJson.toNativeUtf8(allocator: calloc);
+  final toolsJsonC = toolsJson?.toNativeUtf8(allocator: calloc);
+
+  try {
+    final result = bindings.cactusPrefill(
+      Pointer.fromAddress(handle),
+      messagesJsonC,
+      responseBuffer.cast<Utf8>(),
+      bufferSize,
+      optionsJsonC,
+      toolsJsonC ?? nullptr,
+      nullptr.cast<Uint8>(),
+      0,
+    );
+    if (result <= 0) {
+      return {
+        'success': false,
+        'error': 'cactus_prefill failed with code $result',
+      };
+    }
+
+    final responseText = utf8
+        .decode(responseBuffer.asTypedList(result), allowMalformed: true)
+        .trim();
+    final decoded = jsonDecode(responseText);
+    if (decoded is! Map) {
+      return {
+        'success': false,
+        'error': 'cactus_prefill returned a non-object response',
+        'raw_response': responseText,
+      };
+    }
+    return {
+      ...Map<String, dynamic>.from(decoded),
+      'raw_response': responseText,
+    };
+  } catch (error) {
+    return {
+      'success': false,
+      'error': 'Unable to read cactus_prefill response: $error',
+    };
+  } finally {
+    calloc.free(responseBuffer);
+    calloc.free(messagesJsonC);
+    calloc.free(optionsJsonC);
+    if (toolsJsonC != null) {
+      calloc.free(toolsJsonC);
+    }
+  }
+}
+
 Future<CactusCompletionResult> _completionInIsolate(
     Map<String, dynamic> params) async {
   final handle = params['handle'] as int;
@@ -525,6 +586,21 @@ class CactusContext {
     } catch (e) {
       debugPrint('Error resetting context: $e');
     }
+  }
+
+  static Future<Map<String, dynamic>> prefill(
+      int handle,
+      List<ChatMessage> messages,
+      CactusCompletionParams params,
+      int quantization) async {
+    final jsonData = _prepareCompletionJson(messages, params);
+    return await compute(_prefillInIsolate, {
+      'handle': handle,
+      'messagesJson': jsonData['messagesJson']!,
+      'optionsJson': jsonData['optionsJson']!,
+      'toolsJson': jsonData['toolsJson'],
+      'bufferSize': max(params.maxTokens * quantization, 8192),
+    });
   }
 
   static Future<CactusCompletionResult> completion(
