@@ -12,6 +12,13 @@ import 'tool_router.dart' as tool_router;
 
 /// Service for managing CactusLM model operations
 class ModelService {
+  final List<({
+    String label,
+    List<ChatMessage> messages,
+    CactusCompletionParams params,
+    Map<String, dynamic> promptProfile,
+  })> _nativePrefillProfileSamples = [];
+
   CactusLM? _lm;
   bool _isInitialized = false;
   bool _isDownloading = false;
@@ -496,6 +503,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
     String? context,
     bool agenticMode = false,
     List<ChatMessage>? conversationHistory,
+    String? nativePrefillProfileLabel,
   }) async {
     if (!_isInitialized) {
       throw ModelServiceException(
@@ -515,9 +523,18 @@ say so honestly. Provide practical, actionable advice when possible.''';
       context: context,
       conversationHistory: conversationHistory,
     );
+    final completionParams = CactusCompletionParams(maxTokens: defaultMaxTokens);
+    if (nativePrefillProfileLabel != null) {
+      _nativePrefillProfileSamples.add((
+        label: nativePrefillProfileLabel,
+        messages: messages,
+        params: completionParams,
+        promptProfile: promptProfile,
+      ));
+    }
     final streamed = await _lm!.generateCompletionStream(
       messages: messages,
-      params: CactusCompletionParams(maxTokens: defaultMaxTokens),
+      params: completionParams,
     );
 
     return CompletionStreamResult<CompletionResult>(
@@ -551,6 +568,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
     List<ChatMessage>? conversationHistory,
     EmbeddingService? embeddingService,
     bool resetContextBeforeTools = true,
+    String? nativePrefillProfileLabel,
   }) async {
     if (!_isInitialized) {
       throw ModelServiceException(
@@ -573,12 +591,21 @@ say so honestly. Provide practical, actionable advice when possible.''';
       conversationHistory: conversationHistory,
       tools: effectiveTools,
     );
+    final completionParams = CactusCompletionParams(
+      maxTokens: defaultMaxTokens,
+      tools: effectiveTools,
+    );
+    if (nativePrefillProfileLabel != null) {
+      _nativePrefillProfileSamples.add((
+        label: nativePrefillProfileLabel,
+        messages: messages,
+        params: completionParams,
+        promptProfile: promptProfile,
+      ));
+    }
     final streamed = await _lm!.generateCompletionStream(
       messages: messages,
-      params: CactusCompletionParams(
-        maxTokens: defaultMaxTokens,
-        tools: effectiveTools,
-      ),
+      params: completionParams,
       resetContextBeforeTools: resetContextBeforeTools,
     );
 
@@ -605,6 +632,46 @@ say so honestly. Provide practical, actionable advice when possible.''';
         );
       }),
     );
+  }
+
+  /// Run captured prompts through native cactus_prefill after scored calls finish.
+  Future<List<Map<String, dynamic>>> runQueuedNativePrefillProfiles() async {
+    if (!_isInitialized || _lm == null) {
+      throw ModelServiceException('Model not initialized for native prefill profiling.');
+    }
+    final samples = List.of(_nativePrefillProfileSamples);
+    _nativePrefillProfileSamples.clear();
+    final profiles = <Map<String, dynamic>>[];
+    for (final sample in samples) {
+      _lm!.reset();
+      final watch = Stopwatch()..start();
+      Map<String, dynamic>? native;
+      String? error;
+      try {
+        native = await _lm!.prefill(
+          messages: sample.messages,
+          params: sample.params,
+        );
+      } catch (profileError) {
+        error = profileError.toString();
+      } finally {
+        watch.stop();
+        _lm!.reset();
+      }
+      final nativeTime = native?['total_time_ms'];
+      final measured = native?['success'] == true && nativeTime is num;
+      profiles.add({
+        'label': sample.label,
+        'status': measured ? 'complete' : 'failed',
+        'measurement': 'separate cactus_prefill call on exact completion prompt and options; not the original completion event',
+        'native_prefill_ms': measured ? nativeTime.toDouble() : null,
+        'host_wall_ms': watch.elapsedMicroseconds / 1000.0,
+        'prompt_profile': sample.promptProfile,
+        if (native != null) 'native': native,
+        if (error != null) 'error': error,
+      });
+    }
+    return profiles;
   }
 
   /// Benchmark-only context control for matched cache reuse runs.
