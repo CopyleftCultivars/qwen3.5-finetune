@@ -37,6 +37,10 @@ const String runKvCacheStrategy = String.fromEnvironment(
   'BIOACCUMULATOR_KV_CACHE_STRATEGY',
   defaultValue: 'reset_each_decision',
 );
+const bool runNativePrefillProfile = bool.fromEnvironment(
+  'BIOACCUMULATOR_NATIVE_PREFILL_PROFILE',
+  defaultValue: false,
+);
 const int turnTimeoutSeconds = int.fromEnvironment(
   'BIOACCUMULATOR_TURN_TIMEOUT_SECONDS',
   defaultValue: 300,
@@ -61,6 +65,7 @@ const Set<String> contextStrategies = {
   'full_history',
   'bounded_history',
   'structured_state',
+  'hybrid_state_recent',
   'trim_tool_results',
 };
 const Set<String> kvCacheStrategies = {
@@ -74,6 +79,7 @@ const Set<String> prefillKvCacheStrategies = {
 };
 
 const int boundedHistoryMessageLimit = 2;
+const int hybridRecentHistoryMessageLimit = 2;
 
 class PromptContextSelection {
   final List<ChatMessage>? history;
@@ -254,7 +260,8 @@ PromptContextSelection selectPromptContext({
               )
             : history[index],
     ];
-  } else if (runContextStrategy == 'structured_state') {
+  } else if (runContextStrategy == 'structured_state' ||
+      runContextStrategy == 'hybrid_state_recent') {
     final userTexts =
         history
             .where((message) => message.role == 'user')
@@ -333,7 +340,13 @@ PromptContextSelection selectPromptContext({
       'Use the latest explicit correction; ask about unresolved or ambiguous slots before calculating.',
     ];
     context = lines.join('\n');
-    selectedHistory = <ChatMessage>[];
+    selectedHistory = runContextStrategy == 'hybrid_state_recent'
+        ? selectedHistory.length <= hybridRecentHistoryMessageLimit
+            ? selectedHistory
+            : selectedHistory.sublist(
+                selectedHistory.length - hybridRecentHistoryMessageLimit,
+              )
+        : <ChatMessage>[];
   }
   final selectedChars = selectedHistory.fold<int>(
     0,
@@ -353,9 +366,15 @@ PromptContextSelection selectPromptContext({
           runContextStrategy == 'trim_tool_results'
           ? toolResultSummaries.length
           : 0,
-      'tool_results_carried_in_state': runContextStrategy == 'structured_state'
+      'tool_results_carried_in_state':
+          runContextStrategy == 'structured_state' ||
+                  runContextStrategy == 'hybrid_state_recent'
           ? toolResultSummaries.length
           : 0,
+      if (runContextStrategy == 'hybrid_state_recent')
+        'recent_history_message_limit': hybridRecentHistoryMessageLimit,
+      if (runContextStrategy == 'hybrid_state_recent')
+        'recent_history_message_count_used': selectedHistory.length,
       if (runContextStrategy == 'bounded_history')
         'bounded_history_message_limit': boundedHistoryMessageLimit,
     },
@@ -677,6 +696,12 @@ void main() {
         'trial': runTrial,
         'kv_cache_strategy': runKvCacheStrategy,
         'kv_cache_strategy_version': 'cactus-prefix-pilot-v1',
+        'native_prefill_profile': {
+          'enabled': runNativePrefillProfile,
+          'method': 'cactus_prefill on captured prompt after scored inference ends',
+          'native_duration_field': 'total_time_ms',
+          'is_actual_completion_phase_timing': false,
+        },
         'model_slug': ModelService.modelSlug,
         'scenario_sha256': scenarioSha256,
         'tool_schema_sha256': sha256Text(toolSchemaJson),
@@ -688,12 +713,16 @@ void main() {
           'base_system_prompt_sha256': sha256Text(ModelService.systemPrompt),
           'path': 'ModelService.generateCompletionWithTools production prompt',
           'context_strategy': runContextStrategy,
-          'context_strategy_version': 'context-strategies-v1',
+          'context_strategy_version': 'context-strategies-v2',
           'context_strategy_parameters': {
             if (runContextStrategy == 'bounded_history')
               'max_history_messages': boundedHistoryMessageLimit,
             if (runContextStrategy == 'structured_state')
               'state_builder': 'dialogue-and-actual-tool-results-v1',
+            if (runContextStrategy == 'hybrid_state_recent') ...{
+              'state_builder': 'dialogue-and-actual-tool-results-v1',
+              'recent_history_message_limit': hybridRecentHistoryMessageLimit,
+            },
           },
         },
         'inference_settings': {
@@ -937,6 +966,11 @@ void main() {
           for (final rawTurn in turns) {
             final turn = asStringMap(rawTurn);
             final turnNumber = (turn['turn'] as num).toInt();
+            final profileLabel = runNativePrefillProfile &&
+                    caseId == 'development_contextual_crop_ambiguity' &&
+                    turnNumber == turns.length
+                ? '$caseId/turn_$turnNumber'
+                : null;
             final key = checkpointKey(caseId, turnNumber);
             var record = turnRecords[key] == null
                 ? <String, dynamic>{}
@@ -1041,6 +1075,8 @@ void main() {
                   tools: runMode == 'decision' ? ModelService.farmingTools : null,
                   resetContextBeforeTools:
                       runKvCacheStrategy == 'reset_each_decision',
+                  nativePrefillProfileLabel:
+                      profileLabel == null ? null : '$profileLabel/decision',
                 );
                 await for (final chunk in streamed.stream) {
                   progress.addChunk(chunk);
@@ -1192,6 +1228,8 @@ void main() {
                     question: turn['user'].toString(),
                     context: synthesisContext,
                     conversationHistory: promptContext.history,
+                    nativePrefillProfileLabel:
+                        profileLabel == null ? null : '$profileLabel/synthesis',
                   );
                   await for (final chunk in streamed.stream) {
                     progress.addChunk(chunk);
@@ -1282,6 +1320,21 @@ void main() {
           }
         }
 
+        if (runNativePrefillProfile) {
+          checkpoint['native_prefill_profile_status'] = 'started';
+          await saveCheckpoint(checkpointFile, checkpoint);
+          final profiles = await modelService.runQueuedNativePrefillProfiles();
+          checkpoint['native_prefill_profiles'] = profiles;
+          checkpoint['native_prefill_profile_status'] = profiles.isEmpty
+              ? 'no_samples_queued'
+              : profiles.every(
+                  (profile) => profile['native_prefill_ms'] != null,
+                )
+              ? 'complete'
+              : 'completed_with_errors';
+          await saveCheckpoint(checkpointFile, checkpoint);
+        }
+
         final allTurnRecords = asStringMap(checkpoint['turns']);
         final statusCounts = <String, int>{};
         for (final item in allTurnRecords.values) {
@@ -1307,6 +1360,12 @@ void main() {
           'synthesis_generation_errors_this_launch': synthesisGenerationErrors,
           'tool_execution_errors_this_launch': toolExecutionErrors,
           'interrupted_turns_this_launch': interruptedTurns,
+          if (runNativePrefillProfile)
+            'native_prefill_profile_status':
+                checkpoint['native_prefill_profile_status'],
+          if (runNativePrefillProfile)
+            'native_prefill_profile_count':
+                (checkpoint['native_prefill_profiles'] as List?)?.length ?? 0,
         };
         await saveCheckpoint(checkpointFile, checkpoint);
         await saveResults(resultsFile, checkpoint);
