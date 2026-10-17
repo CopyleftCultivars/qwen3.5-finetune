@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Add a local 210-item ladder scorer and a Cactus CQ conversion launcher for the combined adapter (#5, #6)
+- Add flag-gated assistant-only loss masking and the targeted-v2 retrain script for the BF16 candidate; the trainer masks system/user/history tokens, honours the corpus `target_turn`/`messages[i].train` marker, and reports/verifies the masked-token fraction (#44)
 
 ### Fixed
 
