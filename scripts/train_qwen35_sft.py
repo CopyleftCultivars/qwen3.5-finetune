@@ -42,6 +42,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--run-name", default="qwen35-2b-distill-rationale")
     parser.add_argument("--eval-strategy", choices=("no", "steps", "epoch"), default="no")
     parser.add_argument(
+        "--save-total-limit",
+        type=int,
+        default=2,
+        help=(
+            "Maximum number of step/epoch checkpoints to keep (the #44 default). "
+            "Use 0 to keep every checkpoint, which is required for #47 "
+            "per-epoch checkpoint selection."
+        ),
+    )
+    parser.add_argument(
         "--fail-on-truncation",
         action="store_true",
         help="Fail if any rendered example exceeds --max-seq-len instead of silently truncating its target.",
@@ -306,6 +316,45 @@ def build_dataset(
     }
 
 
+def checkpoint_step(path: Path) -> int | None:
+    """Return the integer step of a ``checkpoint-<step>`` directory, else None."""
+    name = path.name
+    if not name.startswith("checkpoint-"):
+        return None
+    try:
+        return int(name.removeprefix("checkpoint-"))
+    except ValueError:
+        return None
+
+
+def list_checkpoints(output_dir: Path) -> list[dict[str, Any]]:
+    """Every saved ``checkpoint-<step>`` directory, ordered by step (#47)."""
+    checkpoints = [
+        {"step": step, "path": str(path)}
+        for path in output_dir.glob("checkpoint-*")
+        if (step := checkpoint_step(path)) is not None
+    ]
+    return sorted(checkpoints, key=lambda entry: entry["step"])
+
+
+def eval_loss_history(log_history: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Per-evaluation loss entries recorded by the trainer (#47).
+
+    Selecting a checkpoint needs the corpus eval loss at *every* epoch, not just
+    the first and last, so keep the step, epoch and loss of each ``eval_loss``
+    entry in training order.
+    """
+    return [
+        {
+            "step": entry.get("step"),
+            "epoch": entry.get("epoch"),
+            "eval_loss": entry["eval_loss"],
+        }
+        for entry in log_history
+        if "eval_loss" in entry
+    ]
+
+
 def latest_checkpoint(output_dir: Path) -> str | None:
     checkpoints: list[tuple[int, Path]] = []
     for path in output_dir.glob("checkpoint-*"):
@@ -449,7 +498,7 @@ def main() -> int:
         fp16=False,
         logging_steps=10,
         save_strategy="epoch",
-        save_total_limit=2,
+        save_total_limit=args.save_total_limit if args.save_total_limit > 0 else None,
         eval_strategy=args.eval_strategy,
         prediction_loss_only=True,
         optim="adamw_8bit",
@@ -510,6 +559,9 @@ def main() -> int:
         "loss_last": losses[-1] if losses else None,
         "eval_loss_first": next((entry["eval_loss"] for entry in trainer.state.log_history if "eval_loss" in entry), None),
         "eval_loss_last": next((entry["eval_loss"] for entry in reversed(trainer.state.log_history) if "eval_loss" in entry), None),
+        "eval_loss_by_epoch": eval_loss_history(trainer.state.log_history),
+        "checkpoints": list_checkpoints(args.output_dir),
+        "save_total_limit": args.save_total_limit,
         "train_result": str(train_result),
     }
     metrics_path = args.output_dir / "training_metrics.json"
