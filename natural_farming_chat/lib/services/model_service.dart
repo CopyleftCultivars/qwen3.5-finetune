@@ -8,6 +8,7 @@ import 'package:flutter/services.dart' show appFlavor;
 import 'package:path_provider/path_provider.dart';
 
 import 'embedding_service.dart';
+import 'recipe_prompt.dart';
 import 'tool_router.dart' as tool_router;
 
 /// Service for managing CactusLM model operations
@@ -32,19 +33,32 @@ class ModelService {
   // by Android flavor. Qwen3.5 is staged locally until a hosted bundle is set up.
   static const String _productionModelSlug =
       'qwen3-nf-distill-v2-cact-int4-ios';
-  static const String _qwen35ModelSlug = 'qwen35-combined-cq4';
-  static const String _qwen35StagingPath =
-      '/data/local/tmp/qwen35-combined-cq4';
+  static const String _defaultQwen35ModelSlug = 'qwen35-combined-cq4';
+  static String _qwen35ModelSlug = _defaultQwen35ModelSlug;
   static const String _productionModelDownloadUrl =
       'https://huggingface.co/CopyleftCultivars/localNFchatbot-cactus/resolve/main/qwen3-distill-v2-calibrated-cact-int4-ios.zip';
+
+  /// The Qwen3.5 recipe bundle is configurable without rebuilding the app.
+  ///
+  /// The default stays the current bundle until the operator switches it to
+  /// candidate 4's CQ4 bundle (`qwen35-recipe-v5-cactus-cq4`), staged under
+  /// `/data/local/tmp/<slug>`.
+  static void configureQwen35Model(String slug) {
+    final trimmed = slug.trim();
+    if (trimmed.isNotEmpty) _qwen35ModelSlug = trimmed;
+  }
+
+  static void resetQwen35Model() {
+    _qwen35ModelSlug = _defaultQwen35ModelSlug;
+  }
+
+  static String get qwen35ModelSlug => _qwen35ModelSlug;
+  static String get qwen35StagingPath => '/data/local/tmp/$_qwen35ModelSlug';
 
   static bool get _isQwen35Flavor => appFlavor == 'qwen35';
   static String get modelSlug =>
       _isQwen35Flavor ? _qwen35ModelSlug : _productionModelSlug;
-  static const String systemPrompt = '''
-You are a helpful farming assistant specializing in natural farming practices.
-Answer questions based on the provided context. If you don't know the answer,
-say so honestly. Provide practical, actionable advice when possible.''';
+  static const String systemPrompt = recipeBaseSystemPrompt;
 
   /// Farming tools available for function calling
   static final List<CactusTool> farmingTools = [
@@ -163,6 +177,10 @@ say so honestly. Provide practical, actionable advice when possible.''';
         },
       ),
     ),
+    // The deterministic trigger-recipe tool from bioaccumulator #56/#57. Its
+    // name, description and parameter text are byte-identical to the
+    // benchmark runner's `trigger_recipe_v1` profile.
+    buildRecipeTool(),
   ];
 
   bool get isInitialized => _isInitialized;
@@ -200,7 +218,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
 
       // The Qwen3.5 bundle is staged locally until it is hosted. Validate it
       // before replacing an incomplete private copy.
-      final qwen35StagingFolder = Directory(_qwen35StagingPath);
+      final qwen35StagingFolder = Directory(qwen35StagingPath);
       if (_isQwen35Flavor) {
         for (final requiredPath in [
           'config.txt',
@@ -386,6 +404,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
     String? context,
     bool agenticMode = false,
     List<ChatMessage>? conversationHistory,
+    String? systemPrompt,
   }) async {
     if (!_isInitialized) {
       throw ModelServiceException(
@@ -393,7 +412,10 @@ say so honestly. Provide practical, actionable advice when possible.''';
       );
     }
 
-    final systemContent = _buildSystemContent(context, agenticMode);
+    var systemContent = systemPrompt ?? _buildSystemContent(context, agenticMode);
+    if (systemPrompt != null && context != null && context.isNotEmpty) {
+      systemContent += '\n\nRelevant Context:\n$context';
+    }
 
     final messages = [
       ChatMessage(content: systemContent, role: 'system'),
@@ -839,17 +861,9 @@ say so honestly. Provide practical, actionable advice when possible.''';
   }
 
   String _buildSystemContentForTools(String? context) {
-    var content = systemPrompt;
-
-    content += '''
-
-You have access to tools for looking up plant nutrients, performing calculations, and creating fertilizer formulations.
-When the user asks about NPK ratios or nutrient requirements, use npk_lookup.
-When the user asks about making organic fertilizer:
-- If they haven't specified their location, ask where they are farming.
-- Once you know location and crop type, use local_fertilizer_plants to get a formulation.
-- Choose the nutrient parameter based on growth stage: "nitrogen" for leafy greens or vegetative growth, "phosphorus" for flowering or root development, "potassium" for fruiting, "balanced" for general use, or "seedling" for transplants.
-After receiving tool results, provide a helpful summary to the user.''';
+    // Byte-identical to the runner's trigger_recipe_v1 system prompt, which
+    // candidate 4 was trained and gated on.
+    var content = recipeSystemPrompt;
 
     if (context != null && context.isNotEmpty) {
       content += '\n\nRelevant Context:\n$context';

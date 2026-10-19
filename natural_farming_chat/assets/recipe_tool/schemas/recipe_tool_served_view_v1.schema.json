@@ -1,0 +1,396 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "recipe_tool_served_view_v1.schema.json",
+  "title": "Recipe tool served view v1",
+  "description": "The deterministic, compact projection of the recipe-tool result that the MODEL receives as the tool result (2026-10-18 owner decision; reviewed 2026-10-18). It carries the sizing nutrient, the fresh-material total and per-m2 amount, per-nutrient coverage, short top-up notes that state the nutrient shortfall and a different source, one nutrition method's steps and defining amounts, one booster recipe's standard batch to make and its separate per-application dose (concentrate mL into diluted litres at the standard rate), and the key assumptions in short form. Amounts are rounded to three significant figures for the model; the full-precision values stay in the full recipe_tool_oracle.calculate result, which is kept for the app's detailed recipe card and for auditing and which the model never sees. Measured with the Qwen3.5 tokenizer, every served view stays at or below 600 tokens.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "served_view_version",
+    "status"
+  ],
+  "properties": {
+    "served_view_version": {
+      "const": "recipe_tool_served_view_v1"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ok",
+        "error"
+      ]
+    },
+    "candidate_plant": {
+      "type": "string"
+    },
+    "crop": {
+      "type": "string"
+    },
+    "area_m2": {
+      "type": "number"
+    },
+    "nutrition": {
+      "$ref": "#/definitions/nutrition"
+    },
+    "booster": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/booster"
+        }
+      ]
+    },
+    "non_computable_recipes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "definitions": {
+    "nutrition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sizing_nutrient",
+        "fresh_material_kg",
+        "fresh_material_kg_per_m2",
+        "coverage_percent",
+        "top_up_notes",
+        "method"
+      ],
+      "properties": {
+        "sizing_nutrient": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "N",
+            "P",
+            "K",
+            null
+          ]
+        },
+        "fresh_material_kg": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "fresh_material_kg_per_m2": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "coverage_percent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "N",
+            "P",
+            "K"
+          ],
+          "properties": {
+            "N": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "P": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "K": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        },
+        "top_up_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "method": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/method"
+            }
+          ]
+        }
+      }
+    },
+    "method": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "label",
+        "fresh_material_kg",
+        "steps"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "enum": [
+            "chop_and_drop",
+            "mulch",
+            "plant_tea"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "fresh_material_kg": {
+          "type": "number"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mulch_depth_cm": {
+          "type": "number"
+        },
+        "implied_depth_cm": {
+          "type": "number"
+        },
+        "fits_standard_depth": {
+          "type": "boolean"
+        },
+        "steep_water_l": {
+          "type": "number"
+        },
+        "concentrate_l": {
+          "type": "number"
+        },
+        "dilution_ratio": {
+          "type": "string"
+        },
+        "diluted_volume_l": {
+          "type": "number"
+        },
+        "rate_l_per_m2": {
+          "type": "number"
+        },
+        "standard_rate_l_per_m2": {
+          "type": "number"
+        },
+        "fits_standard_rate": {
+          "type": "boolean"
+        }
+      }
+    },
+    "booster": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recipe_abbrev",
+        "recipe_name",
+        "target_nutrient",
+        "standard_batch",
+        "application",
+        "substitution"
+      ],
+      "properties": {
+        "recipe_abbrev": {
+          "type": "string"
+        },
+        "recipe_name": {
+          "type": "string"
+        },
+        "target_nutrient": {
+          "type": "string",
+          "enum": [
+            "N",
+            "P",
+            "K"
+          ]
+        },
+        "standard_batch": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "plant_material_fresh_kg",
+            "plant_to_extractant_ratio",
+            "extractant"
+          ],
+          "properties": {
+            "plant_material_fresh_kg": {
+              "type": "number"
+            },
+            "plant_to_extractant_ratio": {
+              "type": "number"
+            },
+            "extractant": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/definitions/ingredient"
+                }
+              ]
+            }
+          }
+        },
+        "application": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method",
+            "ratio",
+            "concentrate_ml",
+            "diluted_volume_l",
+            "rate_l_per_m2",
+            "standard_rate_l_per_m2"
+          ],
+          "properties": {
+            "method": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ratio": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "concentrate_ml": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "diluted_volume_l": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "rate_l_per_m2": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "standard_rate_l_per_m2": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        },
+        "substitution": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "ingredient": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "amount",
+        "unit"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "status": {
+          "const": "ok"
+        }
+      },
+      "required": [
+        "candidate_plant",
+        "crop",
+        "area_m2",
+        "nutrition",
+        "booster",
+        "non_computable_recipes",
+        "assumptions"
+      ],
+      "not": {
+        "required": [
+          "error"
+        ]
+      }
+    },
+    {
+      "properties": {
+        "status": {
+          "const": "error"
+        }
+      },
+      "required": [
+        "error"
+      ],
+      "not": {
+        "required": [
+          "nutrition"
+        ]
+      }
+    }
+  ]
+}
