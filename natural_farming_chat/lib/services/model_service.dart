@@ -8,6 +8,7 @@ import 'package:flutter/services.dart' show appFlavor;
 import 'package:path_provider/path_provider.dart';
 
 import 'embedding_service.dart';
+import 'farming_tools.dart';
 import 'recipe_prompt.dart';
 import 'tool_router.dart' as tool_router;
 
@@ -60,128 +61,11 @@ class ModelService {
       _isQwen35Flavor ? _qwen35ModelSlug : _productionModelSlug;
   static const String systemPrompt = recipeBaseSystemPrompt;
 
-  /// Farming tools available for function calling
-  static final List<CactusTool> farmingTools = [
-    CactusTool(
-      name: 'npk_lookup',
-      description:
-          'Look up the mineral profile of a plant including calcium, iron, potassium, phosphorus, magnesium, and other minerals across different plant parts (leaf, fruit, seed, root, etc.)',
-      parameters: ToolParametersSchema(
-        properties: {
-          'plant': ToolParameter(
-            type: 'string',
-            description: 'Common name or scientific name of the plant',
-            required: true,
-          ),
-        },
-      ),
-    ),
-    CactusTool(
-      name: 'calculate',
-      description:
-          'Perform mathematical calculations for fertilizer amounts, nutrient ratios, coverage area, or dilution rates',
-      parameters: ToolParametersSchema(
-        properties: {
-          'expression': ToolParameter(
-            type: 'string',
-            description: 'Mathematical expression to evaluate',
-            required: true,
-          ),
-          'context': ToolParameter(
-            type: 'string',
-            description:
-                'Optional context describing what the calculation is for',
-            required: false,
-          ),
-        },
-      ),
-    ),
-    CactusTool(
-      name: 'local_fertilizer_plants',
-      description:
-          'Create an organic fertilizer formulation using plants available '
-          'in the user\'s region. Returns a complete blend with percentages, '
-          'NPK values, and preparation instructions.',
-      parameters: ToolParametersSchema(
-        properties: {
-          'location': ToolParameter(
-            type: 'string',
-            description: 'Country or region name',
-            required: true,
-          ),
-          'nutrient': ToolParameter(
-            type: 'string',
-            description:
-                'Target nutrient or growth stage: "nitrogen" (leafy/vegetative), '
-                '"phosphorus" (flowering/roots), "potassium" (fruiting), '
-                '"balanced", "vegetative", "flowering", "fruiting", or "seedling"',
-            required: true,
-          ),
-        },
-      ),
-    ),
-    // Two domain tools ported from the GPU-side multi-tool epic (chainlink
-    // #174/#175/#177): bioaccumulator ratio calculation and combined
-    // regional/recipe lookup. #175's dual-relevant eval found injecting the
-    // right tool's content significantly improves MCQ accuracy over
-    // retrieval-alone (McNemar chi2=6.125, p<0.05).
-    CactusTool(
-      name: 'bioaccumulator_ratio',
-      description:
-          'Compare a crop\'s NPK requirement against a candidate bioaccumulator '
-          'plant\'s tissue mineral content (phosphorus and potassium only -- '
-          'nitrogen is never comparable). Returns a relative ratio, not a '
-          'calibrated fertilizer dosing formula, useful for judging whether a '
-          'plant is nutrient-dense enough to cut as green manure or steep into '
-          'a liquid feed.',
-      parameters: ToolParametersSchema(
-        properties: {
-          'crop': ToolParameter(
-            type: 'string',
-            description: 'Crop name',
-            required: true,
-          ),
-          'candidate_plant': ToolParameter(
-            type: 'string',
-            description:
-                'Candidate bioaccumulator plant common or scientific name',
-            required: true,
-          ),
-        },
-      ),
-    ),
-    CactusTool(
-      name: 'regional_recipe_lookup',
-      description:
-          'Look up candidate bioaccumulator plants native to a region and/or '
-          'matching Korean Natural Farming (KNF) / JADAM technique or recipe '
-          'for a crop or stated nutrient problem. At least one of crop, '
-          'region, or problem must be given.',
-      parameters: ToolParametersSchema(
-        properties: {
-          'crop': ToolParameter(
-            type: 'string',
-            description: 'Crop name, optional',
-            required: false,
-          ),
-          'region': ToolParameter(
-            type: 'string',
-            description: 'Region or location name, optional',
-            required: false,
-          ),
-          'problem': ToolParameter(
-            type: 'string',
-            description: 'Stated problem, optional',
-            required: false,
-          ),
-        },
-      ),
-    ),
-    // The deterministic trigger-recipe tool from bioaccumulator #56/#57. Its
-    // name, description and parameter text are byte-identical to the
-    // benchmark runner's `trigger_recipe_v1` profile.
-    buildRecipeTool(),
-  ];
+  /// The six tools candidate 4 was trained and gated on, in runner order.
+  ///
+  /// Defined in the Flutter-free [farmingToolsCatalog] so the prompt-parity
+  /// exporter can load the exact catalog the app sends.
+  static final List<CactusTool> farmingTools = farmingToolsCatalog;
 
   bool get isInitialized => _isInitialized;
   bool get isDownloading => _isDownloading;
@@ -802,6 +686,51 @@ class ModelService {
       prefillTokensPerSecond: result.prefillTokensPerSecond,
       decodeTokensPerSecond: result.decodeTokensPerSecond,
       availableTools: effectiveTools.map((tool) => tool.name).toList(),
+      rawResponse: result.response,
+      timeToFirstTokenMs: result.timeToFirstTokenMs,
+      totalTimeMs: result.totalTimeMs,
+      prefillTokens: result.prefillTokens,
+      decodeTokens: result.decodeTokens,
+      totalTokens: result.totalTokens,
+    );
+  }
+
+  /// Generate from an already-built message list.
+  ///
+  /// This is the entry point for the runner-faithful recipe instruction turn:
+  /// the app supplies `[system, *history, user, assistant, tool]` verbatim and
+  /// passes the same six tools, so Cactus's `format_qwen_style` renders the
+  /// tool result as `<tool_response>` and appends the deployed empty think
+  /// block at the generation boundary.
+  Future<CompletionResult> generateCompletionFromMessages({
+    required List<ChatMessage> messages,
+    List<CactusTool>? tools,
+    bool resetContextBeforeTools = true,
+  }) async {
+    if (!_isInitialized) {
+      throw ModelServiceException(
+        'Model not initialized. Call initializeModel first.',
+      );
+    }
+
+    final result = await _lm!.generateCompletion(
+      messages: messages,
+      params: CactusCompletionParams(
+        maxTokens: defaultMaxTokens,
+        tools: tools,
+      ),
+      resetContextBeforeTools: resetContextBeforeTools,
+    );
+
+    if (!result.success) {
+      throw ModelServiceException('Generation failed: ${result.response}');
+    }
+
+    return CompletionResult(
+      response: _cleanResponse(result.response),
+      tokensPerSecond: result.tokensPerSecond,
+      prefillTokensPerSecond: result.prefillTokensPerSecond,
+      decodeTokensPerSecond: result.decodeTokensPerSecond,
       rawResponse: result.response,
       timeToFirstTokenMs: result.timeToFirstTokenMs,
       totalTimeMs: result.totalTimeMs,
