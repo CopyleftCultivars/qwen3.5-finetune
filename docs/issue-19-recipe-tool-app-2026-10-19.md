@@ -76,8 +76,8 @@ override it.
 
 ## Checks run
 
-* `flutter analyze lib test` — no new issues (only the pre-existing
-  `avoid_print` infos).
+* `flutter analyze lib test` — 59 infos, all pre-existing `avoid_print`
+  findings; no errors or warnings and no new issues from this change.
 * `flutter test` — 52 tests pass.
 * `/home/goya/storage/CopyLeftCultivars/finetune-gemma4/.venv/bin/python -m
   unittest discover -s tests` — 66 tests pass.
