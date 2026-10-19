@@ -1,6 +1,6 @@
 {
   "schema_version": "issue_19_app_prompt_parity_v1",
-  "generated_at_utc": "2026-10-19T18:03:16.359957+00:00",
+  "generated_at_utc": "2026-10-19T18:20:40.484858+00:00",
   "runner_profile": "trigger_recipe_v1",
   "runner_version": "cactus-qwen-hf-gpu-v12",
   "assistant_prefix": "runner_default",

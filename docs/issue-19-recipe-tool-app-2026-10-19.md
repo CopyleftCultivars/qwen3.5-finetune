@@ -182,11 +182,14 @@ block); the app does not override it.
 
 ## Checks run
 
-* `flutter analyze` — 105 non-package findings, all pre-existing categories
-  (61 `avoid_print`, 42 `use_*`, 2 dead-code infos), zero errors and zero
-  warnings. This is three fewer `avoid_print` infos than `main` because the
-  removed pre-router debug prints are gone; no new finding comes from this
-  change.
+* `flutter analyze` — 105 non-package findings, all pre-existing categories:
+  61 `avoid_print`, 42 `prefer_interpolation_to_compose_strings`, and 2
+  `dead_code` warnings in
+  `integration_test/ladder_benchmark_multitool_test.dart`. `main` has 108 of
+  the same categories (64 + 42 + 2). No error or warning is new, and this
+  branch has three fewer `avoid_print` infos because the removed pre-router
+  debug prints are gone. A detached `main` worktree was analyzed to confirm
+  the comparison directly.
 * `flutter test` — 58 tests pass (52 before, plus 6 turn/parity regression
   tests).
 * `/home/goya/storage/CopyLeftCultivars/finetune-gemma4/.venv/bin/python -m
