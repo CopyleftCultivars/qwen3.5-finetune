@@ -638,8 +638,9 @@ class RecipeToolService {
     final commonExact = common[normalized];
     if (commonExact != null) return (plant: commonExact, suggestions: const []);
     final scientificExact = scientific[normalized];
-    if (scientificExact != null)
+    if (scientificExact != null) {
       return (plant: scientificExact, suggestions: const []);
+    }
 
     for (final entry
         in <({Map<String, Map<String, dynamic>> index, bool scientific})>[
@@ -652,8 +653,9 @@ class RecipeToolService {
           matches.add(item.value);
         }
       }
-      if (matches.length == 1)
+      if (matches.length == 1) {
         return (plant: matches.first, suggestions: const []);
+      }
       if (matches.isNotEmpty) {
         final candidates = matches.take(10).map((row) {
           if (entry.scientific) {
@@ -885,8 +887,9 @@ class RecipeToolService {
         in (_derivationProposal['recipe_candidate_plants'] as List?) ??
             const []) {
       if (rawBlock is! Map<String, dynamic> ||
-          rawBlock['recipe_abbrev'] != abbrev)
+          rawBlock['recipe_abbrev'] != abbrev) {
         continue;
+      }
       final blockApproved = rawBlock['status'] == 'approved_by_owner';
       final entries = <Map<String, dynamic>>[];
       var rank = 1;
