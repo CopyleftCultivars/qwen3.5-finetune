@@ -56,8 +56,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
         properties: {
           'plant': ToolParameter(
             type: 'string',
-            description:
-                'Common name or scientific name of the plant (e.g., Tomato, Okra, Solanum lycopersicum)',
+            description: 'Common name or scientific name of the plant',
             required: true,
           ),
         },
@@ -71,8 +70,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
         properties: {
           'expression': ToolParameter(
             type: 'string',
-            description:
-                'Mathematical expression to evaluate (e.g., "100 * 0.05" for 5% of 100)',
+            description: 'Mathematical expression to evaluate',
             required: true,
           ),
           'context': ToolParameter(
@@ -94,8 +92,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
         properties: {
           'location': ToolParameter(
             type: 'string',
-            description:
-                'Country or region name (e.g., "Kenya", "California", "France")',
+            description: 'Country or region name',
             required: true,
           ),
           'nutrient': ToolParameter(
@@ -127,13 +124,13 @@ say so honestly. Provide practical, actionable advice when possible.''';
         properties: {
           'crop': ToolParameter(
             type: 'string',
-            description: 'Crop name, e.g. "Corn"',
+            description: 'Crop name',
             required: true,
           ),
           'candidate_plant': ToolParameter(
             type: 'string',
             description:
-                'Candidate bioaccumulator plant common or scientific name, e.g. "Comfrey"',
+                'Candidate bioaccumulator plant common or scientific name',
             required: true,
           ),
         },
@@ -160,7 +157,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
           ),
           'problem': ToolParameter(
             type: 'string',
-            description: 'Stated problem, e.g. "nitrogen deficiency", optional',
+            description: 'Stated problem, optional',
             required: false,
           ),
         },
