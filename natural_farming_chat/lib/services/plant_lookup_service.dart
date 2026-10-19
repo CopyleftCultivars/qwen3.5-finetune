@@ -160,7 +160,7 @@ class PlantLookupService {
     return PlantLookupResult(
       found: false,
       message: 'No plant found matching "$name". '
-          'Try using the common name (e.g., "Tomato") or scientific name (e.g., "Solanum lycopersicum").',
+          'Try using the common name or scientific name.',
     );
   }
 

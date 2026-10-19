@@ -20,6 +20,18 @@ DEFAULT_TARGET_MODULES = (
     "gate_proj", "up_proj", "down_proj",
 )
 
+# Rendering modes (chainlink #63).
+RENDER_PLAIN = "plain"
+RENDER_APP_CHAT_TEMPLATE = "app_chat_template"
+RENDER_MODES = (RENDER_PLAIN, RENDER_APP_CHAT_TEMPLATE)
+
+# The bytes the deployed app (Cactus `Tokenizer::format_qwen_style`) and the
+# Qwen3.5 `chat_template.jinja` append at the assistant generation prompt when
+# thinking is off.  `app_chat_template` renders this block at the row's assistant
+# generation boundary and masks the empty block out of the loss.
+APP_CHAT_EMPTY_THINK = "<think>\n\n</think>\n\n"
+APP_CHAT_ASSISTANT_HEADER = "<|im_start|>assistant\n"
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -42,9 +54,44 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--run-name", default="qwen35-2b-distill-rationale")
     parser.add_argument("--eval-strategy", choices=("no", "steps", "epoch"), default="no")
     parser.add_argument(
+        "--save-total-limit",
+        type=int,
+        default=2,
+        help=(
+            "Maximum number of step/epoch checkpoints to keep (the #44 default). "
+            "Use 0 to keep every checkpoint, which is required for #47 "
+            "per-epoch checkpoint selection."
+        ),
+    )
+    parser.add_argument(
         "--fail-on-truncation",
         action="store_true",
         help="Fail if any rendered example exceeds --max-seq-len instead of silently truncating its target.",
+    )
+    parser.add_argument(
+        "--assistant-only-loss",
+        action="store_true",
+        help=(
+            "Mask system, user and history-assistant tokens with label -100. Rows carrying the "
+            "#43 target marker (target_turn / messages[i].train) learn only their marked turn; "
+            "unmarked rows learn their assistant turns. Off by default to keep the old full-text "
+            "recipe reproducible."
+        ),
+    )
+    parser.add_argument(
+        "--render",
+        choices=RENDER_MODES,
+        default=RENDER_PLAIN,
+        help=(
+            "Rendering mode (chainlink #63). `plain` (the default) keeps the historic "
+            "`<|im_start|>{role}\\n{content}<|im_end|>` rendering byte-for-byte. "
+            "`app_chat_template` renders the app/Cactus serving bytes: the final assistant "
+            "generation boundary (or any assistant turn after the last real user query that "
+            "carries its own reasoning) starts with the empty think block "
+            "'<think>\\n\\n</think>\\n\\n', earlier assistant history stays plain, and the "
+            "empty think block is masked out of the loss. `app_chat_template` implies "
+            "assistant-only masking."
+        ),
     )
     parser.add_argument("--wandb", action="store_true")
     return parser.parse_args()
@@ -104,6 +151,309 @@ def render_chat(row: dict[str, Any]) -> str:
     )
 
 
+def render_chat_with_spans(row: dict[str, Any]) -> tuple[str, list[dict[str, Any]]]:
+    """Render a chat row and record where each message lives in the text.
+
+    ``content_start`` is the first character after the ``<|im_start|>role\\n``
+    header, so the header stays masked while the content and the closing
+    ``<|im_end|>`` are learned.
+    """
+    parts: list[str] = []
+    spans: list[dict[str, Any]] = []
+    cursor = 0
+    for index, message in enumerate(messages_for(row)):
+        header = f"<|im_start|>{message['role']}\n"
+        segment = header + message["content"].strip() + "<|im_end|>"
+        if parts:
+            parts.append("\n")
+            cursor += 1
+        start = cursor
+        parts.append(segment)
+        cursor += len(segment)
+        spans.append(
+            {
+                "index": index,
+                "role": message["role"],
+                "start": start,
+                "end": cursor,
+                "content_start": start + len(header),
+            }
+        )
+    return "".join(parts), spans
+
+
+def _app_role(message: dict[str, Any]) -> str:
+    role = message["role"]
+    if role == "developer":
+        return "system"
+    if role not in ("system", "assistant", "tool"):
+        return "user"
+    return role
+
+
+def _is_tool_response_user(message: dict[str, Any]) -> bool:
+    """True for the corpus's role-user `<tool_response>` wrapper.
+
+    The corpus stores a tool result as a ``user`` message wrapped in
+    ``<tool_response>...</tool_response>``.  The Qwen chat template's
+    ``last_query_index`` scan deliberately steps over exactly these messages, so
+    the wrapper is the marker that keeps a tool result from being mistaken for
+    the user query.
+    """
+    content = message["content"]
+    return (
+        message["role"] == "user"
+        and content.startswith("<tool_response>")
+        and content.endswith("</tool_response>")
+    )
+
+
+def _split_assistant_reasoning(content: str) -> tuple[str, str]:
+    """Mirror Cactus `Tokenizer::format_qwen_style` reasoning extraction.
+
+    ``tokenizer.cpp`` splits an assistant message at ``</think>`` into a
+    reasoning string (newline-trimmed) and the remaining content
+    (leading-newline-stripped).  A message without a think block has empty
+    reasoning and unchanged content.
+    """
+    close = content.find("</think>")
+    if close < 0:
+        return "", content
+    head = content[:close]
+    open_at = head.rfind("<think>")
+    reasoning = (head[open_at + len("<think>"):] if open_at >= 0 else head).strip("\n")
+    return reasoning, content[close + len("</think>"):].lstrip("\n")
+
+
+def render_app_chat_template_with_spans(
+    row: dict[str, Any],
+) -> tuple[str, list[dict[str, Any]]]:
+    """Render a chat row exactly as the app/Cactus serves it (chainlink #63).
+
+    Mirrors ``Tokenizer::format_qwen_style`` (vendor cactus-engine
+    ``tokenizer.cpp:620-696``): an assistant turn renders
+    ``<|im_start|>assistant\\n<think>\\n{reasoning}\\n</think>\\n\\n{content}``
+    when it is after the last real user query and either is the final message or
+    carries non-empty reasoning (the generation boundary), and plain otherwise.
+    Every message keeps its own bytes (no ``strip``), and the empty think block
+    that the generation boundary inserts is the ``content_start``-masked prefix
+    so it is masked out of the loss.
+
+    ``content_start`` is the first character the loss labels: the first character
+    after an injected empty think block, the assistant header for a plain
+    history turn, and the assistant header for a turn whose reasoning is real
+    content (retention rows), so real reasoning is still learned while the empty
+    serving prefix is not.
+    """
+    messages = messages_for(row)
+    count = len(messages)
+    last_query_index = -1
+    for index, message in enumerate(messages):
+        if message["role"] == "user" and not _is_tool_response_user(message):
+            last_query_index = index
+    if last_query_index < 0:
+        raise ValueError("app_chat_template render found no user query in messages")
+
+    parts: list[str] = []
+    spans: list[dict[str, Any]] = []
+    cursor = 0
+    for index, message in enumerate(messages):
+        role = _app_role(message)
+        content = message["content"]
+        header = f"<|im_start|>{role}\n"
+        content_start_offset = len(header)
+        if role == "assistant":
+            original = content
+            carries_think = "<think>" in content
+            reasoning, content = _split_assistant_reasoning(content)
+            if index > last_query_index and (index == count - 1 or reasoning):
+                if reasoning:
+                    body = "<think>\n" + reasoning + "\n</think>\n\n" + content
+                elif carries_think:
+                    # The retention rows already carry a (possibly malformed
+                    # `<think>`-headed) block: keep it verbatim instead of
+                    # injecting a second empty block.
+                    body = original
+                else:
+                    body = APP_CHAT_EMPTY_THINK + content
+                    content_start_offset = len(header) + len(APP_CHAT_EMPTY_THINK)
+            else:
+                body = content
+        else:
+            body = content
+        segment = header + body + "<|im_end|>"
+        if parts:
+            parts.append("\n")
+            cursor += 1
+        start = cursor
+        parts.append(segment)
+        cursor += len(segment)
+        spans.append(
+            {
+                "index": index,
+                "role": role,
+                "start": start,
+                "end": cursor,
+                "content_start": start + content_start_offset,
+            }
+        )
+    return "".join(parts), spans
+
+
+def render_app_chat_template(row: dict[str, Any]) -> str:
+    return render_app_chat_template_with_spans(row)[0]
+
+
+def target_message_indices(row: dict[str, Any]) -> list[int]:
+    """Return the assistant turn(s) whose tokens carry loss labels.
+
+    #43 marks the intended target turn with the row-level ``target_turn`` and
+    the message-level ``train`` flag. Rows without a marker (the retained
+    general farming data) fall back to assistant-only masking of every
+    assistant turn.
+    """
+    messages = messages_for(row)
+    marked = [index for index, message in enumerate(messages) if message.get("train") is True]
+    target_turn = row.get("target_turn")
+    if target_turn is not None:
+        if not isinstance(target_turn, int) or not 0 <= target_turn < len(messages):
+            raise ValueError(f"target_turn={target_turn!r} is outside the message list")
+        if messages[target_turn]["role"] != "assistant":
+            raise ValueError(
+                f"target_turn={target_turn} points at a {messages[target_turn]['role']} turn"
+            )
+        if marked and target_turn not in marked:
+            raise ValueError(
+                f"target_turn={target_turn} is not marked train=true; marked={marked}"
+            )
+        return [target_turn]
+    if marked:
+        return marked
+    return [index for index, message in enumerate(messages) if message["role"] == "assistant"]
+
+
+def encode_masked_row(
+    row: dict[str, Any],
+    tokenizer,
+    max_seq_len: int,
+    fail_on_truncation: bool,
+    render: str = RENDER_PLAIN,
+) -> tuple[list[int], list[int]]:
+    """Tokenize a row and set ``labels`` to -100 outside the target assistant turn."""
+    if render == RENDER_APP_CHAT_TEMPLATE:
+        text, spans = render_app_chat_template_with_spans(row)
+    elif render == RENDER_PLAIN:
+        text, spans = render_chat_with_spans(row)
+    else:
+        raise ValueError(f"unknown render mode: {render!r}")
+    encoded = tokenizer(
+        text,
+        add_special_tokens=False,
+        return_offsets_mapping=True,
+        truncation=False,
+    )
+    input_ids = list(encoded["input_ids"])
+    offsets = list(encoded["offset_mapping"])
+    labels = [-100] * len(input_ids)
+    for index in target_message_indices(row):
+        span = spans[index]
+        for token_index, (offset_start, offset_end) in enumerate(offsets):
+            if offset_end > offset_start >= span["content_start"] and offset_end <= span["end"]:
+                labels[token_index] = input_ids[token_index]
+    if all(label == -100 for label in labels):
+        raise ValueError("masked row has no labelled tokens (empty target turn?)")
+    if len(input_ids) > max_seq_len:
+        if fail_on_truncation:
+            raise ValueError(
+                f"rendered example has {len(input_ids)} tokens > max_seq_len={max_seq_len}"
+            )
+        input_ids = input_ids[:max_seq_len]
+        labels = labels[:max_seq_len]
+        if all(label == -100 for label in labels):
+            raise ValueError("truncation removed every labelled token")
+    return input_ids, labels
+
+
+def build_masked_dataset(
+    rows: list[dict[str, Any]],
+    tokenizer,
+    max_seq_len: int,
+    fail_on_truncation: bool,
+    render: str = RENDER_PLAIN,
+):
+    """Build a pre-tokenized dataset with assistant-only labels."""
+    from datasets import Dataset
+
+    input_ids: list[list[int]] = []
+    labels: list[list[int]] = []
+    lengths: list[int] = []
+    labelled_tokens = 0
+    total_tokens = 0
+    for row in rows:
+        row_ids, row_labels = encode_masked_row(
+            row, tokenizer, max_seq_len, fail_on_truncation, render
+        )
+        lengths.append(len(row_ids))
+        input_ids.append(row_ids)
+        labels.append(row_labels)
+        labelled_tokens += sum(1 for label in row_labels if label != -100)
+        total_tokens += len(row_ids)
+
+    dataset = Dataset.from_dict({"input_ids": input_ids, "labels": labels})
+    return dataset, {
+        "rows": len(rows),
+        "max_input_tokens": max(lengths, default=0),
+        "rows_over_max_seq_len": sum(length > max_seq_len for length in lengths),
+        "total_tokens": total_tokens,
+        "labelled_tokens": labelled_tokens,
+        "masked_tokens": total_tokens - labelled_tokens,
+        "masked_token_fraction": (
+            round((total_tokens - labelled_tokens) / total_tokens, 6) if total_tokens else None
+        ),
+    }
+
+
+def verify_masking_example(
+    rows: list[dict[str, Any]], tokenizer, render: str = RENDER_PLAIN
+) -> dict[str, Any] | None:
+    """Decode a marked row's labelled tokens to prove only the target is learned."""
+    for row in rows:
+        if row.get("target_turn") is None:
+            continue
+        messages = messages_for(row)
+        index = row["target_turn"]
+        input_ids, labels = encode_masked_row(row, tokenizer, 10**9, False, render)
+        labelled_ids = [
+            token_id
+            for token_id, label in zip(input_ids, labels, strict=True)
+            if label != -100
+        ]
+        decoded = tokenizer.decode(labelled_ids, skip_special_tokens=False)
+        # `plain` strips content; `app_chat_template` keeps the message bytes one
+        # to one with the app, so the labelled target is the raw content.
+        if render == RENDER_APP_CHAT_TEMPLATE:
+            expected = messages[index]["content"] + "<|im_end|>"
+            _, spans = render_app_chat_template_with_spans(row)
+            rendered = render_app_chat_template(row)
+        else:
+            expected = messages[index]["content"].strip() + "<|im_end|>"
+            _, spans = render_chat_with_spans(row)
+            rendered = render_chat(row)
+        target_slice = rendered[spans[index]["content_start"]:spans[index]["end"]]
+        return {
+            "row_source": row.get("source"),
+            "example_id": row.get("example_id"),
+            "target_turn": index,
+            "target_role": messages[index]["role"],
+            "expected_characters": len(expected),
+            "decoded_characters": len(decoded),
+            "decode_matches_target": decoded == expected,
+            "labels_only_inside_target_slice": target_slice in decoded,
+            "decoded_excerpt": decoded[:160],
+        }
+    return None
+
+
 def build_dataset(
     rows: list[dict[str, Any]], tokenizer, max_seq_len: int, fail_on_truncation: bool
 ):
@@ -133,6 +483,45 @@ def build_dataset(
         "max_input_tokens": max(lengths, default=0),
         "rows_over_max_seq_len": truncated,
     }
+
+
+def checkpoint_step(path: Path) -> int | None:
+    """Return the integer step of a ``checkpoint-<step>`` directory, else None."""
+    name = path.name
+    if not name.startswith("checkpoint-"):
+        return None
+    try:
+        return int(name.removeprefix("checkpoint-"))
+    except ValueError:
+        return None
+
+
+def list_checkpoints(output_dir: Path) -> list[dict[str, Any]]:
+    """Every saved ``checkpoint-<step>`` directory, ordered by step (#47)."""
+    checkpoints = [
+        {"step": step, "path": str(path)}
+        for path in output_dir.glob("checkpoint-*")
+        if (step := checkpoint_step(path)) is not None
+    ]
+    return sorted(checkpoints, key=lambda entry: entry["step"])
+
+
+def eval_loss_history(log_history: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Per-evaluation loss entries recorded by the trainer (#47).
+
+    Selecting a checkpoint needs the corpus eval loss at *every* epoch, not just
+    the first and last, so keep the step, epoch and loss of each ``eval_loss``
+    entry in training order.
+    """
+    return [
+        {
+            "step": entry.get("step"),
+            "epoch": entry.get("epoch"),
+            "eval_loss": entry["eval_loss"],
+        }
+        for entry in log_history
+        if "eval_loss" in entry
+    ]
 
 
 def latest_checkpoint(output_dir: Path) -> str | None:
@@ -205,18 +594,45 @@ def main() -> int:
     tokenizer.eos_token = eos_token
     tokenizer.eos_token_id = eos_id
 
-    train_dataset, train_token_stats = build_dataset(
-        train_rows, tokenizer, args.max_seq_len, args.fail_on_truncation
-    )
-    val_dataset, val_token_stats = build_dataset(
-        val_rows, tokenizer, args.max_seq_len, args.fail_on_truncation
-    )
+    # `app_chat_template` renders the app bytes, so the empty think block must be
+    # masked; it therefore implies assistant-only masking (chainlink #63).
+    assistant_only_loss = args.assistant_only_loss or args.render == RENDER_APP_CHAT_TEMPLATE
+    dataset_builder = build_masked_dataset if assistant_only_loss else build_dataset
+    if assistant_only_loss:
+        train_dataset, train_token_stats = dataset_builder(
+            train_rows, tokenizer, args.max_seq_len, args.fail_on_truncation, args.render
+        )
+        val_dataset, val_token_stats = dataset_builder(
+            val_rows, tokenizer, args.max_seq_len, args.fail_on_truncation, args.render
+        )
+    else:
+        train_dataset, train_token_stats = dataset_builder(
+            train_rows, tokenizer, args.max_seq_len, args.fail_on_truncation
+        )
+        val_dataset, val_token_stats = dataset_builder(
+            val_rows, tokenizer, args.max_seq_len, args.fail_on_truncation
+        )
     print(
         f"tokenized train={len(train_dataset)} validation={len(val_dataset)} "
         f"max_tokens={max(train_token_stats['max_input_tokens'], val_token_stats['max_input_tokens'])} "
-        f"truncated={train_token_stats['rows_over_max_seq_len'] + val_token_stats['rows_over_max_seq_len']}",
+        f"truncated={train_token_stats['rows_over_max_seq_len'] + val_token_stats['rows_over_max_seq_len']} "
+        f"assistant_only_loss={assistant_only_loss} render={args.render}",
         flush=True,
     )
+    masking_verification = None
+    if assistant_only_loss:
+        masking_verification = verify_masking_example(train_rows, tokenizer, args.render)
+        print(
+            f"masked_token_fraction(train)={train_token_stats['masked_token_fraction']} "
+            f"masked_token_fraction(val)={val_token_stats['masked_token_fraction']}",
+            flush=True,
+        )
+        print(f"masking_verification={json.dumps(masking_verification)}", flush=True)
+        if not masking_verification or not masking_verification["decode_matches_target"]:
+            raise RuntimeError(
+                "assistant-only masking verification failed: labelled tokens do not "
+                "match the marked target turn"
+            )
 
     from trl import SFTConfig, SFTTrainer
 
@@ -262,7 +678,7 @@ def main() -> int:
         fp16=False,
         logging_steps=10,
         save_strategy="epoch",
-        save_total_limit=2,
+        save_total_limit=args.save_total_limit if args.save_total_limit > 0 else None,
         eval_strategy=args.eval_strategy,
         prediction_loss_only=True,
         optim="adamw_8bit",
@@ -306,6 +722,11 @@ def main() -> int:
         "validation_rows_by_source": dict(sorted(Counter(row.get("source", "unspecified") for row in val_rows).items())),
         "train_token_stats": train_token_stats,
         "validation_token_stats": val_token_stats,
+        "render": args.render,
+        "app_chat_template": args.render == RENDER_APP_CHAT_TEMPLATE,
+        "assistant_only_loss": assistant_only_loss,
+        "assistant_only_loss_requested": args.assistant_only_loss,
+        "masking_verification": masking_verification,
         "dtype": "bfloat16; Unsloth may retain selected Qwen3.5 layers in float32",
         "load_in_4bit": False,
         "target_modules": list(DEFAULT_TARGET_MODULES),
@@ -321,6 +742,9 @@ def main() -> int:
         "loss_last": losses[-1] if losses else None,
         "eval_loss_first": next((entry["eval_loss"] for entry in trainer.state.log_history if "eval_loss" in entry), None),
         "eval_loss_last": next((entry["eval_loss"] for entry in reversed(trainer.state.log_history) if "eval_loss" in entry), None),
+        "eval_loss_by_epoch": eval_loss_history(trainer.state.log_history),
+        "checkpoints": list_checkpoints(args.output_dir),
+        "save_total_limit": args.save_total_limit,
         "train_result": str(train_result),
     }
     metrics_path = args.output_dir / "training_metrics.json"
