@@ -1,0 +1,396 @@
+{
+  "schema_version": "recipe-tool-dosing-constants-proposal-v2",
+  "issue": "56",
+  "status": "approved_by_owner",
+  "status_note": "APPROVED by the owner on 2026-10-18. The operator verified every corpus quote, and the owner confirmed the crop requirement unit kg/ha. Issue #57 may consume these constants. v2 separates per-part dry matter and per-nutrient release; the v1 single leaf dry-matter value and the single residue-N release value applied to N, P and K are superseded. The nutrition track sizes fresh material with the owner-approved no-overshoot rule (to the nutrient that needs the least), so no nutrient exceeds the target fraction.",
+  "owner_signoff": {
+    "status": "approved_by_owner",
+    "date": "2026-10-18",
+    "source": "Chainlink issue #56 owner decisions comment, 2026-10-18",
+    "decision": "Approved as in this file: every per-part dry-matter and per-nutrient release value, the plant-tea steep/dilution/application constants, the mulch depth and the WSP vinegar substitution. The crop requirement unit kg/ha is CONFIRMED by the owner."
+  },
+  "corpus_root": "../benchmark-workspace/organized",
+  "formula": {
+    "name": "two-track nutrient-equivalence formula",
+    "tracks": {
+      "nutrition": "Fresh plant material needed to supply a target fraction of the crop's seasonal N, P and K requirement through chop-and-drop, mulch or plant tea. Per nutrient: fresh_kg = target_fraction * R * 0.1 * A / (T / 1000 * DM(part) * E(nutrient)). The owner-approved no-overshoot rule sizes the single applied mass to the nutrient that needs the LEAST material, so no nutrient exceeds the target fraction; each nutrient's coverage at that mass is reported with a top-up note for the shortfalls.",
+      "booster": "The source FPJ/FFJ/WSP recipe made at the recipe's standard batch and standard dilution/application rate. The small nutrient amount it supplies is reported only as information; the booster track makes no requirement-coverage claim."
+    },
+    "symbols": {
+      "R": "crop requirement midpoint for the nutrient, kg/ha",
+      "A": "area, m2",
+      "T": "tissue midpoint for the nutrient, ppm on a dry-matter basis",
+      "DM": "dry-matter fraction for the tissue's plant part, kg dry matter per kg fresh material",
+      "E": "nutrient release/extraction fraction for the nutrient, kg plant-available nutrient per kg tissue nutrient",
+      "F": "optional target fraction of the crop requirement, default 1.0"
+    },
+    "nutrition_steps": [
+      "target_g = F * R * 0.1 * A   (1 kg/ha = 0.1 g/m2)",
+      "available_g_per_kg_fresh = T / 1000 * DM(part) * E(nutrient)   (ppm = mg/kg dry; /1000 gives g/kg dry)",
+      "fresh_plant_material_kg = target_g / available_g_per_kg_fresh   (per nutrient)",
+      "sizing_nutrient = the nutrient with the SMALLEST fresh_plant_material_kg (no overshoot)",
+      "coverage(nutrient) = sizing_fresh_plant_material_kg / fresh_plant_material_kg(nutrient), at most 1"
+    ],
+    "booster_steps": [
+      "diluted_volume_l = A * standard_application_rate_l_per_m2",
+      "concentrate_l = diluted_volume_l / (1 + dilution_ratio)",
+      "concentrate_mass_kg = concentrate_l * ferment_density_kg_per_l",
+      "plant_material_kg = concentrate_mass_kg / (1 + sugar_or_vinegar_ratio)",
+      "nutrient_supplied_kg = plant_material_kg * available_g_per_kg_fresh / 1000",
+      "fraction_of_requirement = nutrient_supplied_kg / (R * 0.1 * A / 1000)"
+    ],
+    "worked_example": {
+      "input": "Stinging Nettle for Tomato, 25 m2, target fraction 1.0",
+      "crop_requirement_kg_per_ha": {"N": 115.0, "P": 60.0, "K": 125.0},
+      "nettle_tissue_midpoint_ppm": {"N": 32777.5, "P": 2682.0, "K": 10500.0},
+      "dry_matter_fraction_leaf": 0.15,
+      "release_fraction": {"N": 0.26, "P": 0.2, "K": 0.8},
+      "fresh_plant_material_kg": {"N": 224.904122, "P": 1864.280388, "K": 248.015873},
+      "sizing_nutrient": "N",
+      "sizing_fresh_plant_material_kg": 224.904122,
+      "sizing_fresh_plant_material_kg_per_m2": 8.996165,
+      "coverage": {"N": 1.0, "P": 0.120639, "K": 0.906813},
+      "note": "Numbers are illustrative and rounded; the oracle output is authoritative. The no-overshoot rule sizes to N (the smallest per-nutrient need, about 9 kg/m2), which covers 100% of N but only about 12% of P and about 91% of K, so P and K carry top-up notes."
+    }
+  },
+  "constants": {
+    "dry_matter_fraction": {
+      "value": 0.15,
+      "unit": "kg dry matter per kg fresh plant material",
+      "used_in": "available_g_per_kg_fresh for the nutrition track and the booster standard batch",
+      "source": {
+        "source_type": "corpus_compilation",
+        "corpus_file": "Natural_Fertilizers/Handbook of Plant Nutrition.md",
+        "line": 5669,
+        "quote": "Assuming a medium leaf weight of 2 g fresh weight and a leaf water content of 85%.",
+        "derivation": "1 - 0.85 = 0.15 kg dry matter per kg fresh leaf; other parts use their own quote below."
+      },
+      "by_part": {
+        "leaf": {
+          "value": 0.15,
+          "corpus_file": "Natural_Fertilizers/Handbook of Plant Nutrition.md",
+          "line": 5669,
+          "quote": "Assuming a medium leaf weight of 2 g fresh weight and a leaf water content of 85%.",
+          "derivation": "1 - 0.85 = 0.15."
+        },
+        "herb": {
+          "value": 0.15,
+          "corpus_file": "Integrated_Farming_Systems/Gaia_s Garden - A Guide to Home-Scale Permaculture.md",
+          "line": 1498,
+          "quote": "plants are 85 percent water",
+          "derivation": "1 - 0.85 = 0.15 for whole herbs, soft shoots, seedlings and hay proxies."
+        },
+        "fruit": {
+          "value": 0.1,
+          "corpus_file": "Organic_Farming/(Springer) Growing Food (2006).md",
+          "line": 7028,
+          "quote": "The ripe fruit of tomatoes is eaten raw or cooked. It is about 90% water",
+          "derivation": "1 - 0.90 = 0.10. Watery fruits range from about 90% to 96% water in the corpus (Mollison: 'Fruit is 96% water'), so 0.10 is the high-dry-matter end of the fruit range."
+        },
+        "seed": {
+          "value": 0.8,
+          "corpus_file": "Integrated_Farming_Systems/Edible Forest Gardens Vol.2 Design and Practice.md",
+          "line": 10385,
+          "quote": "Most seeds ripen at about 40% moisture content but get harvested at 20% or less moisture as the plant browns.",
+          "derivation": "1 - 0.20 = 0.80 at harvest; stored seed is drier (about 13-14% moisture), so 0.80 is conservative."
+        },
+        "root": {
+          "value": 0.22,
+          "corpus_file": "Sustainable_Water_Management/Potato Biology and Biotechnology.md",
+          "line": 9953,
+          "quote": "The DM content of most varieties selected for commercial usage ranges from about 18 to 26% (Burton, 1989)",
+          "derivation": "Midpoint of 18-26% = 22% = 0.22 for roots, tubers and bulbs."
+        },
+        "bark": {
+          "value": 0.65,
+          "corpus_file": "Integrated_Farming_Systems/07_Agroforestry_a_decade_of_development.md",
+          "line": 5464,
+          "quote": "Moisture at harvest depends on tree age, ranging from about 55 percent at 1 year to 45 percent at 4 years and 35 percent at 7 years",
+          "derivation": "1 - 0.35 = 0.65 for mature wood/bark; the corpus quote is for leucaena wood, used here as a bark proxy."
+        },
+        "stem": {
+          "value": 0.35,
+          "corpus_file": "Integrated_Farming_Systems/Industrial hemp (Cannabis sativa L.) for phytoremediation_ Energy and _environmental life cycle assessment of using contaminated biomass as an _energy resource.md",
+          "line": 146,
+          "quote": "Fresh industrial hemp was harvested at blooming ... with an average dry matter content of 35%.",
+          "derivation": "0.35 for fresh stems and pith, using whole fresh hemp biomass as the proxy."
+        },
+        "flower": {
+          "value": 0.15,
+          "corpus_file": "Integrated_Farming_Systems/Gaia_s Garden - A Guide to Home-Scale Permaculture.md",
+          "line": 1498,
+          "quote": "plants are 85 percent water",
+          "derivation": "1 - 0.85 = 0.15 for fresh flowers and buds; no separate flower measurement was found in the corpus."
+        }
+      },
+      "part_category_map": {
+        "leaf": "leaf",
+        "herb": "herb",
+        "plant": "herb",
+        "shoot": "herb",
+        "sprout_seedling": "herb",
+        "hay": "herb",
+        "fruit": "fruit",
+        "aril": "fruit",
+        "pericarp": "fruit",
+        "mesocarp": "fruit",
+        "seed": "seed",
+        "hull_husk": "seed",
+        "pollen_or_spore": "seed",
+        "root": "root",
+        "rhizome": "root",
+        "tuber": "root",
+        "bulb": "root",
+        "root_bark": "root",
+        "bark": "bark",
+        "wood": "bark",
+        "stem": "stem",
+        "pith": "stem",
+        "flower": "flower",
+        "bud": "flower",
+        "silk_stigma_style": "flower"
+      },
+      "default_category": "herb",
+      "applies_to": "every catalog part; unmapped parts fall back to the herb value and say so in the result",
+      "confidence": "medium",
+      "caveat": "Each part value is a corpus-derived point estimate, not a measurement of the specific candidate. Bark uses a wood-moisture proxy and flower uses the whole-plant water content because the corpus has no separate measurement.",
+      "owner_signoff": "approved_by_owner"
+    },
+    "nutrient_release_fraction": {
+      "value": 0.26,
+      "unit": "kg plant-available nutrient per kg tissue nutrient",
+      "used_in": "available_g_per_kg_fresh for the nutrition track and the booster standard batch",
+      "source": {
+        "source_type": "corpus_compilation",
+        "corpus_file": "Organic_Farming/Soil Microbiology, Ecology & Biochemistry.md",
+        "line": 762,
+        "quote": "In 1943, Norman and Werkman labeled soybeans with 15N. Addition of the labeled residue to soil showed that 26% of the tagged N was recovered by a subsequent crop.",
+        "derivation": "N keeps the 0.26 labeled-residue recovery. P and K use separate sources below and do not reuse this N figure."
+      },
+      "by_nutrient": {
+        "N": {
+          "value": 0.26,
+          "corpus_file": "Organic_Farming/Soil Microbiology, Ecology & Biochemistry.md",
+          "line": 762,
+          "quote": "In 1943, Norman and Werkman labeled soybeans with 15N. Addition of the labeled residue to soil showed that 26% of the tagged N was recovered by a subsequent crop.",
+          "derivation": "26% recovery of labeled residue nitrogen.",
+          "caveat": "A labeled soybean-residue recovery, not a measurement of a fermented plant extract."
+        },
+        "P": {
+          "value": 0.2,
+          "corpus_file": "Natural_Fertilizers/Managing Phosphorus for Crop _Production.md",
+          "line": 21,
+          "quote": "This is why, even with optimum management, the efficiency of plant uptake of phosphorus is very low usually less than 20 percent.",
+          "derivation": "Use 0.20 as an upper-bound phosphorus availability proxy: less than 20% of applied phosphorus is typically taken up.",
+          "caveat": "This is a plant-uptake efficiency, not a residue-release measurement. It is proposed as a conservative proxy because the corpus gives no direct P release fraction for mulch or fermented plant material; a residue-specific P mineralization measurement should replace it."
+        },
+        "K": {
+          "value": 0.8,
+          "corpus_file": "Natural_Fertilizers/Trees, Crops & Soil Fertility - G. Schroth, F. Sinclair.md",
+          "line": 1768,
+          "quote": "This fraction includes most of the potassium, and for freshly cut (as opposed to naturally fallen) materials it may also include a relevant percentage of the phosphorus in the biomass",
+          "derivation": "Most potassium is rapidly leached from fresh litter and mulch; use 0.80.",
+          "caveat": "The corpus says 'most' rather than a measured percentage, and the same passage notes that little is known about the fate of the leached potassium. 0.80 is the owner-approved value (2026-10-18)."
+        }
+      },
+      "applies_to": "N, P and K separately; never one shared residue-N figure",
+      "confidence": "low-medium",
+      "caveat": "N and K have residue/litter evidence; P uses a plant-uptake efficiency as a conservative proxy. All three are approved by the owner (2026-10-18).",
+      "owner_signoff": "approved_by_owner"
+    },
+    "sugar_to_plant_material_ratio": {
+      "value": 1.0,
+      "unit": "kg brown sugar per kg fresh plant material",
+      "used_in": "FPJ and FFJ standard batch",
+      "source": {
+        "corpus_file": "Natural_Fertilizers/KNF Recipe Book - Master Cho.md",
+        "line": 477,
+        "quote": "Mix the ingredients with brown sugar in a 1:1 ratio for storage.",
+        "app_recipe_corroboration": "Enriched_Recipes.json FPJ and FFJ steps: 'Mix the chopped shoots/fruits with brown sugar in a 1:1 ratio by weight.'"
+      },
+      "applies_to": "FPJ and FFJ",
+      "confidence": "high",
+      "caveat": "The KNF text also allows 1/2 to 2/3 sugar by weight for immediate use; v2 follows the app recipes' 1:1 storage ratio.",
+      "owner_signoff": "approved_by_owner"
+    },
+    "vinegar_to_material_ratio": {
+      "value": 10.0,
+      "unit": "L vinegar per kg material",
+      "used_in": "WSP standard batch",
+      "source": {
+        "corpus_file": "Natural_Fertilizers/KNF Recipe Book - Master Cho.md",
+        "line": 764,
+        "quote": "Put the bones in the jar with BRV (charcoal: BRV= 1:10)."
+      },
+      "applies_to": "WSP, where v2 substitutes the candidate plant material for bones and flags the substitution",
+      "confidence": "medium",
+      "caveat": "The corpus ratio is for bone charcoal in brown rice vinegar. The app's WSP uses bones plus vinegar and says 'until submerged'; v2 uses the WSP/WCP 1:10 ratio. The plant-material substitution is a derived proposal, not a source recipe.",
+      "owner_signoff": "approved_by_owner"
+    },
+    "ferment_density_kg_per_l": {
+      "value": 1.0,
+      "unit": "kg per L",
+      "used_in": "converting concentrate mass to volume in the booster standard batch",
+      "source": {
+        "source_type": "unit_convention",
+        "corpus_file": null,
+        "quote": "Water-density approximation used to convert a plant/sugar or plant/vinegar mixture to litres."
+      },
+      "applies_to": "all recipes",
+      "confidence": "low as an absolute volume",
+      "caveat": "Sugar solutions and plant extracts are denser than water; v2 treats 1 kg as 1 L so the dilution arithmetic is transparent. This is a unit convention, not a corpus-derived dosing constant.",
+      "owner_signoff": "approved_by_owner"
+    },
+    "crop_requirement_unit": {
+      "value": "kg/ha",
+      "used_in": "R",
+      "source": {
+        "corpus_file": "Organic_Farming/hemp diseases and pests-management and biological control by-jim-mcpartland-r-c-clarke.md",
+        "line": 7410,
+        "quote": "Fibre production requires high soil N, at least 150 kg ha-1.",
+        "app_data_corroboration": "Crop_Requirements.json stores ranges such as Rice Nitrogen 60-100, Phosphorus 35-58, Potassium 36-44, consistent with kg/ha recommendations."
+      },
+      "applies_to": "all crops",
+      "confidence": "high",
+      "caveat": "Crop_Requirements.json does not state a unit in the file, but the owner CONFIRMED kg/ha on 2026-10-18; the values and the corpus convention are kg/ha.",
+      "owner_signoff": "approved_by_owner"
+    },
+    "crop_requirement_midpoint": {
+      "value": "arithmetic_mean_of_range",
+      "used_in": "R",
+      "source": {
+        "source_type": "method",
+        "corpus_file": null,
+        "quote": "Use the midpoint of the crop's declared NPK range, matching bioaccumulator_oracle.py."
+      },
+      "applies_to": "all crops",
+      "confidence": "high",
+      "caveat": "A midpoint is a central estimate, not a lower or upper recommendation.",
+      "owner_signoff": "approved_by_owner"
+    },
+    "foliar_application_rate_l_per_ha": {
+      "value": 250.0,
+      "unit": "L diluted spray per ha",
+      "used_in": "booster standard-rate calculation",
+      "source": {
+        "corpus_file": "Natural_Fertilizers/KNF Recipe Book - Master Cho.md",
+        "line": 1037,
+        "quote": "Leaf spraying: Dilute M-B or M-C in the ratio of 1/1,000. Spray 200~300 l per 100a on the leaves.",
+        "derivation": "Midpoint of 200-300 L per 100a; 100a = 1 ha."
+      },
+      "applies_to": "foliar method",
+      "confidence": "medium",
+      "caveat": "The quote is for mineral liquids M-B/M-C, not FPJ/FFJ. It defines the standard-rate booster volume; the booster makes no requirement-coverage claim.",
+      "owner_signoff": "approved_by_owner"
+    },
+    "soil_drench_application_rate_l_per_ha": {
+      "value": 15000.0,
+      "unit": "L diluted drench per ha",
+      "used_in": "booster standard-rate calculation",
+      "source": {
+        "corpus_file": "Natural_Fertilizers/KNF Recipe Book - Master Cho.md",
+        "line": 1036,
+        "quote": "Soil irrigation: Dilute M-B or M-C in the ratio of 1/1,000. Water 1~2 tons of M-B or M-C per 100a.",
+        "derivation": "Midpoint of 1-2 t per 100a; 100a = 1 ha and 1 t = 1000 L."
+      },
+      "applies_to": "soil drench method",
+      "confidence": "medium",
+      "caveat": "The quote is for mineral liquids M-B/M-C, not FPJ/FFJ. It defines the standard-rate booster volume; the booster makes no requirement-coverage claim.",
+      "owner_signoff": "approved_by_owner"
+    },
+    "plant_tea_steep_water_l_per_kg": {
+      "value": 10.0,
+      "unit": "L water per kg fresh plant material",
+      "used_in": "nutrition track plant-tea water volume",
+      "source": {
+        "source_type": "method_convention",
+        "corpus_file": "Natural_Fertilizers/The Organic Gardener.md",
+        "line": 1585,
+        "quote": "Simply fill an old pillowcase or burlap bag with your chosen material (comfrey, nettles, compost or manure) and sink it into a large bucket or barrel of water.",
+        "derivation": "The corpus says to cover the material with water but gives no numeric material:water ratio. v2 proposes 10 L water per kg fresh material so the tea volume is transparent and testable; this is the one steep-ratio convention in the proposal."
+      },
+      "applies_to": "plant tea method",
+      "confidence": "low as an absolute ratio",
+      "caveat": "A method convention proposed for arithmetic transparency, not a corpus measurement. Approved by the owner (2026-10-18).",
+      "owner_signoff": "approved_by_owner"
+    },
+    "plant_tea_dilution_ratio": {
+      "value": 10.0,
+      "unit": "L water per L finished tea concentrate",
+      "used_in": "nutrition track plant-tea dilution",
+      "source": {
+        "corpus_file": "Natural_Fertilizers/The Organic Gardener.md",
+        "line": 1573,
+        "quote": "The liquid feed must be diluted before it is applied to plants at a ratio of about 10 parts water to 1 part concentrate."
+      },
+      "applies_to": "comfrey/nettle plant tea",
+      "confidence": "medium",
+      "caveat": "The corpus recipe is comfrey tea; the same dilution is proposed for a candidate-plant tea. JADAM's JLF standard is a different, much weaker 1:100 dilution.",
+      "owner_signoff": "approved_by_owner"
+    },
+    "plant_tea_application_rate_l_per_m2": {
+      "value": 3.333333,
+      "unit": "L diluted tea per m2",
+      "used_in": "nutrition track plant-tea comparison",
+      "source": {
+        "corpus_file": "Natural_Fertilizers/JADAM Organic FarmingmThe way to UltraLowCost agriculture.md",
+        "line": 1893,
+        "quote": "Standard is ×100 dilution. Calculate the volume of liquid fertilizer based on 1 t (264 gal) of water being used for 0.03 ha (0.08 ac).",
+        "derivation": "1000 L diluted liquid per 0.03 ha = 1000 / 300 m2 = 3.333 L/m2."
+      },
+      "applies_to": "plant tea method",
+      "confidence": "medium",
+      "caveat": "The quote is JADAM liquid fertilizer at its standard 1:100 dilution, not the 1:10 comfrey tea. v2 uses it only to say whether the full-requirement tea volume fits a normal liquid application.",
+      "owner_signoff": "approved_by_owner"
+    },
+    "mulch_depth_cm": {
+      "value": 5.0,
+      "unit": "cm of surface mulch",
+      "used_in": "nutrition track mulch method",
+      "source": {
+        "corpus_file": "Natural_Fertilizers/The Organic Gardener.md",
+        "line": 1391,
+        "quote": "Grass clippings are a cheap, effective mulch. Apply them at a maximum depth of 5cm (2in) or the heat they create as they decompose may harm the stems."
+      },
+      "applies_to": "mulch method",
+      "confidence": "medium",
+      "caveat": "The 5 cm maximum is for grass clippings; coarser or drier materials can be applied deeper (the corpus also describes 8-12 inch sheet mulch). v2 reports it as the default fresh-material mulch depth.",
+      "owner_signoff": "approved_by_owner"
+    },
+    "ratio_rounding_decimals": {
+      "value": 3,
+      "unit": "decimal places",
+      "used_in": "ratios",
+      "source": {
+        "source_type": "method",
+        "corpus_file": null,
+        "quote": "Matches the existing bioaccumulator_oracle.py ratio rounding."
+      },
+      "applies_to": "all ratios",
+      "confidence": "high",
+      "caveat": null,
+      "owner_signoff": "approved_by_owner"
+    },
+    "amount_rounding_decimals": {
+      "value": 6,
+      "unit": "decimal places",
+      "used_in": "kg and L amounts",
+      "source": {
+        "source_type": "method",
+        "corpus_file": null,
+        "quote": "Six decimals keeps small standard-rate batches visible while staying stable across Python and Dart double arithmetic."
+      },
+      "applies_to": "all amounts",
+      "confidence": "high",
+      "caveat": null,
+      "owner_signoff": "approved_by_owner"
+    }
+  },
+  "owner_signoff_requested": {
+    "decision": "APPROVED by the owner on 2026-10-18 as in this file: the per-part dry-matter table, the per-nutrient release fractions (N 0.26, P 0.20, K 0.80), the plant-tea steep convention and application rate, the mulch depth, the WSP vinegar substitution and the crop requirement unit kg/ha (CONFIRMED). No further sign-off is required before #57.",
+    "date_requested": "2026-10-18",
+    "date_approved": "2026-10-18",
+    "blocking": "none",
+    "note": "The trigger template is approved_by_owner (2026-10-17) and these dosing constants are approved_by_owner (2026-10-18); #57 may consume both."
+  }
+}

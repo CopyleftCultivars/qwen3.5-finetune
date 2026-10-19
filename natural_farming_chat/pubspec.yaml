@@ -76,6 +76,8 @@ flutter:
   assets:
     - assets/rag_db/
     - assets/plant_data/
+    - assets/recipe_tool/
+    - assets/recipe_tool/schemas/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

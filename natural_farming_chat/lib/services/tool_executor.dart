@@ -5,6 +5,7 @@ import 'calculator_service.dart';
 import 'fertilizer_formulation_service.dart';
 import 'plant_lookup_service.dart';
 import 'recipe_lookup_service.dart';
+import 'recipe_tool_service.dart';
 
 /// Service for executing tool calls requested by the LLM.
 /// Dispatches tool calls to appropriate handlers (plant lookups, calculations,
@@ -16,6 +17,7 @@ class ToolExecutor {
   final FertilizerFormulationService _formulationService;
   final BioaccumulatorRatioService? _bioaccumulatorRatioService;
   final RecipeLookupService? _recipeLookupService;
+  final RecipeToolService? _recipeToolService;
 
   ToolExecutor({
     required PlantLookupService plantLookupService,
@@ -23,11 +25,13 @@ class ToolExecutor {
     required FertilizerFormulationService formulationService,
     BioaccumulatorRatioService? bioaccumulatorRatioService,
     RecipeLookupService? recipeLookupService,
+    RecipeToolService? recipeToolService,
   })  : _plantLookupService = plantLookupService,
         _calculatorService = calculatorService,
         _formulationService = formulationService,
         _bioaccumulatorRatioService = bioaccumulatorRatioService,
-        _recipeLookupService = recipeLookupService;
+        _recipeLookupService = recipeLookupService,
+        _recipeToolService = recipeToolService;
 
   /// Execute a tool call and return the result
   Future<ToolResult> execute(ToolCall toolCall) async {
@@ -50,6 +54,9 @@ class ToolExecutor {
         break;
       case 'regional_recipe_lookup':
         result = _executeRegionalRecipeLookup(toolCall.arguments);
+        break;
+      case 'bioaccumulator_recipe':
+        result = _executeRecipeTool(toolCall.arguments);
         break;
       default:
         result = ToolResult(
@@ -241,6 +248,54 @@ class ToolExecutor {
     );
   }
 
+  /// Execute the deterministic trigger-recipe tool (bioaccumulator #56/#57).
+  ///
+  /// The model receives only the compact served view in QUICK mode; the full
+  /// result rides along in [ToolResult.data] for the detailed recipe card.
+  ToolResult _executeRecipeTool(Map<String, String> arguments) {
+    if (_recipeToolService == null || !_recipeToolService.isInitialized) {
+      return ToolResult(
+        toolName: 'bioaccumulator_recipe',
+        success: false,
+        result: 'Recipe tool service not available',
+      );
+    }
+
+    final payload = <String, dynamic>{
+      'candidate_plant': arguments['candidate_plant'],
+      'crop': arguments['crop'],
+      'quantity': _recipeNumber(arguments['quantity']),
+      'unit': arguments['unit'],
+    };
+    if (arguments['target_fraction'] != null) {
+      payload['target_fraction'] = _recipeNumber(arguments['target_fraction']);
+    }
+
+    final full = _recipeToolService.calculate(payload);
+    final served = _recipeToolService.servedView(full);
+    return ToolResult(
+      toolName: 'bioaccumulator_recipe',
+      success: true,
+      result: canonicalJson(served),
+      data: full,
+      metadata: {
+        'candidate_plant': arguments['candidate_plant'] ?? '',
+        'crop': arguments['crop'] ?? '',
+        'result_status': full['status']?.toString() ?? '',
+      },
+    );
+  }
+
+  static dynamic _recipeNumber(String? raw) {
+    if (raw == null) return null;
+    final trimmed = raw.trim();
+    if (trimmed.isEmpty) return raw;
+    final integer = int.tryParse(trimmed);
+    if (integer != null) return integer;
+    final decimal = double.tryParse(trimmed);
+    return decimal ?? raw;
+  }
+
   /// Format tool results for inclusion in follow-up prompt
   String formatResultsForPrompt(List<ToolResult> results) {
     if (results.isEmpty) return '';
@@ -268,11 +323,15 @@ class ToolResult {
   final String result;
   final Map<String, String>? metadata;
 
+  /// Full deterministic tool payload when one exists (recipe tool).
+  final Map<String, dynamic>? data;
+
   ToolResult({
     required this.toolName,
     required this.success,
     required this.result,
     this.metadata,
+    this.data,
   });
 
   @override
