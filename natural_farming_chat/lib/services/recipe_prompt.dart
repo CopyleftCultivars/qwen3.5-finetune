@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cactus/cactus.dart'
+import 'package:cactus/models/tools.dart'
     show CactusTool, ToolParameter, ToolParametersSchema;
 
 /// The exact system prompt and tool catalog of the benchmark runner's

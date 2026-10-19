@@ -1,0 +1,87 @@
+{
+  "schema_version": "issue_19_app_prompt_parity_v1",
+  "generated_at_utc": "2026-10-19T18:03:16.359957+00:00",
+  "runner_profile": "trigger_recipe_v1",
+  "runner_version": "cactus-qwen-hf-gpu-v12",
+  "assistant_prefix": "runner_default",
+  "candidate_checkpoint": "issue_64_ckpt423",
+  "app_scenario_path": "/home/goya/storage/CopyLeftCultivars/bioaccumulator-benchmark-workspace/scenarios/v3/development.jsonl",
+  "app_scenario_turn_count": 40,
+  "tool_schema_sha256": "cd6e6b850f5160a6ff2e04dc8fd5a68003ed5d5949fc4bb7a69d84d15bbff0c0",
+  "tool_prompt_sha256": "216c4e45ce4cf59bac354f3ae85cb039a46870fdce4f3eafbeaf79e91676373d",
+  "runner_tool_schema_sha256": "cd6e6b850f5160a6ff2e04dc8fd5a68003ed5d5949fc4bb7a69d84d15bbff0c0",
+  "app_tools_equal_runner_tools": true,
+  "seeds": [
+    {
+      "seed": 42,
+      "results_path": "/home/goya/storage/CopyLeftCultivars/bioaccumulator-benchmark-workspace/results/bioaccumulator/gpu_hf/development/issue_64_ckpt423_seed_42/bioaccumulator_gpu_issue_64_ckpt423_seed_42.results.json",
+      "decision": {
+        "matched": 40,
+        "total": 40
+      },
+      "instruction": {
+        "matched": 27,
+        "total": 27
+      },
+      "tool_context": {
+        "matched": 27,
+        "total": 27
+      },
+      "history": {
+        "matched": 40,
+        "total": 40
+      }
+    },
+    {
+      "seed": 43,
+      "results_path": "/home/goya/storage/CopyLeftCultivars/bioaccumulator-benchmark-workspace/results/bioaccumulator/gpu_hf/development/issue_64_ckpt423_seed_43/bioaccumulator_gpu_issue_64_ckpt423_seed_43.results.json",
+      "decision": {
+        "matched": 40,
+        "total": 40
+      },
+      "instruction": {
+        "matched": 26,
+        "total": 26
+      },
+      "tool_context": {
+        "matched": 26,
+        "total": 26
+      },
+      "history": {
+        "matched": 40,
+        "total": 40
+      }
+    },
+    {
+      "seed": 44,
+      "results_path": "/home/goya/storage/CopyLeftCultivars/bioaccumulator-benchmark-workspace/results/bioaccumulator/gpu_hf/development/issue_64_ckpt423_seed_44/bioaccumulator_gpu_issue_64_ckpt423_seed_44.results.json",
+      "decision": {
+        "matched": 40,
+        "total": 40
+      },
+      "instruction": {
+        "matched": 27,
+        "total": 27
+      },
+      "tool_context": {
+        "matched": 27,
+        "total": 27
+      },
+      "history": {
+        "matched": 40,
+        "total": 40
+      }
+    }
+  ],
+  "totals": {
+    "decision_matched": 120,
+    "decision_total": 120,
+    "instruction_matched": 80,
+    "instruction_total": 80,
+    "tool_context_matched": 80,
+    "tool_context_total": 80,
+    "history_matched": 120,
+    "history_total": 120
+  },
+  "mismatches": []
+}

@@ -13,6 +13,7 @@ import 'services/bioaccumulator_ratio_service.dart';
 import 'services/recipe_lookup_service.dart';
 import 'services/recipe_prompt.dart';
 import 'services/recipe_tool_service.dart';
+import 'services/recipe_turn.dart';
 import 'services/embedding_service.dart';
 import 'widgets/recipe_card.dart';
 
@@ -324,7 +325,11 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> _sendMessage(String text) async {
     if (text.trim().isEmpty || _isLoading) return;
 
-    final userMessage = ChatMessage(content: text.trim(), isUser: true);
+    // Build the runner-style history before adding the current user message,
+    // so the turn is not duplicated in the model prompt.
+    final history = _buildConversationHistory();
+    final trimmed = text.trim();
+    final userMessage = ChatMessage(content: trimmed, isUser: true);
     setState(() {
       _messages.add(userMessage);
       _isLoading = true;
@@ -333,21 +338,17 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollToBottom();
 
     try {
-      String response;
-      Map<String, dynamic>? recipe;
-      if (_recipeToolService.isInitialized &&
-          _recipeToolService.hasTriggerPrefix(text)) {
-        final recipeOutcome = await _handleRecipeTrigger(text.trim());
-        response = recipeOutcome.text;
-        recipe = recipeOutcome.recipe;
-      } else {
-        // Always use tool-calling flow
-        response = await _generateWithTools(text);
-      }
+      // Every message goes through the model with the full six-tool catalog;
+      // the app never pre-routes a message by its text.
+      final outcome = await _generateWithTools(trimmed, history);
 
       setState(() {
         _messages.add(
-          ChatMessage(content: response, isUser: false, recipe: recipe),
+          ChatMessage(
+            content: outcome.text,
+            isUser: false,
+            recipe: outcome.recipe,
+          ),
         );
         _isLoading = false;
       });
@@ -366,49 +367,6 @@ class _ChatScreenState extends State<ChatScreen> {
     }
 
     _scrollToBottom();
-  }
-
-  /// Deterministic trigger-recognition path.
-  ///
-  /// QUICK executes the recipe tool, gives the model only the compact served
-  /// view, and keeps the full JSON for the card. DETAILED renders the full
-  /// result deterministically with no model call at all.
-  Future<({String text, Map<String, dynamic>? recipe})> _handleRecipeTrigger(
-    String text,
-  ) async {
-    final RecipeTrigger trigger;
-    try {
-      trigger = _recipeToolService.parseTrigger(text);
-    } on RecipeTriggerException catch (error) {
-      return (
-        text:
-            'Recipe trigger not used (${error.code}): ${error.message}\n\n'
-            'Fixed phrase: ${RecipeToolService.triggerTemplate}',
-        recipe: null,
-      );
-    }
-
-    final full = _recipeToolService.calculate(trigger.toArguments());
-    final served = _recipeToolService.servedView(full);
-    if (_detailedRecipeMode || full['status'] != 'ok') {
-      return (text: _deterministicRecipeSummary(full), recipe: full);
-    }
-
-    final toolContext =
-        'Tool Results:\n--- bioaccumulator_recipe ---\n${canonicalJson(served)}\n';
-    final instructions = await _modelService.generateCompletion(
-      question: text,
-      context: toolContext,
-      conversationHistory: _buildConversationHistory(maxChars: 800),
-      systemPrompt: recipeSystemPrompt,
-    );
-    final response = instructions.response.trim();
-    return (
-      text: response.isEmpty
-          ? 'The recipe tool returned:\n${canonicalJson(served)}'
-          : response,
-      recipe: full,
-    );
   }
 
   String _deterministicRecipeSummary(Map<String, dynamic> result) {
@@ -444,55 +402,46 @@ class _ChatScreenState extends State<ChatScreen> {
         'Booster: ${booster.isEmpty ? 'no standard batch is computable' : booster}.';
   }
 
-  /// Build conversation history from recent messages for model context.
-  /// Returns cactus ChatMessage objects with user/assistant roles.
-  /// Limits to roughly [maxChars] of content to stay within context window.
-  List<cactus.ChatMessage> _buildConversationHistory({int maxChars = 2000}) {
-    // Skip the welcome message (index 0 if it's an assistant message)
-    // and the current user message (last in _messages, already sent separately)
-    final historyMessages = _messages.where((m) {
-      // Exclude the welcome message
-      if (m == _messages.first && !m.isUser) return false;
-      return true;
-    }).toList();
-
-    // Build from most recent backwards, respecting character budget
+  /// Build the full conversation history in runner order.
+  ///
+  /// The runner appends every earlier turn's user message and its complete
+  /// final answer, in order, with no character budget. The app's welcome
+  /// message is UI-only, so it is excluded.
+  List<cactus.ChatMessage> _buildConversationHistory() {
     final history = <cactus.ChatMessage>[];
-    var charCount = 0;
-
-    for (var i = historyMessages.length - 1; i >= 0; i--) {
-      final msg = historyMessages[i];
-      if (charCount + msg.content.length > maxChars) break;
-      history.insert(
-        0,
+    for (var i = 0; i < _messages.length; i++) {
+      final message = _messages[i];
+      if (i == 0 && !message.isUser) continue;
+      history.add(
         cactus.ChatMessage(
-          content: msg.content,
-          role: msg.isUser ? 'user' : 'assistant',
+          content: message.content,
+          role: message.isUser ? 'user' : 'assistant',
         ),
       );
-      charCount += msg.content.length;
     }
-
     return history;
   }
 
   /// Two-phase generation with tool calling support.
-  /// Phase 1: Generate with tools — model decides if tools are needed.
-  /// Phase 2: If tools were called, execute them and generate again WITHOUT
-  ///          tools so the model must synthesize a text response from the data.
-  Future<String> _generateWithTools(String question) async {
+  ///
+  /// Every message goes through the model with the six trained tools; the app
+  /// never pre-routes by text. If the model calls `bioaccumulator_recipe`, the
+  /// instruction turn is rendered exactly as `trigger_recipe_v1` does:
+  /// `[system, *history, user, assistant tool call, tool served view]`, with
+  /// the same tools passed. DETAILED mode skips that instruction pass and
+  /// renders the full result deterministically instead.
+  Future<({String text, Map<String, dynamic>? recipe})> _generateWithTools(
+    String question,
+    List<cactus.ChatMessage> history,
+  ) async {
     print('[TOOL_DEBUG] _generateWithTools started for: $question');
 
-    final history = _buildConversationHistory();
-    print(
-      '[TOOL_DEBUG] Conversation history: ${history.length} turns, ${history.fold<int>(0, (sum, m) => sum + m.content.length)} chars',
-    );
-
-    // Phase 1: Generate with tools available
     final result = await _modelService.generateCompletionWithTools(
       question: question,
       conversationHistory: history,
-      embeddingService: _embeddingService,
+      // Explicit tools bypass embedding routing, so the recipe pipeline always
+      // receives all six tools in the trained order.
+      tools: ModelService.farmingTools,
     );
 
     print('[TOOL_DEBUG] hasToolCalls: ${result.hasToolCalls}');
@@ -500,32 +449,62 @@ class _ChatScreenState extends State<ChatScreen> {
       '[TOOL_DEBUG] Response preview: ${result.response.substring(0, result.response.length.clamp(0, 100))}...',
     );
 
-    // If no tool calls, return the response directly
     if (!result.hasToolCalls) {
-      print('[TOOL_DEBUG] No tool calls, returning response');
-      return result.response;
+      return (text: result.response, recipe: null);
     }
 
-    // Execute tool calls
     print('[TOOL_DEBUG] Executing ${result.toolCalls.length} tool calls');
     final toolResults = await _toolExecutor.executeAll(result.toolCalls);
     final toolContext = _toolExecutor.formatResultsForPrompt(toolResults);
     print('[TOOL_DEBUG] Tool results formatted (${toolContext.length} chars)');
 
-    // Phase 2: Generate WITHOUT tools, passing tool results as context
-    // Use shorter history budget since tool context takes space
-    final phase2History = _buildConversationHistory(maxChars: 800);
-    print('[TOOL_DEBUG] Phase 2: generating response from tool results');
+    Map<String, dynamic>? recipeResult;
+    for (final toolResult in toolResults) {
+      if (toolResult.toolName == recipeToolName && toolResult.data != null) {
+        recipeResult = toolResult.data;
+      }
+    }
+
+    if (recipeResult != null) {
+      if (_detailedRecipeMode) {
+        return (
+          text: _deterministicRecipeSummary(recipeResult),
+          recipe: recipeResult,
+        );
+      }
+
+      final instructionMessages = buildRecipeInstructionMessages(
+        userMessage: question,
+        history: history,
+        assistantToolCallResponse: result.rawResponse,
+        toolResultContext: toolContext,
+      );
+      final instructions = await _modelService.generateCompletionFromMessages(
+        messages: instructionMessages,
+        tools: ModelService.farmingTools,
+      );
+      final response = instructions.response.trim();
+      return (
+        text: response.isEmpty
+            ? 'The recipe tool returned:\n'
+                  '${canonicalJson(_recipeToolService.servedView(recipeResult))}'
+            : response,
+        recipe: recipeResult,
+      );
+    }
+
+    // Any other tool call keeps the existing synthesis pass, but now with the
+    // full history rather than a truncated one.
     final synthesis = await _modelService.generateCompletion(
       question: question,
       context: toolContext,
-      conversationHistory: phase2History,
+      conversationHistory: history,
     );
 
     print(
       '[TOOL_DEBUG] Synthesis complete (${synthesis.response.length} chars)',
     );
-    return synthesis.response;
+    return (text: synthesis.response, recipe: null);
   }
 
   void _scrollToBottom() {
@@ -737,7 +716,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           Text(
             _detailedRecipeMode
-                ? 'DETAILED: the app renders the full recipe card without a model call.'
+                ? 'DETAILED: the model still decides to call the tool; the app then renders the full recipe card deterministically (no instruction pass).'
                 : 'QUICK: the model reads the compact served view and writes the instructions.',
             style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
           ),

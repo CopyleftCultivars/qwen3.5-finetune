@@ -6,6 +6,7 @@ import 'fertilizer_formulation_service.dart';
 import 'plant_lookup_service.dart';
 import 'recipe_lookup_service.dart';
 import 'recipe_tool_service.dart';
+import 'tool_result_context.dart';
 
 /// Service for executing tool calls requested by the LLM.
 /// Dispatches tool calls to appropriate handlers (plant lookups, calculations,
@@ -296,23 +297,17 @@ class ToolExecutor {
     return decimal ?? raw;
   }
 
-  /// Format tool results for inclusion in follow-up prompt
+  /// Format tool results exactly as the runner's `tool_result_context` does.
   String formatResultsForPrompt(List<ToolResult> results) {
-    if (results.isEmpty) return '';
-
-    final buffer = StringBuffer('Tool Results:\n');
-
-    for (final result in results) {
-      buffer.writeln('--- ${result.toolName} ---');
-      if (result.success) {
-        buffer.writeln(result.result);
-      } else {
-        buffer.writeln('Error: ${result.result}');
-      }
-      buffer.writeln();
-    }
-
-    return buffer.toString();
+    return formatToolResultsForPrompt(
+      results.map(
+        (result) => PromptToolResult(
+          toolName: result.toolName,
+          success: result.success,
+          text: result.result,
+        ),
+      ),
+    );
   }
 }
 
