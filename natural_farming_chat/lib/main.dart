@@ -11,7 +11,11 @@ import 'services/region_plant_service.dart';
 import 'services/tool_executor.dart';
 import 'services/bioaccumulator_ratio_service.dart';
 import 'services/recipe_lookup_service.dart';
+import 'services/recipe_prompt.dart';
+import 'services/recipe_tool_service.dart';
+import 'services/recipe_turn.dart';
 import 'services/embedding_service.dart';
+import 'widgets/recipe_card.dart';
 
 void main() {
   runApp(const NaturalFarmingChatApp());
@@ -49,10 +53,14 @@ class ChatMessage {
   final bool isUser;
   final DateTime timestamp;
 
+  /// Full deterministic recipe-tool result for the "Show full recipe" card.
+  final Map<String, dynamic>? recipe;
+
   ChatMessage({
     required this.content,
     required this.isUser,
     DateTime? timestamp,
+    this.recipe,
   }) : timestamp = timestamp ?? DateTime.now();
 
   /// Convert to JSON for persistence
@@ -60,6 +68,7 @@ class ChatMessage {
     'content': content,
     'isUser': isUser,
     'timestamp': timestamp.toIso8601String(),
+    if (recipe != null) 'recipe': recipe,
   };
 
   /// Create from JSON
@@ -67,6 +76,7 @@ class ChatMessage {
     content: json['content'] as String,
     isUser: json['isUser'] as bool,
     timestamp: DateTime.parse(json['timestamp'] as String),
+    recipe: json['recipe'] as Map<String, dynamic>?,
   );
 }
 
@@ -89,6 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final RegionPlantService _regionPlantService = RegionPlantService();
   late final BioaccumulatorRatioService _bioaccumulatorRatioService;
   late final RecipeLookupService _recipeLookupService;
+  final RecipeToolService _recipeToolService = RecipeToolService();
   final EmbeddingService _embeddingService = EmbeddingService();
   late final FertilizerFormulationService _formulationService;
   late final ToolExecutor _toolExecutor;
@@ -99,8 +110,13 @@ class _ChatScreenState extends State<ChatScreen> {
   double _initProgress = 0.0;
   String? _deviceInfo;
 
+  /// QUICK lets the model write instructions from the compact served view.
+  /// DETAILED renders the deterministic recipe card without a model call.
+  bool _detailedRecipeMode = false;
+
   // Persistence keys
   static const String _chatHistoryKey = 'chat_history';
+  static const String _qwen35ModelSlugKey = 'qwen35_model_slug';
 
   @override
   void initState() {
@@ -121,14 +137,24 @@ class _ChatScreenState extends State<ChatScreen> {
       formulationService: _formulationService,
       bioaccumulatorRatioService: _bioaccumulatorRatioService,
       recipeLookupService: _recipeLookupService,
+      recipeToolService: _recipeToolService,
     );
-    _loadPersistedSettings();
-    _initializeServices();
+    _bootstrap();
+  }
+
+  Future<void> _bootstrap() async {
+    await _loadPersistedSettings();
+    await _initializeServices();
   }
 
   /// Load persisted settings from SharedPreferences
   Future<void> _loadPersistedSettings() async {
     final prefs = await SharedPreferences.getInstance();
+
+    final configuredModel = prefs.getString(_qwen35ModelSlugKey);
+    if (configuredModel != null && configuredModel.trim().isNotEmpty) {
+      ModelService.configureQwen35Model(configuredModel);
+    }
 
     // Load chat history
     final savedHistory = prefs.getString(_chatHistoryKey);
@@ -226,11 +252,22 @@ class _ChatScreenState extends State<ChatScreen> {
       await _recipeLookupService.initialize(
         onProgress: (progress, status) {
           setState(() {
-            _initProgress = 0.65 + (progress * 0.04);
+            _initProgress = 0.65 + (progress * 0.02);
             _initStatus = status;
           });
         },
       );
+
+      setState(() {
+        _initProgress = 0.67;
+        _initStatus = 'Loading recipe-tool contract...';
+      });
+
+      await _recipeToolService.initialize();
+      setState(() {
+        _initProgress = 0.69;
+        _initStatus = 'Recipe tool ready';
+      });
 
       if (appFlavor == 'qwen35') {
         // A second CactusLM context can fail on this device/engine. The Qwen3.5
@@ -288,7 +325,11 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> _sendMessage(String text) async {
     if (text.trim().isEmpty || _isLoading) return;
 
-    final userMessage = ChatMessage(content: text.trim(), isUser: true);
+    // Build the runner-style history before adding the current user message,
+    // so the turn is not duplicated in the model prompt.
+    final history = _buildConversationHistory();
+    final trimmed = text.trim();
+    final userMessage = ChatMessage(content: trimmed, isUser: true);
     setState(() {
       _messages.add(userMessage);
       _isLoading = true;
@@ -297,11 +338,18 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollToBottom();
 
     try {
-      // Always use tool-calling flow
-      final response = await _generateWithTools(text);
+      // Every message goes through the model with the full six-tool catalog;
+      // the app never pre-routes a message by its text.
+      final outcome = await _generateWithTools(trimmed, history);
 
       setState(() {
-        _messages.add(ChatMessage(content: response, isUser: false));
+        _messages.add(
+          ChatMessage(
+            content: outcome.text,
+            isUser: false,
+            recipe: outcome.recipe,
+          ),
+        );
         _isLoading = false;
       });
       _saveChatHistory();
@@ -321,55 +369,79 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollToBottom();
   }
 
-  /// Build conversation history from recent messages for model context.
-  /// Returns cactus ChatMessage objects with user/assistant roles.
-  /// Limits to roughly [maxChars] of content to stay within context window.
-  List<cactus.ChatMessage> _buildConversationHistory({int maxChars = 2000}) {
-    // Skip the welcome message (index 0 if it's an assistant message)
-    // and the current user message (last in _messages, already sent separately)
-    final historyMessages = _messages.where((m) {
-      // Exclude the welcome message
-      if (m == _messages.first && !m.isUser) return false;
-      return true;
-    }).toList();
+  String _deterministicRecipeSummary(Map<String, dynamic> result) {
+    if (result['status'] != 'ok') {
+      final error = (result['error'] as Map<String, dynamic>?) ?? const {};
+      return 'Recipe tool error (${error['code']}): ${error['message']}';
+    }
+    final candidate = result['candidate_plant'] as Map<String, dynamic>;
+    final crop = result['crop'] as Map<String, dynamic>;
+    final input = result['input'] as Map<String, dynamic>;
+    final nutrition = result['nutrition_track'] as Map<String, dynamic>;
+    final nutrients = nutrition['nutrients'] as Map<String, dynamic>;
+    final coverageText = ['N', 'P', 'K']
+        .where((nutrient) => nutrients[nutrient]['coverage_percent'] != null)
+        .map(
+          (nutrient) =>
+              '$nutrient ${(nutrients[nutrient]['coverage_percent'] as num).toDouble().toStringAsFixed(1)}%',
+        )
+        .join(', ');
+    final recipes = ((result['booster_track'] as Map<String, dynamic>)['recipes']
+            as List)
+        .cast<Map<String, dynamic>>();
+    final booster = recipes
+        .where((recipe) => recipe['computable'] == true)
+        .map((recipe) => '${recipe['recipe_abbrev']} (${recipe['recipe_name']})')
+        .join(', ');
+    return 'Bioaccumulator recipe for ${candidate['common_name']} on '
+        '${crop['common_name']}, ${input['quantity']} m2.\n'
+        'Nutrition (no overshoot): ${nutrition['sizing_nutrient']} sizing, '
+        '${nutrition['sizing_fresh_plant_material_kg']} kg fresh material '
+        '(${nutrition['sizing_fresh_plant_material_kg_per_m2']} kg/m2). '
+        'Coverage: $coverageText.\n'
+        'Booster: ${booster.isEmpty ? 'no standard batch is computable' : booster}.';
+  }
 
-    // Build from most recent backwards, respecting character budget
+  /// Build the full conversation history in runner order.
+  ///
+  /// The runner appends every earlier turn's user message and its complete
+  /// final answer, in order, with no character budget. The app's welcome
+  /// message is UI-only, so it is excluded.
+  List<cactus.ChatMessage> _buildConversationHistory() {
     final history = <cactus.ChatMessage>[];
-    var charCount = 0;
-
-    for (var i = historyMessages.length - 1; i >= 0; i--) {
-      final msg = historyMessages[i];
-      if (charCount + msg.content.length > maxChars) break;
-      history.insert(
-        0,
+    for (var i = 0; i < _messages.length; i++) {
+      final message = _messages[i];
+      if (i == 0 && !message.isUser) continue;
+      history.add(
         cactus.ChatMessage(
-          content: msg.content,
-          role: msg.isUser ? 'user' : 'assistant',
+          content: message.content,
+          role: message.isUser ? 'user' : 'assistant',
         ),
       );
-      charCount += msg.content.length;
     }
-
     return history;
   }
 
   /// Two-phase generation with tool calling support.
-  /// Phase 1: Generate with tools — model decides if tools are needed.
-  /// Phase 2: If tools were called, execute them and generate again WITHOUT
-  ///          tools so the model must synthesize a text response from the data.
-  Future<String> _generateWithTools(String question) async {
+  ///
+  /// Every message goes through the model with the six trained tools; the app
+  /// never pre-routes by text. If the model calls `bioaccumulator_recipe`, the
+  /// instruction turn is rendered exactly as `trigger_recipe_v1` does:
+  /// `[system, *history, user, assistant tool call, tool served view]`, with
+  /// the same tools passed. DETAILED mode skips that instruction pass and
+  /// renders the full result deterministically instead.
+  Future<({String text, Map<String, dynamic>? recipe})> _generateWithTools(
+    String question,
+    List<cactus.ChatMessage> history,
+  ) async {
     print('[TOOL_DEBUG] _generateWithTools started for: $question');
 
-    final history = _buildConversationHistory();
-    print(
-      '[TOOL_DEBUG] Conversation history: ${history.length} turns, ${history.fold<int>(0, (sum, m) => sum + m.content.length)} chars',
-    );
-
-    // Phase 1: Generate with tools available
     final result = await _modelService.generateCompletionWithTools(
       question: question,
       conversationHistory: history,
-      embeddingService: _embeddingService,
+      // Explicit tools bypass embedding routing, so the recipe pipeline always
+      // receives all six tools in the trained order.
+      tools: ModelService.farmingTools,
     );
 
     print('[TOOL_DEBUG] hasToolCalls: ${result.hasToolCalls}');
@@ -377,32 +449,62 @@ class _ChatScreenState extends State<ChatScreen> {
       '[TOOL_DEBUG] Response preview: ${result.response.substring(0, result.response.length.clamp(0, 100))}...',
     );
 
-    // If no tool calls, return the response directly
     if (!result.hasToolCalls) {
-      print('[TOOL_DEBUG] No tool calls, returning response');
-      return result.response;
+      return (text: result.response, recipe: null);
     }
 
-    // Execute tool calls
     print('[TOOL_DEBUG] Executing ${result.toolCalls.length} tool calls');
     final toolResults = await _toolExecutor.executeAll(result.toolCalls);
     final toolContext = _toolExecutor.formatResultsForPrompt(toolResults);
     print('[TOOL_DEBUG] Tool results formatted (${toolContext.length} chars)');
 
-    // Phase 2: Generate WITHOUT tools, passing tool results as context
-    // Use shorter history budget since tool context takes space
-    final phase2History = _buildConversationHistory(maxChars: 800);
-    print('[TOOL_DEBUG] Phase 2: generating response from tool results');
+    Map<String, dynamic>? recipeResult;
+    for (final toolResult in toolResults) {
+      if (toolResult.toolName == recipeToolName && toolResult.data != null) {
+        recipeResult = toolResult.data;
+      }
+    }
+
+    if (recipeResult != null) {
+      if (_detailedRecipeMode) {
+        return (
+          text: _deterministicRecipeSummary(recipeResult),
+          recipe: recipeResult,
+        );
+      }
+
+      final instructionMessages = buildRecipeInstructionMessages(
+        userMessage: question,
+        history: history,
+        assistantToolCallResponse: result.rawResponse,
+        toolResultContext: toolContext,
+      );
+      final instructions = await _modelService.generateCompletionFromMessages(
+        messages: instructionMessages,
+        tools: ModelService.farmingTools,
+      );
+      final response = instructions.response.trim();
+      return (
+        text: response.isEmpty
+            ? 'The recipe tool returned:\n'
+                  '${canonicalJson(_recipeToolService.servedView(recipeResult))}'
+            : response,
+        recipe: recipeResult,
+      );
+    }
+
+    // Any other tool call keeps the existing synthesis pass, but now with the
+    // full history rather than a truncated one.
     final synthesis = await _modelService.generateCompletion(
       question: question,
       context: toolContext,
-      conversationHistory: phase2History,
+      conversationHistory: history,
     );
 
     print(
       '[TOOL_DEBUG] Synthesis complete (${synthesis.response.length} chars)',
     );
-    return synthesis.response;
+    return (text: synthesis.response, recipe: null);
   }
 
   void _scrollToBottom() {
@@ -464,6 +566,7 @@ class _ChatScreenState extends State<ChatScreen> {
       drawer: _buildDrawer(),
       body: Column(
         children: [
+          _buildRecipeHint(),
           Expanded(child: _buildMessageList()),
           _buildInputArea(),
         ],
@@ -567,6 +670,61 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  Widget _buildRecipeHint() {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+      color: colorScheme.surfaceContainerHigh,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.eco_outlined, size: 16, color: colorScheme.primary),
+              const SizedBox(width: 6),
+              const Expanded(
+                child: Text(
+                  'Recipe trigger (fixed phrase)',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                ),
+              ),
+              SegmentedButton<bool>(
+                style: const ButtonStyle(
+                  visualDensity: VisualDensity.compact,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                segments: const [
+                  ButtonSegment(value: false, label: Text('QUICK')),
+                  ButtonSegment(value: true, label: Text('DETAILED')),
+                ],
+                selected: {_detailedRecipeMode},
+                onSelectionChanged: (selection) {
+                  setState(() => _detailedRecipeMode = selection.first);
+                },
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          SelectableText(
+            RecipeToolService.triggerTemplate,
+            style: TextStyle(
+              fontSize: 12,
+              fontFamily: 'monospace',
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
+          Text(
+            _detailedRecipeMode
+                ? 'DETAILED: the model still decides to call the tool; the app then renders the full recipe card deterministically (no instruction pass).'
+                : 'QUICK: the model reads the compact served view and writes the instructions.',
+            style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildInputArea() {
     return Container(
       padding: const EdgeInsets.all(8),
@@ -651,13 +809,42 @@ class _MessageBubble extends StatelessWidget {
             bottomRight: Radius.circular(isUser ? 4 : 16),
           ),
         ),
-        child: SelectableText(
-          message.content,
-          style: TextStyle(
-            color: isUser
-                ? colorScheme.onPrimaryContainer
-                : colorScheme.onSecondaryContainer,
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SelectableText(
+              message.content,
+              style: TextStyle(
+                color: isUser
+                    ? colorScheme.onPrimaryContainer
+                    : colorScheme.onSecondaryContainer,
+              ),
+            ),
+            if (!isUser && message.recipe != null) ...[
+              const SizedBox(height: 8),
+              TextButton.icon(
+                onPressed: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    showDragHandle: true,
+                    builder: (context) => DraggableScrollableSheet(
+                      expand: false,
+                      initialChildSize: 0.9,
+                      minChildSize: 0.4,
+                      maxChildSize: 0.98,
+                      builder: (context, scrollController) => RecipeCard(
+                        result: message.recipe!,
+                        scrollController: scrollController,
+                      ),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.receipt_long, size: 18),
+                label: const Text('Show full recipe'),
+              ),
+            ],
+          ],
         ),
       ),
     );

@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "recipe_tool_input_v2.schema.json",
+  "title": "Recipe tool input v2",
+  "description": "Input for the trigger-phrase recipe tool. The trigger carries candidate_plant, crop, quantity and unit; the form may also set the optional target_fraction.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "candidate_plant",
+    "crop",
+    "quantity",
+    "unit"
+  ],
+  "properties": {
+    "candidate_plant": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Catalog common or scientific name, or a recipe-named plant string such as 'Nettle leaf'."
+    },
+    "crop": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Crop_Requirements.json common or scientific name."
+    },
+    "quantity": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 1000000,
+      "description": "Positive area in square metres."
+    },
+    "unit": {
+      "type": "string",
+      "enum": [
+        "m2",
+        "m²",
+        "sq m",
+        "square metres",
+        "square meters"
+      ],
+      "description": "Canonical unit m2; the accepted aliases are normalised to m2 before the tool runs."
+    },
+    "target_fraction": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 1,
+      "default": 1,
+      "description": "Optional fraction of the crop requirement the nutrition track targets. Defaults to 1.0 (100%)."
+    }
+  }
+}

@@ -8,6 +8,8 @@ import 'package:flutter/services.dart' show appFlavor;
 import 'package:path_provider/path_provider.dart';
 
 import 'embedding_service.dart';
+import 'farming_tools.dart';
+import 'recipe_prompt.dart';
 import 'tool_router.dart' as tool_router;
 
 /// Service for managing CactusLM model operations
@@ -32,138 +34,38 @@ class ModelService {
   // by Android flavor. Qwen3.5 is staged locally until a hosted bundle is set up.
   static const String _productionModelSlug =
       'qwen3-nf-distill-v2-cact-int4-ios';
-  static const String _qwen35ModelSlug = 'qwen35-combined-cq4';
-  static const String _qwen35StagingPath =
-      '/data/local/tmp/qwen35-combined-cq4';
+  static const String _defaultQwen35ModelSlug = 'qwen35-combined-cq4';
+  static String _qwen35ModelSlug = _defaultQwen35ModelSlug;
   static const String _productionModelDownloadUrl =
       'https://huggingface.co/CopyleftCultivars/localNFchatbot-cactus/resolve/main/qwen3-distill-v2-calibrated-cact-int4-ios.zip';
+
+  /// The Qwen3.5 recipe bundle is configurable without rebuilding the app.
+  ///
+  /// The default stays the current bundle until the operator switches it to
+  /// candidate 4's CQ4 bundle (`qwen35-recipe-v5-cactus-cq4`), staged under
+  /// `/data/local/tmp/<slug>`.
+  static void configureQwen35Model(String slug) {
+    final trimmed = slug.trim();
+    if (trimmed.isNotEmpty) _qwen35ModelSlug = trimmed;
+  }
+
+  static void resetQwen35Model() {
+    _qwen35ModelSlug = _defaultQwen35ModelSlug;
+  }
+
+  static String get qwen35ModelSlug => _qwen35ModelSlug;
+  static String get qwen35StagingPath => '/data/local/tmp/$_qwen35ModelSlug';
 
   static bool get _isQwen35Flavor => appFlavor == 'qwen35';
   static String get modelSlug =>
       _isQwen35Flavor ? _qwen35ModelSlug : _productionModelSlug;
-  static const String systemPrompt = '''
-You are a helpful farming assistant specializing in natural farming practices.
-Answer questions based on the provided context. If you don't know the answer,
-say so honestly. Provide practical, actionable advice when possible.''';
+  static const String systemPrompt = recipeBaseSystemPrompt;
 
-  /// Farming tools available for function calling
-  static final List<CactusTool> farmingTools = [
-    CactusTool(
-      name: 'npk_lookup',
-      description:
-          'Look up the mineral profile of a plant including calcium, iron, potassium, phosphorus, magnesium, and other minerals across different plant parts (leaf, fruit, seed, root, etc.)',
-      parameters: ToolParametersSchema(
-        properties: {
-          'plant': ToolParameter(
-            type: 'string',
-            description: 'Common name or scientific name of the plant',
-            required: true,
-          ),
-        },
-      ),
-    ),
-    CactusTool(
-      name: 'calculate',
-      description:
-          'Perform mathematical calculations for fertilizer amounts, nutrient ratios, coverage area, or dilution rates',
-      parameters: ToolParametersSchema(
-        properties: {
-          'expression': ToolParameter(
-            type: 'string',
-            description: 'Mathematical expression to evaluate',
-            required: true,
-          ),
-          'context': ToolParameter(
-            type: 'string',
-            description:
-                'Optional context describing what the calculation is for',
-            required: false,
-          ),
-        },
-      ),
-    ),
-    CactusTool(
-      name: 'local_fertilizer_plants',
-      description:
-          'Create an organic fertilizer formulation using plants available '
-          'in the user\'s region. Returns a complete blend with percentages, '
-          'NPK values, and preparation instructions.',
-      parameters: ToolParametersSchema(
-        properties: {
-          'location': ToolParameter(
-            type: 'string',
-            description: 'Country or region name',
-            required: true,
-          ),
-          'nutrient': ToolParameter(
-            type: 'string',
-            description:
-                'Target nutrient or growth stage: "nitrogen" (leafy/vegetative), '
-                '"phosphorus" (flowering/roots), "potassium" (fruiting), '
-                '"balanced", "vegetative", "flowering", "fruiting", or "seedling"',
-            required: true,
-          ),
-        },
-      ),
-    ),
-    // Two domain tools ported from the GPU-side multi-tool epic (chainlink
-    // #174/#175/#177): bioaccumulator ratio calculation and combined
-    // regional/recipe lookup. #175's dual-relevant eval found injecting the
-    // right tool's content significantly improves MCQ accuracy over
-    // retrieval-alone (McNemar chi2=6.125, p<0.05).
-    CactusTool(
-      name: 'bioaccumulator_ratio',
-      description:
-          'Compare a crop\'s NPK requirement against a candidate bioaccumulator '
-          'plant\'s tissue mineral content (phosphorus and potassium only -- '
-          'nitrogen is never comparable). Returns a relative ratio, not a '
-          'calibrated fertilizer dosing formula, useful for judging whether a '
-          'plant is nutrient-dense enough to cut as green manure or steep into '
-          'a liquid feed.',
-      parameters: ToolParametersSchema(
-        properties: {
-          'crop': ToolParameter(
-            type: 'string',
-            description: 'Crop name',
-            required: true,
-          ),
-          'candidate_plant': ToolParameter(
-            type: 'string',
-            description:
-                'Candidate bioaccumulator plant common or scientific name',
-            required: true,
-          ),
-        },
-      ),
-    ),
-    CactusTool(
-      name: 'regional_recipe_lookup',
-      description:
-          'Look up candidate bioaccumulator plants native to a region and/or '
-          'matching Korean Natural Farming (KNF) / JADAM technique or recipe '
-          'for a crop or stated nutrient problem. At least one of crop, '
-          'region, or problem must be given.',
-      parameters: ToolParametersSchema(
-        properties: {
-          'crop': ToolParameter(
-            type: 'string',
-            description: 'Crop name, optional',
-            required: false,
-          ),
-          'region': ToolParameter(
-            type: 'string',
-            description: 'Region or location name, optional',
-            required: false,
-          ),
-          'problem': ToolParameter(
-            type: 'string',
-            description: 'Stated problem, optional',
-            required: false,
-          ),
-        },
-      ),
-    ),
-  ];
+  /// The six tools candidate 4 was trained and gated on, in runner order.
+  ///
+  /// Defined in the Flutter-free [farmingToolsCatalog] so the prompt-parity
+  /// exporter can load the exact catalog the app sends.
+  static final List<CactusTool> farmingTools = farmingToolsCatalog;
 
   bool get isInitialized => _isInitialized;
   bool get isDownloading => _isDownloading;
@@ -200,7 +102,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
 
       // The Qwen3.5 bundle is staged locally until it is hosted. Validate it
       // before replacing an incomplete private copy.
-      final qwen35StagingFolder = Directory(_qwen35StagingPath);
+      final qwen35StagingFolder = Directory(qwen35StagingPath);
       if (_isQwen35Flavor) {
         for (final requiredPath in [
           'config.txt',
@@ -386,6 +288,7 @@ say so honestly. Provide practical, actionable advice when possible.''';
     String? context,
     bool agenticMode = false,
     List<ChatMessage>? conversationHistory,
+    String? systemPrompt,
   }) async {
     if (!_isInitialized) {
       throw ModelServiceException(
@@ -393,7 +296,10 @@ say so honestly. Provide practical, actionable advice when possible.''';
       );
     }
 
-    final systemContent = _buildSystemContent(context, agenticMode);
+    var systemContent = systemPrompt ?? _buildSystemContent(context, agenticMode);
+    if (systemPrompt != null && context != null && context.isNotEmpty) {
+      systemContent += '\n\nRelevant Context:\n$context';
+    }
 
     final messages = [
       ChatMessage(content: systemContent, role: 'system'),
@@ -789,6 +695,51 @@ say so honestly. Provide practical, actionable advice when possible.''';
     );
   }
 
+  /// Generate from an already-built message list.
+  ///
+  /// This is the entry point for the runner-faithful recipe instruction turn:
+  /// the app supplies `[system, *history, user, assistant, tool]` verbatim and
+  /// passes the same six tools, so Cactus's `format_qwen_style` renders the
+  /// tool result as `<tool_response>` and appends the deployed empty think
+  /// block at the generation boundary.
+  Future<CompletionResult> generateCompletionFromMessages({
+    required List<ChatMessage> messages,
+    List<CactusTool>? tools,
+    bool resetContextBeforeTools = true,
+  }) async {
+    if (!_isInitialized) {
+      throw ModelServiceException(
+        'Model not initialized. Call initializeModel first.',
+      );
+    }
+
+    final result = await _lm!.generateCompletion(
+      messages: messages,
+      params: CactusCompletionParams(
+        maxTokens: defaultMaxTokens,
+        tools: tools,
+      ),
+      resetContextBeforeTools: resetContextBeforeTools,
+    );
+
+    if (!result.success) {
+      throw ModelServiceException('Generation failed: ${result.response}');
+    }
+
+    return CompletionResult(
+      response: _cleanResponse(result.response),
+      tokensPerSecond: result.tokensPerSecond,
+      prefillTokensPerSecond: result.prefillTokensPerSecond,
+      decodeTokensPerSecond: result.decodeTokensPerSecond,
+      rawResponse: result.response,
+      timeToFirstTokenMs: result.timeToFirstTokenMs,
+      totalTimeMs: result.totalTimeMs,
+      prefillTokens: result.prefillTokens,
+      decodeTokens: result.decodeTokens,
+      totalTokens: result.totalTokens,
+    );
+  }
+
   /// Select which of [farmingTools] are relevant to `question`, using our
   /// own query-based router (`tool_router.dart`, a faithful Dart port of
   /// `qwen3-finetune/rlm_slice/tool_router.py`) -- NOT Cactus's own
@@ -839,17 +790,9 @@ say so honestly. Provide practical, actionable advice when possible.''';
   }
 
   String _buildSystemContentForTools(String? context) {
-    var content = systemPrompt;
-
-    content += '''
-
-You have access to tools for looking up plant nutrients, performing calculations, and creating fertilizer formulations.
-When the user asks about NPK ratios or nutrient requirements, use npk_lookup.
-When the user asks about making organic fertilizer:
-- If they haven't specified their location, ask where they are farming.
-- Once you know location and crop type, use local_fertilizer_plants to get a formulation.
-- Choose the nutrient parameter based on growth stage: "nitrogen" for leafy greens or vegetative growth, "phosphorus" for flowering or root development, "potassium" for fruiting, "balanced" for general use, or "seedling" for transplants.
-After receiving tool results, provide a helpful summary to the user.''';
+    // Byte-identical to the runner's trigger_recipe_v1 system prompt, which
+    // candidate 4 was trained and gated on.
+    var content = recipeSystemPrompt;
 
     if (context != null && context.isNotEmpty) {
       content += '\n\nRelevant Context:\n$context';

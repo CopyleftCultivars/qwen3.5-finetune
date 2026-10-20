@@ -1,0 +1,1019 @@
+{
+  "schema_version": "recipe-mapping-derivations-proposal-v1",
+  "issue": "55",
+  "generated_by": "scripts/audit_recipe_mapping.py",
+  "status": "approved_by_owner",
+  "app_data_sha256": {
+    "Enriched_Recipes.json": "a09340679a7a184be12f7e1fb74b060e2ec9a3a066970092112a1e57d32c0514",
+    "NF_Recipes.json": "21690722326bed97dd0e393355783bd217d1c4a58b8490619cf71f6bf609ae6a",
+    "plant_mineral_profiles.json": "c97f9afa9956bebe3478dbd8bbcd4245dcf471a2f7d84c0cad80b696d09ef053",
+    "Crop_Requirements.json": "5a85ec677eddf6ce9d7cef3d3edeb15ccd5395191b9c4c0ae849d42de6f89559"
+  },
+  "instructions": "Owner sign-off recorded for the #55 recipe-to-plant mappings on 2026-10-17. These derivations remain proposals in the sense that nothing here has been written into the read-only app data. The trigger template is approved_by_owner (2026-10-17) and the JSON schemas are defined (v2); the dosing constants are the only remaining sign-off gate before #57.",
+  "recipe_candidate_plants": [
+    {
+      "recipe_abbrev": "FAA",
+      "recipe_name": "Fish Amino Acid (FAA)",
+      "primary_nutrient": "N",
+      "target_mineral": "nitrogen",
+      "in_ratio_tool_scope": false,
+      "basis": "highest complete nitrogen tissue midpoint among the 660 catalog profiles",
+      "candidates": [
+        {
+          "common_name": "Sweet Acacia",
+          "scientific_name": "Acacia farnesiana",
+          "part": "leaf",
+          "min": 12800.0,
+          "max": 68800.0,
+          "unit": "ppm",
+          "midpoint": 40800.0
+        },
+        {
+          "common_name": "Cucumber",
+          "scientific_name": "Cucumis sativus",
+          "part": "fruit",
+          "min": 1400.0,
+          "max": 80000.0,
+          "unit": "ppm",
+          "midpoint": 40700.0
+        },
+        {
+          "common_name": "Brassica oleracea var. botrytis l.",
+          "scientific_name": "Brassica oleracea var. botrytis l.",
+          "part": "leaf",
+          "min": 7000.0,
+          "max": 71800.0,
+          "unit": "ppm",
+          "midpoint": 39400.0
+        },
+        {
+          "common_name": "Broccoli",
+          "scientific_name": "Brassica oleracea var. italica",
+          "part": "leaf",
+          "min": 7000.0,
+          "max": 71800.0,
+          "unit": "ppm",
+          "midpoint": 39400.0
+        },
+        {
+          "common_name": "Stinging Nettle",
+          "scientific_name": "Urtica dioica",
+          "part": "leaf",
+          "min": 10000.0,
+          "max": 55555.0,
+          "unit": "ppm",
+          "midpoint": 32777.5
+        },
+        {
+          "common_name": "Dill",
+          "scientific_name": "Anethum graveolens",
+          "part": "plant",
+          "min": 6800.0,
+          "max": 55300.0,
+          "unit": "ppm",
+          "midpoint": 31050.0
+        },
+        {
+          "common_name": "Pea",
+          "scientific_name": "Pisum sativum",
+          "part": "seed",
+          "min": 11000.0,
+          "max": 50000.0,
+          "unit": "ppm",
+          "midpoint": 30500.0
+        },
+        {
+          "common_name": "Nicotiana tabacum",
+          "scientific_name": "Nicotiana tabacum",
+          "part": "leaf",
+          "min": 20000.0,
+          "max": 40000.0,
+          "unit": "ppm",
+          "midpoint": 30000.0
+        },
+        {
+          "common_name": "Lettuce",
+          "scientific_name": "Lactuca sativa",
+          "part": "leaf",
+          "min": 2200.0,
+          "max": 54000.0,
+          "unit": "ppm",
+          "midpoint": 28100.0
+        },
+        {
+          "common_name": "Senna obtusifolia",
+          "scientific_name": "Senna obtusifolia",
+          "part": "seed",
+          "min": 22200.0,
+          "max": 31300.0,
+          "unit": "ppm",
+          "midpoint": 26750.0
+        }
+      ],
+      "provenance": "derived-proposed",
+      "status": "approved_by_owner",
+      "note": "NOT applied to app data; owner sign-off required before use",
+      "owner_decision": "accepted: recipe-named plants first, then this derived top-10 list"
+    },
+    {
+      "recipe_abbrev": "FPJ",
+      "recipe_name": "Fermented Plant Juice (FPJ)",
+      "primary_nutrient": "N",
+      "target_mineral": "nitrogen",
+      "in_ratio_tool_scope": false,
+      "basis": "highest complete nitrogen tissue midpoint among the 660 catalog profiles",
+      "candidates": [
+        {
+          "common_name": "Sweet Acacia",
+          "scientific_name": "Acacia farnesiana",
+          "part": "leaf",
+          "min": 12800.0,
+          "max": 68800.0,
+          "unit": "ppm",
+          "midpoint": 40800.0
+        },
+        {
+          "common_name": "Cucumber",
+          "scientific_name": "Cucumis sativus",
+          "part": "fruit",
+          "min": 1400.0,
+          "max": 80000.0,
+          "unit": "ppm",
+          "midpoint": 40700.0
+        },
+        {
+          "common_name": "Brassica oleracea var. botrytis l.",
+          "scientific_name": "Brassica oleracea var. botrytis l.",
+          "part": "leaf",
+          "min": 7000.0,
+          "max": 71800.0,
+          "unit": "ppm",
+          "midpoint": 39400.0
+        },
+        {
+          "common_name": "Broccoli",
+          "scientific_name": "Brassica oleracea var. italica",
+          "part": "leaf",
+          "min": 7000.0,
+          "max": 71800.0,
+          "unit": "ppm",
+          "midpoint": 39400.0
+        },
+        {
+          "common_name": "Stinging Nettle",
+          "scientific_name": "Urtica dioica",
+          "part": "leaf",
+          "min": 10000.0,
+          "max": 55555.0,
+          "unit": "ppm",
+          "midpoint": 32777.5
+        },
+        {
+          "common_name": "Dill",
+          "scientific_name": "Anethum graveolens",
+          "part": "plant",
+          "min": 6800.0,
+          "max": 55300.0,
+          "unit": "ppm",
+          "midpoint": 31050.0
+        },
+        {
+          "common_name": "Pea",
+          "scientific_name": "Pisum sativum",
+          "part": "seed",
+          "min": 11000.0,
+          "max": 50000.0,
+          "unit": "ppm",
+          "midpoint": 30500.0
+        },
+        {
+          "common_name": "Nicotiana tabacum",
+          "scientific_name": "Nicotiana tabacum",
+          "part": "leaf",
+          "min": 20000.0,
+          "max": 40000.0,
+          "unit": "ppm",
+          "midpoint": 30000.0
+        },
+        {
+          "common_name": "Lettuce",
+          "scientific_name": "Lactuca sativa",
+          "part": "leaf",
+          "min": 2200.0,
+          "max": 54000.0,
+          "unit": "ppm",
+          "midpoint": 28100.0
+        },
+        {
+          "common_name": "Senna obtusifolia",
+          "scientific_name": "Senna obtusifolia",
+          "part": "seed",
+          "min": 22200.0,
+          "max": 31300.0,
+          "unit": "ppm",
+          "midpoint": 26750.0
+        }
+      ],
+      "provenance": "derived-proposed",
+      "status": "approved_by_owner",
+      "note": "NOT applied to app data; owner sign-off required before use",
+      "owner_decision": "accepted: recipe-named plants first, then this derived top-10 list"
+    },
+    {
+      "recipe_abbrev": "FFJ",
+      "recipe_name": "Fermented Fruit Juice (FFJ)",
+      "primary_nutrient": "K",
+      "target_mineral": "potassium",
+      "in_ratio_tool_scope": true,
+      "basis": "highest complete potassium tissue midpoint among the 660 catalog profiles",
+      "candidates": [
+        {
+          "common_name": "Brassica pekinensis",
+          "scientific_name": "Brassica pekinensis",
+          "part": "leaf",
+          "min": 74100.0,
+          "max": 81900.0,
+          "unit": "ppm",
+          "midpoint": 78000.0
+        },
+        {
+          "common_name": "Lettuce",
+          "scientific_name": "Lactuca sativa",
+          "part": "leaf",
+          "min": 2900.0,
+          "max": 121800.0,
+          "unit": "ppm",
+          "midpoint": 62350.0
+        },
+        {
+          "common_name": "Endive",
+          "scientific_name": "Cichorium endivia",
+          "part": "leaf",
+          "min": 2915.0,
+          "max": 96000.0,
+          "unit": "ppm",
+          "midpoint": 49457.5
+        },
+        {
+          "common_name": "Anthriscus cerefolium",
+          "scientific_name": "Anthriscus cerefolium",
+          "part": "leaf",
+          "min": 47400.0,
+          "max": 51200.0,
+          "unit": "ppm",
+          "midpoint": 49300.0
+        },
+        {
+          "common_name": "Vigna mungo",
+          "scientific_name": "Vigna mungo",
+          "part": "seed",
+          "min": 1710.0,
+          "max": 89790.0,
+          "unit": "ppm",
+          "midpoint": 45750.0
+        },
+        {
+          "common_name": "Radish",
+          "scientific_name": "Raphanus sativus",
+          "part": "root",
+          "min": 2215.0,
+          "max": 85700.0,
+          "unit": "ppm",
+          "midpoint": 43957.5
+        },
+        {
+          "common_name": "Portulaca oleracea",
+          "scientific_name": "Portulaca oleracea",
+          "part": "herb",
+          "min": 4880.0,
+          "max": 81200.0,
+          "unit": "ppm",
+          "midpoint": 43040.0
+        },
+        {
+          "common_name": "Dill",
+          "scientific_name": "Anethum graveolens",
+          "part": "plant",
+          "min": 8700.0,
+          "max": 76450.0,
+          "unit": "ppm",
+          "midpoint": 42575.0
+        },
+        {
+          "common_name": "Chrysanthemum coronarium",
+          "scientific_name": "Chrysanthemum coronarium",
+          "part": "bud",
+          "min": 5710.0,
+          "max": 76745.0,
+          "unit": "ppm",
+          "midpoint": 41227.5
+        },
+        {
+          "common_name": "Glechoma hederacea",
+          "scientific_name": "Glechoma hederacea",
+          "part": "plant",
+          "min": 32000.0,
+          "max": 46000.0,
+          "unit": "ppm",
+          "midpoint": 39000.0
+        }
+      ],
+      "provenance": "derived-proposed",
+      "status": "approved_by_owner",
+      "note": "NOT applied to app data; owner sign-off required before use",
+      "owner_decision": "accepted: recipe-named plants first, then this derived top-10 list"
+    },
+    {
+      "recipe_abbrev": "WCA",
+      "recipe_name": "Water-Soluble Calcium (WCA)",
+      "primary_nutrient": "Ca",
+      "target_mineral": "calcium",
+      "in_ratio_tool_scope": false,
+      "basis": "highest complete calcium tissue midpoint among the 660 catalog profiles",
+      "candidates": [
+        {
+          "common_name": "Albizia lebbeck",
+          "scientific_name": "Albizia lebbeck",
+          "part": "leaf",
+          "min": 10100.0,
+          "max": 104000.0,
+          "unit": "ppm",
+          "midpoint": 57050.0
+        },
+        {
+          "common_name": "Boehmeria nivea",
+          "scientific_name": "Boehmeria nivea",
+          "part": "plant",
+          "min": 36000.0,
+          "max": 39000.0,
+          "unit": "ppm",
+          "midpoint": 37500.0
+        },
+        {
+          "common_name": "Ephedra nevadensis",
+          "scientific_name": "Ephedra nevadensis",
+          "part": "plant",
+          "min": 4500.0,
+          "max": 58100.0,
+          "unit": "ppm",
+          "midpoint": 31300.0
+        },
+        {
+          "common_name": "Mimulus glabratus",
+          "scientific_name": "Mimulus glabratus",
+          "part": "shoot",
+          "min": 5430.0,
+          "max": 54300.0,
+          "unit": "ppm",
+          "midpoint": 29865.0
+        },
+        {
+          "common_name": "Spiny Amaranth",
+          "scientific_name": "Amaranthus spinosus",
+          "part": "leaf",
+          "min": 4760.0,
+          "max": 53335.0,
+          "unit": "ppm",
+          "midpoint": 29047.5
+        },
+        {
+          "common_name": "Luffa aegyptiaca",
+          "scientific_name": "Luffa aegyptiaca",
+          "part": "leaf",
+          "min": 560.0,
+          "max": 55000.0,
+          "unit": "ppm",
+          "midpoint": 27780.0
+        },
+        {
+          "common_name": "Amaranth",
+          "scientific_name": "Amaranthus sp.",
+          "part": "leaf",
+          "min": 1559.0,
+          "max": 53333.0,
+          "unit": "ppm",
+          "midpoint": 27446.0
+        },
+        {
+          "common_name": "Brassica oleracea var. botrytis l.",
+          "scientific_name": "Brassica oleracea var. botrytis l.",
+          "part": "leaf",
+          "min": 360.0,
+          "max": 54247.0,
+          "unit": "ppm",
+          "midpoint": 27303.5
+        },
+        {
+          "common_name": "Broccoli",
+          "scientific_name": "Brassica oleracea var. italica",
+          "part": "leaf",
+          "min": 360.0,
+          "max": 54247.0,
+          "unit": "ppm",
+          "midpoint": 27303.5
+        },
+        {
+          "common_name": "Achyranthes bidentata",
+          "scientific_name": "Achyranthes bidentata",
+          "part": "root",
+          "min": 1130.0,
+          "max": 52200.0,
+          "unit": "ppm",
+          "midpoint": 26665.0
+        }
+      ],
+      "provenance": "derived-proposed",
+      "status": "approved_by_owner",
+      "note": "NOT applied to app data; owner sign-off required before use",
+      "owner_decision": "accepted: recipe-named plants first, then this derived top-10 list"
+    },
+    {
+      "recipe_abbrev": "WSP",
+      "recipe_name": "Water-Soluble Phosphorus (WSP)",
+      "primary_nutrient": "P",
+      "target_mineral": "phosphorus",
+      "in_ratio_tool_scope": true,
+      "basis": "highest complete phosphorus tissue midpoint among the 660 catalog profiles",
+      "candidates": [
+        {
+          "common_name": "Beet",
+          "scientific_name": "Beta vulgaris",
+          "part": "root",
+          "min": 260.0,
+          "max": 45580.0,
+          "unit": "ppm",
+          "midpoint": 22920.0
+        },
+        {
+          "common_name": "Xanthosoma sagittifolium",
+          "scientific_name": "Xanthosoma sagittifolium",
+          "part": "leaf",
+          "min": 610.0,
+          "max": 38416.0,
+          "unit": "ppm",
+          "midpoint": 19513.0
+        },
+        {
+          "common_name": "Lambsquarters",
+          "scientific_name": "Chenopodium album",
+          "part": "leaf",
+          "min": 720.0,
+          "max": 36833.0,
+          "unit": "ppm",
+          "midpoint": 18776.5
+        },
+        {
+          "common_name": "Momordica charantia",
+          "scientific_name": "Momordica charantia",
+          "part": "leaf",
+          "min": 540.0,
+          "max": 33467.0,
+          "unit": "ppm",
+          "midpoint": 17003.5
+        },
+        {
+          "common_name": "Lepidium sativum",
+          "scientific_name": "Lepidium sativum",
+          "part": "seed",
+          "min": 16500.0,
+          "max": 17500.0,
+          "unit": "ppm",
+          "midpoint": 17000.0
+        },
+        {
+          "common_name": "Physalis ixocarpa",
+          "scientific_name": "Physalis ixocarpa",
+          "part": "fruit",
+          "min": 400.0,
+          "max": 30250.0,
+          "unit": "ppm",
+          "midpoint": 15325.0
+        },
+        {
+          "common_name": "Limonia acidissima",
+          "scientific_name": "Limonia acidissima",
+          "part": "seed",
+          "min": 14300.0,
+          "max": 14895.0,
+          "unit": "ppm",
+          "midpoint": 14597.5
+        },
+        {
+          "common_name": "Flax",
+          "scientific_name": "Linum usitatissimum",
+          "part": "seed",
+          "min": 3961.0,
+          "max": 20335.0,
+          "unit": "ppm",
+          "midpoint": 12148.0
+        },
+        {
+          "common_name": "Murraya koenigii",
+          "scientific_name": "Murraya koenigii",
+          "part": "leaf",
+          "min": 6000.0,
+          "max": 17800.0,
+          "unit": "ppm",
+          "midpoint": 11900.0
+        },
+        {
+          "common_name": "Pumpkin",
+          "scientific_name": "Cucurbita pepo",
+          "part": "seed",
+          "min": 10600.0,
+          "max": 12982.0,
+          "unit": "ppm",
+          "midpoint": 11791.0
+        }
+      ],
+      "provenance": "derived-proposed",
+      "status": "approved_by_owner",
+      "note": "NOT applied to app data; owner sign-off required before use",
+      "owner_decision": "accepted: recipe-named plants first, then this derived top-10 list"
+    }
+  ],
+  "entity_proposals": [
+    {
+      "recipe_abbrev": "FAA",
+      "recipe_name": "Fish Amino Acid (FAA)",
+      "text": "Fish (blue-back species)",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "IMO",
+      "recipe_name": "Collection of IMOs from Native Soil",
+      "text": "Forest floor material",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "IMO",
+      "recipe_name": "Collection of IMOs from Native Soil",
+      "text": "Bamboo grove soil",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "IMO",
+      "recipe_name": "Collection of IMOs from Native Soil",
+      "text": "Oak grove soil",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "OHN",
+      "recipe_name": "Oriental Herbal Nutrient (OHN)",
+      "text": "Angelica archangelica",
+      "source_status": "ambiguous",
+      "source_category": "plant",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": true,
+      "reason": "recipe names a species not in the catalog; the genus has several profiles",
+      "proposed_entities": [
+        {
+          "common_name": "Angelica dahurica",
+          "scientific_name": "Angelica dahurica"
+        },
+        {
+          "common_name": "Angelica laxiflora",
+          "scientific_name": "Angelica laxiflora"
+        },
+        {
+          "common_name": "Dong Quai",
+          "scientific_name": "Angelica sinensis"
+        }
+      ],
+      "owner_decision": {
+        "decision": "use the closest of the three Angelica profiles",
+        "selected": {
+          "common_name": "Angelica dahurica",
+          "scientific_name": "Angelica dahurica"
+        },
+        "basis": "highest scientific-name similarity to Angelica archangelica (0.737)"
+      }
+    },
+    {
+      "recipe_abbrev": "WCA",
+      "recipe_name": "Water-Soluble Calcium (WCA)",
+      "text": "Eggshell",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "WCA",
+      "recipe_name": "Water-Soluble Calcium (WCA)",
+      "text": "Oyster shell",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "WCA",
+      "recipe_name": "Water-Soluble Calcium (WCA)",
+      "text": "Limestone",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "WSP",
+      "recipe_name": "Water-Soluble Phosphorus (WSP)",
+      "text": "Fish bones",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "WSP",
+      "recipe_name": "Water-Soluble Phosphorus (WSP)",
+      "text": "Animal bones",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "LABS",
+      "recipe_name": "Lactic Acid Bacteria Serum (LABS)",
+      "text": "Rice wash water",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "LABS",
+      "recipe_name": "Lactic Acid Bacteria Serum (LABS)",
+      "text": "Raw milk",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "SES",
+      "recipe_name": "Seed/Seedling Treatment (SES)",
+      "text": "FPJ",
+      "source_status": "unresolved",
+      "source_category": "recipe_reference",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "reference to another recipe's product, not a plant profile",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "SES",
+      "recipe_name": "Seed/Seedling Treatment (SES)",
+      "text": "FFJ",
+      "source_status": "unresolved",
+      "source_category": "recipe_reference",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "reference to another recipe's product, not a plant profile",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "SES",
+      "recipe_name": "Seed/Seedling Treatment (SES)",
+      "text": "OHN",
+      "source_status": "unresolved",
+      "source_category": "recipe_reference",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "reference to another recipe's product, not a plant profile",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "SES",
+      "recipe_name": "Seed/Seedling Treatment (SES)",
+      "text": "LABS",
+      "source_status": "unresolved",
+      "source_category": "recipe_reference",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "reference to another recipe's product, not a plant profile",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "SES",
+      "recipe_name": "Seed/Seedling Treatment (SES)",
+      "text": "BRV",
+      "source_status": "unresolved",
+      "source_category": "recipe_reference",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "reference to another recipe's product, not a plant profile",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "FMC",
+      "recipe_name": "Fermented Mixed Compost (FMC)",
+      "text": "Kitchen scraps",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "FMC",
+      "recipe_name": "Fermented Mixed Compost (FMC)",
+      "text": "Garden waste",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "FMC",
+      "recipe_name": "Fermented Mixed Compost (FMC)",
+      "text": "Animal manure",
+      "source_status": "unresolved",
+      "source_category": "non_plant_material",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": false,
+      "reason": "animal, mineral or other non-plant input; no plant derivation",
+      "owner_decision": {
+        "decision": "accepted as not derivable"
+      }
+    },
+    {
+      "recipe_abbrev": "AIA",
+      "recipe_name": "Aromatic Insect Attractants (AIA)",
+      "text": "Aromatic plants",
+      "source_status": "unresolved",
+      "source_category": "generic_placeholder",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": true,
+      "reason": "generic placeholder; the app's own OHN recipe already fixes an aromatic set",
+      "proposed_entities": [
+        "Garlic",
+        "Ginger",
+        "Cinnamon"
+      ],
+      "owner_decision": {
+        "decision": "use the app's OHN aromatic set",
+        "entities": [
+          "Garlic",
+          "Ginger",
+          "Cinnamon"
+        ]
+      }
+    },
+    {
+      "recipe_abbrev": "AIA",
+      "recipe_name": "Aromatic Insect Attractants (AIA)",
+      "text": "Citrus peel",
+      "source_status": "ambiguous",
+      "source_category": "plant",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": true,
+      "reason": "generic citrus tissue; the catalog holds several Citrus species",
+      "proposed_entities": [
+        {
+          "common_name": "Citrus aurantium",
+          "scientific_name": "Citrus aurantium"
+        },
+        {
+          "common_name": "Citrus medica",
+          "scientific_name": "Citrus medica"
+        },
+        {
+          "common_name": "Citrus mitis",
+          "scientific_name": "Citrus mitis"
+        },
+        {
+          "common_name": "Grapefruit",
+          "scientific_name": "Citrus paradisi"
+        },
+        {
+          "common_name": "Lemon",
+          "scientific_name": "Citrus limon"
+        },
+        {
+          "common_name": "Lime",
+          "scientific_name": "Citrus aurantiifolia"
+        },
+        {
+          "common_name": "Mandarin",
+          "scientific_name": "Citrus reticulata"
+        },
+        {
+          "common_name": "Orange",
+          "scientific_name": "Citrus sinensis"
+        }
+      ],
+      "owner_decision": {
+        "decision": "user picks one of the eight citrus profiles",
+        "candidates_remain_visible": true
+      }
+    },
+    {
+      "recipe_abbrev": "Wildcrafted",
+      "recipe_name": "Fermented Wildcrafted Plant Fertilizer",
+      "text": "Varies \u2014 select based on target nutrient",
+      "source_status": "unresolved",
+      "source_category": "generic_placeholder",
+      "status": "approved_by_owner",
+      "provenance": "derived-proposed",
+      "derivable": true,
+      "reason": "placeholder that asks for a per-nutrient choice",
+      "proposed_per_nutrient": {
+        "nitrogen": [
+          "Sweet Acacia",
+          "Cucumber",
+          "Brassica oleracea var. botrytis l.",
+          "Broccoli",
+          "Stinging Nettle",
+          "Dill",
+          "Pea",
+          "Nicotiana tabacum",
+          "Lettuce",
+          "Senna obtusifolia"
+        ],
+        "phosphorus": [
+          "Beet",
+          "Xanthosoma sagittifolium",
+          "Lambsquarters",
+          "Momordica charantia",
+          "Lepidium sativum",
+          "Physalis ixocarpa",
+          "Limonia acidissima",
+          "Flax",
+          "Murraya koenigii",
+          "Pumpkin"
+        ],
+        "potassium": [
+          "Brassica pekinensis",
+          "Lettuce",
+          "Endive",
+          "Anthriscus cerefolium",
+          "Vigna mungo",
+          "Radish",
+          "Portulaca oleracea",
+          "Dill",
+          "Chrysanthemum coronarium",
+          "Glechoma hederacea"
+        ],
+        "calcium": [
+          "Albizia lebbeck",
+          "Boehmeria nivea",
+          "Ephedra nevadensis",
+          "Mimulus glabratus",
+          "Spiny Amaranth",
+          "Luffa aegyptiaca",
+          "Amaranth",
+          "Brassica oleracea var. botrytis l.",
+          "Broccoli",
+          "Achyranthes bidentata"
+        ]
+      },
+      "owner_decision": {
+        "decision": "use the per-nutrient top-10 lists for the chosen nutrient"
+      }
+    }
+  ],
+  "owner_signoff": {
+    "status": "approved_by_owner",
+    "date": "2026-10-17",
+    "source": "Chainlink issue #56 owner decisions comment, 2026-10-17",
+    "scope": "recipe-to-plant mappings and the derived candidate policy only",
+    "decisions": [
+      {
+        "id": "nutrient_scope",
+        "decision": "The recipe tool computes N, P and K; Ca stays out of scope for v2 and WCA is not computable."
+      },
+      {
+        "id": "trifolium_repens",
+        "decision": "Accept Trifolium repens (Clover) as Red Clover (Trifolium pratense), the only clover in the catalog.",
+        "caveat": "species proxy: the recipe names white clover, the profile is red clover"
+      },
+      {
+        "id": "citrus_peel",
+        "decision": "Citrus peel resolves to a citrus group the user picks from; the eight Citrus profiles stay visible as candidates."
+      },
+      {
+        "id": "angelica_archangelica",
+        "decision": "Angelica archangelica uses the closest of the three Angelica profiles; v2 records Angelica dahurica as closest by scientific-name similarity."
+      },
+      {
+        "id": "candidate_policy",
+        "decision": "Each recipe offers its recipe-named plants first, then the top catalog plants by tissue content for the recipe's nutrient, labelled 'derived'."
+      }
+    ],
+    "still_pending": [
+      "dosing constants, each with a corpus source (re-proposed in data/recipe_tool_dosing_constants_proposal_v2.json)"
+    ],
+    "approved_later": [
+      {
+        "id": "trigger_template",
+        "decision": "Approved as proposed 2026-10-17; see data/recipe_tool_trigger_template_proposal_v1.json.",
+        "status": "approved_by_owner",
+        "date": "2026-10-17"
+      },
+      {
+        "id": "json_schemas",
+        "decision": "Input/output schema v2 defined in this repository; only the dosing constants remain pending before #57.",
+        "status": "defined",
+        "date": "2026-10-18"
+      }
+    ]
+  }
+}
