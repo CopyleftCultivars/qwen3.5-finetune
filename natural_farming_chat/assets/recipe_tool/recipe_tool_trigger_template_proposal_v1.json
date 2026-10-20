@@ -1,0 +1,81 @@
+{
+  "schema_version": "recipe-tool-trigger-template-proposal-v1",
+  "issue": "56",
+  "status": "approved_by_owner",
+  "status_note": "APPROVED by the owner on 2026-10-17 exactly as proposed. The trigger wording and accepted units may be consumed by issue #57.",
+  "canonical_template": "Bioaccumulator recipe: <candidate plant> for my <crop>, <area> m2",
+  "canonical_example": "Bioaccumulator recipe: Stinging Nettle for my Tomato, 25 m2",
+  "prefix": "Bioaccumulator recipe:",
+  "recognizer": {
+    "pattern": "^\\s*Bioaccumulator recipe:\\s*(?P<candidate_plant>.+?)\\s+for my\\s+(?P<crop>[^,]+),\\s*(?P<quantity>\\d+(?:\\.\\d+)?)\\s*(?P<unit>m2|m\u00b2|sq m|square metres|square meters)\\s*$",
+    "case_sensitive": false,
+    "notes": [
+      "The prefix is the only trigger. A message without the prefix must not call the tool.",
+      "The three arguments are carried entirely by the template; malformed prompts are user error.",
+      "The crop is parsed up to the first comma, so crop names must not contain a comma.",
+      "The candidate plant may contain spaces and punctuation; it is resolved by the catalog resolver.",
+      "The canonical unit is m2; accepted aliases are normalized to m2 before the tool call."
+    ]
+  },
+  "arguments": {
+    "candidate_plant": {
+      "schema_field": "candidate_plant",
+      "type": "string",
+      "description": "Catalog common or scientific name, or a recipe-named plant string such as 'Nettle leaf'. The oracle resolves it with the same rules as bioaccumulator_oracle.py."
+    },
+    "crop": {
+      "schema_field": "crop",
+      "type": "string",
+      "description": "Crop_Requirements.json common or scientific name."
+    },
+    "quantity": {
+      "schema_field": "quantity",
+      "type": "number",
+      "description": "Positive area, canonical unit m2."
+    },
+    "unit": {
+      "schema_field": "unit",
+      "type": "string",
+      "description": "Canonical unit m2. The form/parser normalizes the accepted aliases before the call."
+    }
+  },
+  "units": {
+    "canonical": "m2",
+    "accepted_aliases": [
+      "m2",
+      "m\u00b2",
+      "sq m",
+      "square metres",
+      "square meters"
+    ],
+    "rejected_in_v1": [
+      "ha",
+      "hectare",
+      "ft2",
+      "ft\u00b2",
+      "sq ft",
+      "acres",
+      "acre"
+    ],
+    "rejection_behavior": {
+      "error_code": "unsupported_unit",
+      "message": "Unit must be m2 in v2. Convert hectares or square feet to m2 before using the trigger.",
+      "rationale": "One form and one canonical unit keep the call arguments and the benchmark scoring unambiguous."
+    }
+  },
+  "owner_signoff": {
+    "status": "approved_by_owner",
+    "date": "2026-10-17",
+    "source": "Chainlink issue #56 owner decisions comment, 2026-10-17",
+    "decision": "Approved as proposed: 'Bioaccumulator recipe: <candidate plant> for my <crop>, <area> m2', aliases m2/m²/sq m/square metres/square meters; ha, hectare, ft2, sq ft and acres are rejected with unsupported_unit."
+  },
+  "owner_signoff_requested": {
+    "decision": "Approved 2026-10-17; retained for the record.",
+    "alternatives_considered": [
+      "Adding an optional method or dilution argument: rejected for v2 because the tool already selects the recipe and reports all recipe dilutions.",
+      "Accepting hectares: rejected for v2 to avoid a silent unit conversion in the model's arguments.",
+      "A shorter prefix without 'Bioaccumulator recipe:': rejected because it is easier to confuse with ordinary chat."
+    ],
+    "date_requested": "2026-10-17"
+  }
+}

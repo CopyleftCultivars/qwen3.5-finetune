@@ -1,0 +1,1543 @@
+{
+  "schema_version": "recipe-mapping-v1",
+  "issue": "55",
+  "generated_by": "scripts/audit_recipe_mapping.py",
+  "app_data": {
+    "root": "qwen3.5-finetune/natural_farming_chat/assets/plant_data",
+    "read_only": true,
+    "sha256": {
+      "Enriched_Recipes.json": "a09340679a7a184be12f7e1fb74b060e2ec9a3a066970092112a1e57d32c0514",
+      "NF_Recipes.json": "21690722326bed97dd0e393355783bd217d1c4a58b8490619cf71f6bf609ae6a",
+      "plant_mineral_profiles.json": "c97f9afa9956bebe3478dbd8bbcd4245dcf471a2f7d84c0cad80b696d09ef053",
+      "Crop_Requirements.json": "5a85ec677eddf6ce9d7cef3d3edeb15ccd5395191b9c4c0ae849d42de6f89559"
+    }
+  },
+  "provenance_note": "Every suggested_bioaccumulators entry is 'source'. The 'derivations' block is 'derived-proposed' and was approved by the owner on 2026-10-17 for the recipe tool's candidate policy; it is never written into app data.",
+  "summary": {
+    "enriched_recipes": 14,
+    "nf_recipes": 14,
+    "nf_recipes_matched_by_name": 14,
+    "suggested_bioaccumulator_entries": 40,
+    "distinct_suggested_bioaccumulators": 40,
+    "resolved_entries": 17,
+    "unresolved_entries": 21,
+    "ambiguous_entries": 2,
+    "plant_entries": 19,
+    "recipes_with_a_resolved_plant": 6,
+    "recipes_with_ratio_support": 1,
+    "derived_recipes_proposed": 5,
+    "entity_proposals": 23
+  },
+  "recipes": [
+    {
+      "recipe_abbrev": "FAA",
+      "recipe_name": "Fish Amino Acid (FAA)",
+      "primary_nutrient": "N",
+      "npk_provided": {
+        "N": "high",
+        "P": "trace",
+        "K": "low"
+      },
+      "ratio_support": {
+        "primary_mineral": "nitrogen",
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [
+          "Stinging Nettle"
+        ],
+        "supported": false,
+        "reason": "catalog parts carry nitrogen for some plants, but the ratio tool computes phosphorus and potassium only"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Fish (blue-back species)",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        },
+        {
+          "text": "Comfrey leaf",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "part_of_plant",
+          "matched_via": "common_name",
+          "profile": {
+            "common_name": "Comfrey",
+            "scientific_name": "Symphytum officinale"
+          },
+          "part": "leaf",
+          "part_in_profile": true,
+          "provenance": "source"
+        },
+        {
+          "text": "Nettle leaf",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "part_of_plant",
+          "matched_via": "unique_fragment",
+          "profile": {
+            "common_name": "Stinging Nettle",
+            "scientific_name": "Urtica dioica"
+          },
+          "part": "leaf",
+          "part_in_profile": true,
+          "provenance": "source"
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "IMO",
+      "recipe_name": "Collection of IMOs from Native Soil",
+      "primary_nutrient": "soil_biology",
+      "npk_provided": {
+        "N": "low",
+        "P": "low",
+        "K": "low"
+      },
+      "ratio_support": {
+        "primary_mineral": null,
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [],
+        "supported": false,
+        "reason": "primary nutrient 'soil_biology' is not a single mineral the profile catalog or the P/K ratio tool can score"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Forest floor material",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        },
+        {
+          "text": "Bamboo grove soil",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        },
+        {
+          "text": "Oak grove soil",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "IMO-3",
+      "recipe_name": "Preparation of IMO-3",
+      "primary_nutrient": "soil_biology",
+      "npk_provided": {
+        "N": "moderate",
+        "P": "moderate",
+        "K": "moderate"
+      },
+      "ratio_support": {
+        "primary_mineral": null,
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [],
+        "supported": false,
+        "reason": "primary nutrient 'soil_biology' is not a single mineral the profile catalog or the P/K ratio tool can score"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Rice bran",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "part_of_plant",
+          "matched_via": "material_override",
+          "profile": {
+            "common_name": "Rice",
+            "scientific_name": "Oryza sativa"
+          },
+          "part": "bran",
+          "part_in_profile": false,
+          "provenance": "source",
+          "note": "processed plant material mapped to its source crop profile"
+        },
+        {
+          "text": "Rice flour",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "part_of_plant",
+          "matched_via": "material_override",
+          "profile": {
+            "common_name": "Rice",
+            "scientific_name": "Oryza sativa"
+          },
+          "part": "flour",
+          "part_in_profile": false,
+          "provenance": "source",
+          "note": "processed plant material mapped to its source crop profile"
+        },
+        {
+          "text": "Paddy straw",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "part_of_plant",
+          "matched_via": "material_override",
+          "profile": {
+            "common_name": "Rice",
+            "scientific_name": "Oryza sativa"
+          },
+          "part": "straw",
+          "part_in_profile": false,
+          "provenance": "source",
+          "note": "processed plant material mapped to its source crop profile"
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "FPJ",
+      "recipe_name": "Fermented Plant Juice (FPJ)",
+      "primary_nutrient": "N",
+      "npk_provided": {
+        "N": "high",
+        "P": "low",
+        "K": "moderate"
+      },
+      "ratio_support": {
+        "primary_mineral": "nitrogen",
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [
+          "Stinging Nettle"
+        ],
+        "supported": false,
+        "reason": "catalog parts carry nitrogen for some plants, but the ratio tool computes phosphorus and potassium only"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Urtica dioica (Nettle)",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "alias",
+          "matched_via": "parenthetical_common",
+          "profile": {
+            "common_name": "Stinging Nettle",
+            "scientific_name": "Urtica dioica"
+          },
+          "part": null,
+          "part_in_profile": null,
+          "provenance": "source"
+        },
+        {
+          "text": "Symphytum officinale (Comfrey)",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "alias",
+          "matched_via": "parenthetical_common",
+          "profile": {
+            "common_name": "Comfrey",
+            "scientific_name": "Symphytum officinale"
+          },
+          "part": null,
+          "part_in_profile": null,
+          "provenance": "source"
+        },
+        {
+          "text": "Trifolium repens (Clover)",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "alias",
+          "matched_via": "parenthetical_common",
+          "profile": {
+            "common_name": "Red Clover",
+            "scientific_name": "Trifolium pratense"
+          },
+          "part": null,
+          "part_in_profile": null,
+          "provenance": "source",
+          "note": "recipe names Trifolium repens (Clover); catalog profile is Red Clover (Trifolium pratense), same genus"
+        },
+        {
+          "text": "Taraxacum officinale (Dandelion)",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "alias",
+          "matched_via": "parenthetical_common",
+          "profile": {
+            "common_name": "Dandelion",
+            "scientific_name": "Taraxacum officinale"
+          },
+          "part": null,
+          "part_in_profile": null,
+          "provenance": "source"
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "FFJ",
+      "recipe_name": "Fermented Fruit Juice (FFJ)",
+      "primary_nutrient": "K",
+      "npk_provided": {
+        "N": "trace",
+        "P": "moderate",
+        "K": "high"
+      },
+      "ratio_support": {
+        "primary_mineral": "potassium",
+        "in_ratio_tool_scope": true,
+        "resolved_source_plants_with_tissue": [
+          "Banana",
+          "Tomato",
+          "Peach",
+          "Mango"
+        ],
+        "supported": true,
+        "reason": "resolved source plants carry complete potassium tissue values that the ratio tool can compare against a crop requirement"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Musa (Banana)",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "alias",
+          "matched_via": "parenthetical_common",
+          "profile": {
+            "common_name": "Banana",
+            "scientific_name": "Musa x paradisiaca"
+          },
+          "part": null,
+          "part_in_profile": null,
+          "provenance": "source"
+        },
+        {
+          "text": "Solanum lycopersicum (Tomato)",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "alias",
+          "matched_via": "parenthetical_common",
+          "profile": {
+            "common_name": "Tomato",
+            "scientific_name": "Lycopersicon esculentum"
+          },
+          "part": null,
+          "part_in_profile": null,
+          "provenance": "source",
+          "note": "recipe names Solanum lycopersicum (Tomato); catalog profile is Tomato (Lycopersicon esculentum), a synonym or related name"
+        },
+        {
+          "text": "Prunus persica (Peach)",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "alias",
+          "matched_via": "parenthetical_common",
+          "profile": {
+            "common_name": "Peach",
+            "scientific_name": "Prunus persica"
+          },
+          "part": null,
+          "part_in_profile": null,
+          "provenance": "source"
+        },
+        {
+          "text": "Mangifera indica (Mango)",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "alias",
+          "matched_via": "parenthetical_common",
+          "profile": {
+            "common_name": "Mango",
+            "scientific_name": "Mangifera indica"
+          },
+          "part": null,
+          "part_in_profile": null,
+          "provenance": "source"
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "OHN",
+      "recipe_name": "Oriental Herbal Nutrient (OHN)",
+      "primary_nutrient": "micronutrients",
+      "npk_provided": {
+        "N": "trace",
+        "P": "trace",
+        "K": "trace"
+      },
+      "ratio_support": {
+        "primary_mineral": null,
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [],
+        "supported": false,
+        "reason": "primary nutrient 'micronutrients' is not a single mineral the profile catalog or the P/K ratio tool can score"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Allium sativum (Garlic)",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "alias",
+          "matched_via": "parenthetical_common",
+          "profile": {
+            "common_name": "Garlic",
+            "scientific_name": "Allium sativum var. sativum"
+          },
+          "part": null,
+          "part_in_profile": null,
+          "provenance": "source"
+        },
+        {
+          "text": "Zingiber officinale (Ginger)",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "alias",
+          "matched_via": "parenthetical_common",
+          "profile": {
+            "common_name": "Ginger",
+            "scientific_name": "Zingiber officinale"
+          },
+          "part": null,
+          "part_in_profile": null,
+          "provenance": "source"
+        },
+        {
+          "text": "Cinnamomum (Cinnamon)",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "alias",
+          "matched_via": "parenthetical_common",
+          "profile": {
+            "common_name": "Cinnamon",
+            "scientific_name": "Cinnamomum verum"
+          },
+          "part": null,
+          "part_in_profile": null,
+          "provenance": "source"
+        },
+        {
+          "text": "Angelica archangelica",
+          "status": "ambiguous",
+          "category": "plant",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "genus 'Angelica' matches several profiles",
+          "provenance": "source",
+          "candidates": [
+            "Angelica dahurica (Angelica dahurica)",
+            "Angelica laxiflora (Angelica laxiflora)",
+            "Dong Quai (Angelica sinensis)"
+          ]
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "WCA",
+      "recipe_name": "Water-Soluble Calcium (WCA)",
+      "primary_nutrient": "Ca",
+      "npk_provided": {
+        "N": "none",
+        "P": "none",
+        "K": "none",
+        "Ca": "high"
+      },
+      "ratio_support": {
+        "primary_mineral": "calcium",
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [],
+        "supported": false,
+        "reason": "catalog parts carry calcium for some plants, but the ratio tool computes phosphorus and potassium only"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Eggshell",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        },
+        {
+          "text": "Oyster shell",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        },
+        {
+          "text": "Limestone",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "WSP",
+      "recipe_name": "Water-Soluble Phosphorus (WSP)",
+      "primary_nutrient": "P",
+      "npk_provided": {
+        "N": "trace",
+        "P": "high",
+        "K": "low"
+      },
+      "ratio_support": {
+        "primary_mineral": "phosphorus",
+        "in_ratio_tool_scope": true,
+        "resolved_source_plants_with_tissue": [],
+        "supported": false,
+        "reason": "no source-resolved plant has a complete phosphorus tissue value; a derivation is proposed in the sign-off proposal file"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Fish bones",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        },
+        {
+          "text": "Animal bones",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "LABS",
+      "recipe_name": "Lactic Acid Bacteria Serum (LABS)",
+      "primary_nutrient": "soil_biology",
+      "npk_provided": {
+        "N": "trace",
+        "P": "trace",
+        "K": "trace"
+      },
+      "ratio_support": {
+        "primary_mineral": null,
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [],
+        "supported": false,
+        "reason": "primary nutrient 'soil_biology' is not a single mineral the profile catalog or the P/K ratio tool can score"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Rice wash water",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        },
+        {
+          "text": "Raw milk",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "BRV",
+      "recipe_name": "Brown Rice Vinegar (BRV)",
+      "primary_nutrient": "pH_buffer",
+      "npk_provided": {
+        "N": "trace",
+        "P": "trace",
+        "K": "trace"
+      },
+      "ratio_support": {
+        "primary_mineral": null,
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [],
+        "supported": false,
+        "reason": "primary nutrient 'pH_buffer' is not a single mineral the profile catalog or the P/K ratio tool can score"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Brown rice",
+          "status": "resolved",
+          "category": "plant",
+          "match_type": "part_of_plant",
+          "matched_via": "material_override",
+          "profile": {
+            "common_name": "Rice",
+            "scientific_name": "Oryza sativa"
+          },
+          "part": "seed",
+          "part_in_profile": true,
+          "provenance": "source",
+          "note": "processed plant material mapped to its source crop profile"
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "SES",
+      "recipe_name": "Seed/Seedling Treatment (SES)",
+      "primary_nutrient": "mixed",
+      "npk_provided": {
+        "N": "moderate",
+        "P": "moderate",
+        "K": "moderate"
+      },
+      "ratio_support": {
+        "primary_mineral": null,
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [],
+        "supported": false,
+        "reason": "primary nutrient 'mixed' is not a single mineral the profile catalog or the P/K ratio tool can score"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "FPJ",
+          "status": "unresolved",
+          "category": "recipe_reference",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "names another recipe's product, not a plant",
+          "provenance": "source",
+          "refers_to_recipe": "FPJ"
+        },
+        {
+          "text": "FFJ",
+          "status": "unresolved",
+          "category": "recipe_reference",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "names another recipe's product, not a plant",
+          "provenance": "source",
+          "refers_to_recipe": "FFJ"
+        },
+        {
+          "text": "OHN",
+          "status": "unresolved",
+          "category": "recipe_reference",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "names another recipe's product, not a plant",
+          "provenance": "source",
+          "refers_to_recipe": "OHN"
+        },
+        {
+          "text": "LABS",
+          "status": "unresolved",
+          "category": "recipe_reference",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "names another recipe's product, not a plant",
+          "provenance": "source",
+          "refers_to_recipe": "LABS"
+        },
+        {
+          "text": "BRV",
+          "status": "unresolved",
+          "category": "recipe_reference",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "names another recipe's product, not a plant",
+          "provenance": "source",
+          "refers_to_recipe": "BRV"
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "FMC",
+      "recipe_name": "Fermented Mixed Compost (FMC)",
+      "primary_nutrient": "mixed",
+      "npk_provided": {
+        "N": "high",
+        "P": "moderate",
+        "K": "moderate"
+      },
+      "ratio_support": {
+        "primary_mineral": null,
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [],
+        "supported": false,
+        "reason": "primary nutrient 'mixed' is not a single mineral the profile catalog or the P/K ratio tool can score"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Kitchen scraps",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        },
+        {
+          "text": "Garden waste",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        },
+        {
+          "text": "Animal manure",
+          "status": "unresolved",
+          "category": "non_plant_material",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "animal, mineral or other non-plant input; no profile expected",
+          "provenance": "source"
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "AIA",
+      "recipe_name": "Aromatic Insect Attractants (AIA)",
+      "primary_nutrient": "none",
+      "npk_provided": {
+        "N": "none",
+        "P": "none",
+        "K": "none"
+      },
+      "ratio_support": {
+        "primary_mineral": null,
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [],
+        "supported": false,
+        "reason": "primary nutrient 'none' is not a single mineral the profile catalog or the P/K ratio tool can score"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Aromatic plants",
+          "status": "unresolved",
+          "category": "generic_placeholder",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "generic instruction for the operator to choose entities",
+          "provenance": "source"
+        },
+        {
+          "text": "Citrus peel",
+          "status": "ambiguous",
+          "category": "plant",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "plant part 'peel' leaves several candidate profiles",
+          "provenance": "source",
+          "candidates": [
+            "Citrus aurantium (Citrus aurantium)",
+            "Citrus medica (Citrus medica)",
+            "Citrus mitis (Citrus mitis)",
+            "Grapefruit (Citrus paradisi)",
+            "Lemon (Citrus limon)",
+            "Lime (Citrus aurantiifolia)",
+            "Mandarin (Citrus reticulata)",
+            "Orange (Citrus sinensis)"
+          ]
+        }
+      ],
+      "provenance": "source"
+    },
+    {
+      "recipe_abbrev": "Wildcrafted",
+      "recipe_name": "Fermented Wildcrafted Plant Fertilizer",
+      "primary_nutrient": "variable",
+      "npk_provided": {
+        "N": "variable",
+        "P": "variable",
+        "K": "variable"
+      },
+      "ratio_support": {
+        "primary_mineral": null,
+        "in_ratio_tool_scope": false,
+        "resolved_source_plants_with_tissue": [],
+        "supported": false,
+        "reason": "primary nutrient 'variable' is not a single mineral the profile catalog or the P/K ratio tool can score"
+      },
+      "suggested_bioaccumulators": [
+        {
+          "text": "Varies \u2014 select based on target nutrient",
+          "status": "unresolved",
+          "category": "generic_placeholder",
+          "match_type": null,
+          "matched_via": null,
+          "profile": null,
+          "part": null,
+          "part_in_profile": null,
+          "reason": "generic instruction for the operator to choose entities",
+          "provenance": "source"
+        }
+      ],
+      "provenance": "source"
+    }
+  ],
+  "nf_recipes": [
+    {
+      "recipe_name": "Fish Amino Acid (FAA)",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "FAA",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Collection of IMOs from Native Soil",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "IMO",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Preparation of IMO-3",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "IMO-3",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Fermented Plant Juice (FPJ)",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "FPJ",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Fermented Fruit Juice (FFJ)",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "FFJ",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Oriental Herbal Nutrient (OHN)",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "OHN",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Water-Soluble Calcium (WCA)",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "WCA",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Water-Soluble Phosphorus (WSP)",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "WSP",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Lactic Acid Bacteria Serum (LABS)",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "LABS",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Brown Rice Vinegar (BRV)",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "BRV",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Seed/Seedling Treatment (SES)",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "SES",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Fermented Mixed Compost (FMC)",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "FMC",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Aromatic Insect Attractants (AIA)",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "AIA",
+      "ingredients_match": true,
+      "provenance": "source"
+    },
+    {
+      "recipe_name": "Fermented Wildcrafted Plant Fertilizer",
+      "matched_enriched_recipe": true,
+      "enriched_recipe_abbrev": "Wildcrafted",
+      "ingredients_match": true,
+      "provenance": "source"
+    }
+  ],
+  "crop_catalog": {
+    "file": "Crop_Requirements.json",
+    "sha256": "5a85ec677eddf6ce9d7cef3d3edeb15ccd5395191b9c4c0ae849d42de6f89559",
+    "crops": 97,
+    "crops_with_parseable_requirement": {
+      "nitrogen": 97,
+      "phosphorus": 97,
+      "potassium": 97
+    },
+    "note": "the ratio tool compares resolved plant tissue phosphorus and potassium against these crop NPK requirements"
+  },
+  "derivations": [
+    {
+      "recipe_abbrev": "FAA",
+      "recipe_name": "Fish Amino Acid (FAA)",
+      "primary_nutrient": "N",
+      "target_mineral": "nitrogen",
+      "in_ratio_tool_scope": false,
+      "basis": "highest complete nitrogen tissue midpoint among the 660 catalog profiles",
+      "candidates": [
+        {
+          "common_name": "Sweet Acacia",
+          "scientific_name": "Acacia farnesiana",
+          "part": "leaf",
+          "min": 12800.0,
+          "max": 68800.0,
+          "unit": "ppm",
+          "midpoint": 40800.0
+        },
+        {
+          "common_name": "Cucumber",
+          "scientific_name": "Cucumis sativus",
+          "part": "fruit",
+          "min": 1400.0,
+          "max": 80000.0,
+          "unit": "ppm",
+          "midpoint": 40700.0
+        },
+        {
+          "common_name": "Brassica oleracea var. botrytis l.",
+          "scientific_name": "Brassica oleracea var. botrytis l.",
+          "part": "leaf",
+          "min": 7000.0,
+          "max": 71800.0,
+          "unit": "ppm",
+          "midpoint": 39400.0
+        },
+        {
+          "common_name": "Broccoli",
+          "scientific_name": "Brassica oleracea var. italica",
+          "part": "leaf",
+          "min": 7000.0,
+          "max": 71800.0,
+          "unit": "ppm",
+          "midpoint": 39400.0
+        },
+        {
+          "common_name": "Stinging Nettle",
+          "scientific_name": "Urtica dioica",
+          "part": "leaf",
+          "min": 10000.0,
+          "max": 55555.0,
+          "unit": "ppm",
+          "midpoint": 32777.5
+        },
+        {
+          "common_name": "Dill",
+          "scientific_name": "Anethum graveolens",
+          "part": "plant",
+          "min": 6800.0,
+          "max": 55300.0,
+          "unit": "ppm",
+          "midpoint": 31050.0
+        },
+        {
+          "common_name": "Pea",
+          "scientific_name": "Pisum sativum",
+          "part": "seed",
+          "min": 11000.0,
+          "max": 50000.0,
+          "unit": "ppm",
+          "midpoint": 30500.0
+        },
+        {
+          "common_name": "Nicotiana tabacum",
+          "scientific_name": "Nicotiana tabacum",
+          "part": "leaf",
+          "min": 20000.0,
+          "max": 40000.0,
+          "unit": "ppm",
+          "midpoint": 30000.0
+        },
+        {
+          "common_name": "Lettuce",
+          "scientific_name": "Lactuca sativa",
+          "part": "leaf",
+          "min": 2200.0,
+          "max": 54000.0,
+          "unit": "ppm",
+          "midpoint": 28100.0
+        },
+        {
+          "common_name": "Senna obtusifolia",
+          "scientific_name": "Senna obtusifolia",
+          "part": "seed",
+          "min": 22200.0,
+          "max": 31300.0,
+          "unit": "ppm",
+          "midpoint": 26750.0
+        }
+      ],
+      "provenance": "derived-proposed",
+      "status": "approved_by_owner",
+      "note": "NOT applied to app data; owner sign-off required before use",
+      "owner_decision": "accepted: recipe-named plants first, then this derived top-10 list"
+    },
+    {
+      "recipe_abbrev": "FPJ",
+      "recipe_name": "Fermented Plant Juice (FPJ)",
+      "primary_nutrient": "N",
+      "target_mineral": "nitrogen",
+      "in_ratio_tool_scope": false,
+      "basis": "highest complete nitrogen tissue midpoint among the 660 catalog profiles",
+      "candidates": [
+        {
+          "common_name": "Sweet Acacia",
+          "scientific_name": "Acacia farnesiana",
+          "part": "leaf",
+          "min": 12800.0,
+          "max": 68800.0,
+          "unit": "ppm",
+          "midpoint": 40800.0
+        },
+        {
+          "common_name": "Cucumber",
+          "scientific_name": "Cucumis sativus",
+          "part": "fruit",
+          "min": 1400.0,
+          "max": 80000.0,
+          "unit": "ppm",
+          "midpoint": 40700.0
+        },
+        {
+          "common_name": "Brassica oleracea var. botrytis l.",
+          "scientific_name": "Brassica oleracea var. botrytis l.",
+          "part": "leaf",
+          "min": 7000.0,
+          "max": 71800.0,
+          "unit": "ppm",
+          "midpoint": 39400.0
+        },
+        {
+          "common_name": "Broccoli",
+          "scientific_name": "Brassica oleracea var. italica",
+          "part": "leaf",
+          "min": 7000.0,
+          "max": 71800.0,
+          "unit": "ppm",
+          "midpoint": 39400.0
+        },
+        {
+          "common_name": "Stinging Nettle",
+          "scientific_name": "Urtica dioica",
+          "part": "leaf",
+          "min": 10000.0,
+          "max": 55555.0,
+          "unit": "ppm",
+          "midpoint": 32777.5
+        },
+        {
+          "common_name": "Dill",
+          "scientific_name": "Anethum graveolens",
+          "part": "plant",
+          "min": 6800.0,
+          "max": 55300.0,
+          "unit": "ppm",
+          "midpoint": 31050.0
+        },
+        {
+          "common_name": "Pea",
+          "scientific_name": "Pisum sativum",
+          "part": "seed",
+          "min": 11000.0,
+          "max": 50000.0,
+          "unit": "ppm",
+          "midpoint": 30500.0
+        },
+        {
+          "common_name": "Nicotiana tabacum",
+          "scientific_name": "Nicotiana tabacum",
+          "part": "leaf",
+          "min": 20000.0,
+          "max": 40000.0,
+          "unit": "ppm",
+          "midpoint": 30000.0
+        },
+        {
+          "common_name": "Lettuce",
+          "scientific_name": "Lactuca sativa",
+          "part": "leaf",
+          "min": 2200.0,
+          "max": 54000.0,
+          "unit": "ppm",
+          "midpoint": 28100.0
+        },
+        {
+          "common_name": "Senna obtusifolia",
+          "scientific_name": "Senna obtusifolia",
+          "part": "seed",
+          "min": 22200.0,
+          "max": 31300.0,
+          "unit": "ppm",
+          "midpoint": 26750.0
+        }
+      ],
+      "provenance": "derived-proposed",
+      "status": "approved_by_owner",
+      "note": "NOT applied to app data; owner sign-off required before use",
+      "owner_decision": "accepted: recipe-named plants first, then this derived top-10 list"
+    },
+    {
+      "recipe_abbrev": "FFJ",
+      "recipe_name": "Fermented Fruit Juice (FFJ)",
+      "primary_nutrient": "K",
+      "target_mineral": "potassium",
+      "in_ratio_tool_scope": true,
+      "basis": "highest complete potassium tissue midpoint among the 660 catalog profiles",
+      "candidates": [
+        {
+          "common_name": "Brassica pekinensis",
+          "scientific_name": "Brassica pekinensis",
+          "part": "leaf",
+          "min": 74100.0,
+          "max": 81900.0,
+          "unit": "ppm",
+          "midpoint": 78000.0
+        },
+        {
+          "common_name": "Lettuce",
+          "scientific_name": "Lactuca sativa",
+          "part": "leaf",
+          "min": 2900.0,
+          "max": 121800.0,
+          "unit": "ppm",
+          "midpoint": 62350.0
+        },
+        {
+          "common_name": "Endive",
+          "scientific_name": "Cichorium endivia",
+          "part": "leaf",
+          "min": 2915.0,
+          "max": 96000.0,
+          "unit": "ppm",
+          "midpoint": 49457.5
+        },
+        {
+          "common_name": "Anthriscus cerefolium",
+          "scientific_name": "Anthriscus cerefolium",
+          "part": "leaf",
+          "min": 47400.0,
+          "max": 51200.0,
+          "unit": "ppm",
+          "midpoint": 49300.0
+        },
+        {
+          "common_name": "Vigna mungo",
+          "scientific_name": "Vigna mungo",
+          "part": "seed",
+          "min": 1710.0,
+          "max": 89790.0,
+          "unit": "ppm",
+          "midpoint": 45750.0
+        },
+        {
+          "common_name": "Radish",
+          "scientific_name": "Raphanus sativus",
+          "part": "root",
+          "min": 2215.0,
+          "max": 85700.0,
+          "unit": "ppm",
+          "midpoint": 43957.5
+        },
+        {
+          "common_name": "Portulaca oleracea",
+          "scientific_name": "Portulaca oleracea",
+          "part": "herb",
+          "min": 4880.0,
+          "max": 81200.0,
+          "unit": "ppm",
+          "midpoint": 43040.0
+        },
+        {
+          "common_name": "Dill",
+          "scientific_name": "Anethum graveolens",
+          "part": "plant",
+          "min": 8700.0,
+          "max": 76450.0,
+          "unit": "ppm",
+          "midpoint": 42575.0
+        },
+        {
+          "common_name": "Chrysanthemum coronarium",
+          "scientific_name": "Chrysanthemum coronarium",
+          "part": "bud",
+          "min": 5710.0,
+          "max": 76745.0,
+          "unit": "ppm",
+          "midpoint": 41227.5
+        },
+        {
+          "common_name": "Glechoma hederacea",
+          "scientific_name": "Glechoma hederacea",
+          "part": "plant",
+          "min": 32000.0,
+          "max": 46000.0,
+          "unit": "ppm",
+          "midpoint": 39000.0
+        }
+      ],
+      "provenance": "derived-proposed",
+      "status": "approved_by_owner",
+      "note": "NOT applied to app data; owner sign-off required before use",
+      "owner_decision": "accepted: recipe-named plants first, then this derived top-10 list"
+    },
+    {
+      "recipe_abbrev": "WCA",
+      "recipe_name": "Water-Soluble Calcium (WCA)",
+      "primary_nutrient": "Ca",
+      "target_mineral": "calcium",
+      "in_ratio_tool_scope": false,
+      "basis": "highest complete calcium tissue midpoint among the 660 catalog profiles",
+      "candidates": [
+        {
+          "common_name": "Albizia lebbeck",
+          "scientific_name": "Albizia lebbeck",
+          "part": "leaf",
+          "min": 10100.0,
+          "max": 104000.0,
+          "unit": "ppm",
+          "midpoint": 57050.0
+        },
+        {
+          "common_name": "Boehmeria nivea",
+          "scientific_name": "Boehmeria nivea",
+          "part": "plant",
+          "min": 36000.0,
+          "max": 39000.0,
+          "unit": "ppm",
+          "midpoint": 37500.0
+        },
+        {
+          "common_name": "Ephedra nevadensis",
+          "scientific_name": "Ephedra nevadensis",
+          "part": "plant",
+          "min": 4500.0,
+          "max": 58100.0,
+          "unit": "ppm",
+          "midpoint": 31300.0
+        },
+        {
+          "common_name": "Mimulus glabratus",
+          "scientific_name": "Mimulus glabratus",
+          "part": "shoot",
+          "min": 5430.0,
+          "max": 54300.0,
+          "unit": "ppm",
+          "midpoint": 29865.0
+        },
+        {
+          "common_name": "Spiny Amaranth",
+          "scientific_name": "Amaranthus spinosus",
+          "part": "leaf",
+          "min": 4760.0,
+          "max": 53335.0,
+          "unit": "ppm",
+          "midpoint": 29047.5
+        },
+        {
+          "common_name": "Luffa aegyptiaca",
+          "scientific_name": "Luffa aegyptiaca",
+          "part": "leaf",
+          "min": 560.0,
+          "max": 55000.0,
+          "unit": "ppm",
+          "midpoint": 27780.0
+        },
+        {
+          "common_name": "Amaranth",
+          "scientific_name": "Amaranthus sp.",
+          "part": "leaf",
+          "min": 1559.0,
+          "max": 53333.0,
+          "unit": "ppm",
+          "midpoint": 27446.0
+        },
+        {
+          "common_name": "Brassica oleracea var. botrytis l.",
+          "scientific_name": "Brassica oleracea var. botrytis l.",
+          "part": "leaf",
+          "min": 360.0,
+          "max": 54247.0,
+          "unit": "ppm",
+          "midpoint": 27303.5
+        },
+        {
+          "common_name": "Broccoli",
+          "scientific_name": "Brassica oleracea var. italica",
+          "part": "leaf",
+          "min": 360.0,
+          "max": 54247.0,
+          "unit": "ppm",
+          "midpoint": 27303.5
+        },
+        {
+          "common_name": "Achyranthes bidentata",
+          "scientific_name": "Achyranthes bidentata",
+          "part": "root",
+          "min": 1130.0,
+          "max": 52200.0,
+          "unit": "ppm",
+          "midpoint": 26665.0
+        }
+      ],
+      "provenance": "derived-proposed",
+      "status": "approved_by_owner",
+      "note": "NOT applied to app data; owner sign-off required before use",
+      "owner_decision": "accepted: recipe-named plants first, then this derived top-10 list"
+    },
+    {
+      "recipe_abbrev": "WSP",
+      "recipe_name": "Water-Soluble Phosphorus (WSP)",
+      "primary_nutrient": "P",
+      "target_mineral": "phosphorus",
+      "in_ratio_tool_scope": true,
+      "basis": "highest complete phosphorus tissue midpoint among the 660 catalog profiles",
+      "candidates": [
+        {
+          "common_name": "Beet",
+          "scientific_name": "Beta vulgaris",
+          "part": "root",
+          "min": 260.0,
+          "max": 45580.0,
+          "unit": "ppm",
+          "midpoint": 22920.0
+        },
+        {
+          "common_name": "Xanthosoma sagittifolium",
+          "scientific_name": "Xanthosoma sagittifolium",
+          "part": "leaf",
+          "min": 610.0,
+          "max": 38416.0,
+          "unit": "ppm",
+          "midpoint": 19513.0
+        },
+        {
+          "common_name": "Lambsquarters",
+          "scientific_name": "Chenopodium album",
+          "part": "leaf",
+          "min": 720.0,
+          "max": 36833.0,
+          "unit": "ppm",
+          "midpoint": 18776.5
+        },
+        {
+          "common_name": "Momordica charantia",
+          "scientific_name": "Momordica charantia",
+          "part": "leaf",
+          "min": 540.0,
+          "max": 33467.0,
+          "unit": "ppm",
+          "midpoint": 17003.5
+        },
+        {
+          "common_name": "Lepidium sativum",
+          "scientific_name": "Lepidium sativum",
+          "part": "seed",
+          "min": 16500.0,
+          "max": 17500.0,
+          "unit": "ppm",
+          "midpoint": 17000.0
+        },
+        {
+          "common_name": "Physalis ixocarpa",
+          "scientific_name": "Physalis ixocarpa",
+          "part": "fruit",
+          "min": 400.0,
+          "max": 30250.0,
+          "unit": "ppm",
+          "midpoint": 15325.0
+        },
+        {
+          "common_name": "Limonia acidissima",
+          "scientific_name": "Limonia acidissima",
+          "part": "seed",
+          "min": 14300.0,
+          "max": 14895.0,
+          "unit": "ppm",
+          "midpoint": 14597.5
+        },
+        {
+          "common_name": "Flax",
+          "scientific_name": "Linum usitatissimum",
+          "part": "seed",
+          "min": 3961.0,
+          "max": 20335.0,
+          "unit": "ppm",
+          "midpoint": 12148.0
+        },
+        {
+          "common_name": "Murraya koenigii",
+          "scientific_name": "Murraya koenigii",
+          "part": "leaf",
+          "min": 6000.0,
+          "max": 17800.0,
+          "unit": "ppm",
+          "midpoint": 11900.0
+        },
+        {
+          "common_name": "Pumpkin",
+          "scientific_name": "Cucurbita pepo",
+          "part": "seed",
+          "min": 10600.0,
+          "max": 12982.0,
+          "unit": "ppm",
+          "midpoint": 11791.0
+        }
+      ],
+      "provenance": "derived-proposed",
+      "status": "approved_by_owner",
+      "note": "NOT applied to app data; owner sign-off required before use",
+      "owner_decision": "accepted: recipe-named plants first, then this derived top-10 list"
+    }
+  ],
+  "proposal_file": "data/recipe_mapping_derivations_proposal_v1.json",
+  "owner_signoff": {
+    "status": "approved_by_owner",
+    "date": "2026-10-17",
+    "source": "Chainlink issue #56 owner decisions comment, 2026-10-17",
+    "scope": "recipe-to-plant mappings and the derived candidate policy only",
+    "decisions": [
+      {
+        "id": "nutrient_scope",
+        "decision": "The recipe tool computes N, P and K; Ca stays out of scope for v2 and WCA is not computable."
+      },
+      {
+        "id": "trifolium_repens",
+        "decision": "Accept Trifolium repens (Clover) as Red Clover (Trifolium pratense), the only clover in the catalog.",
+        "caveat": "species proxy: the recipe names white clover, the profile is red clover"
+      },
+      {
+        "id": "citrus_peel",
+        "decision": "Citrus peel resolves to a citrus group the user picks from; the eight Citrus profiles stay visible as candidates."
+      },
+      {
+        "id": "angelica_archangelica",
+        "decision": "Angelica archangelica uses the closest of the three Angelica profiles; v2 records Angelica dahurica as closest by scientific-name similarity."
+      },
+      {
+        "id": "candidate_policy",
+        "decision": "Each recipe offers its recipe-named plants first, then the top catalog plants by tissue content for the recipe's nutrient, labelled 'derived'."
+      }
+    ],
+    "still_pending": [
+      "dosing constants, each with a corpus source (re-proposed in data/recipe_tool_dosing_constants_proposal_v2.json)"
+    ],
+    "approved_later": [
+      {
+        "id": "trigger_template",
+        "decision": "Approved as proposed 2026-10-17; see data/recipe_tool_trigger_template_proposal_v1.json.",
+        "status": "approved_by_owner",
+        "date": "2026-10-17"
+      },
+      {
+        "id": "json_schemas",
+        "decision": "Input/output schema v2 defined in this repository; only the dosing constants remain pending before #57.",
+        "status": "defined",
+        "date": "2026-10-18"
+      }
+    ]
+  }
+}
