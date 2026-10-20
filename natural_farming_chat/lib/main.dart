@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show appFlavor;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'services/model_service.dart';
+import 'services/memory_service.dart';
 import 'services/plant_lookup_service.dart';
 import 'services/calculator_service.dart';
 import 'services/fertilizer_formulation_service.dart';
@@ -94,6 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<ChatMessage> _messages = [];
 
   final ModelService _modelService = ModelService();
+  MemoryService _memoryService = const NoopMemoryService();
   final PlantLookupService _plantLookupService = PlantLookupService();
   final CalculatorService _calculatorService = CalculatorService();
   final RegionPlantService _regionPlantService = RegionPlantService();
@@ -194,6 +196,21 @@ class _ChatScreenState extends State<ChatScreen> {
           });
         },
       );
+
+      // Initialize optional long-term memory after the chat model. A storage
+      // failure leaves the chat usable with memory disabled.
+      try {
+        final memoryService = createMemoryService(appFlavor);
+        await memoryService.initialize();
+        _memoryService = memoryService;
+        if (_memoryService.enabled) {
+          debugPrint('[MEMORY] Keyword-only memlocal database opened');
+        }
+      } catch (error, stackTrace) {
+        debugPrint('[MEMORY] Initialization failed; memory disabled: $error');
+        debugPrint(stackTrace.toString());
+        _memoryService = const NoopMemoryService();
+      }
 
       // Get device info
       final deviceInfo = await _modelService.getDeviceInfo();
