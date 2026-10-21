@@ -202,7 +202,7 @@ class RecipeToolService {
     if (validation.error != null) return validation.error!;
     final normalised = validation.normalised!;
 
-    final crop = _resolveCrop(normalised['crop'] as String);
+    final crop = resolveCrop(normalised['crop'] as String);
     if (crop == null) {
       return _error(
         normalised,
@@ -210,7 +210,7 @@ class RecipeToolService {
         "no crop matches '${normalised['crop']}'",
       );
     }
-    final plantResult = _resolvePlant(normalised['candidate_plant'] as String);
+    final plantResult = resolvePlant(normalised['candidate_plant'] as String);
     final plant = plantResult.plant;
     if (plant == null) {
       final suggestions = plantResult.suggestions;
@@ -613,7 +613,11 @@ class RecipeToolService {
     return (normalised: normalised, error: null);
   }
 
-  Map<String, dynamic>? _resolveCrop(String query) {
+  /// Public crop resolver shared by the tool and the recipe form.
+  ///
+  /// The recipe form uses this directly so its inline validation is exactly
+  /// what [calculate] will accept. The matching behaviour is unchanged.
+  Map<String, dynamic>? resolveCrop(String query) {
     final normalized = query.trim().toLowerCase();
     if (normalized.isEmpty) return null;
     for (final row in _crops) {
@@ -628,7 +632,11 @@ class RecipeToolService {
     return null;
   }
 
-  ({Map<String, dynamic>? plant, List<String> suggestions}) _resolvePlant(
+  /// Public candidate-plant resolver shared by the tool and the recipe form.
+  ///
+  /// [suggestions] are the tool's own ambiguity suggestions; an empty list with
+  /// no plant means the name is unknown. The matching behaviour is unchanged.
+  ({Map<String, dynamic>? plant, List<String> suggestions}) resolvePlant(
     String query,
   ) {
     final normalized = query.trim().toLowerCase();
