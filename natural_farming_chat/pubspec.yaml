@@ -40,6 +40,8 @@ dependencies:
   crypto: ^3.0.3
   path_provider: ^2.1.2
   path: ^1.8.0
+  memlocal:
+    path: /home/goya/agent-workspace/memlocal_core/flutter
   archive: ^4.0.7
   ffi: ^2.1.0
 
