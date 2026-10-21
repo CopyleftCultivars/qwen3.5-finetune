@@ -10,11 +10,7 @@ class RegionEntry {
   final String? region;
   final List<RegionPlant> plants;
 
-  RegionEntry({
-    required this.country,
-    this.region,
-    required this.plants,
-  });
+  RegionEntry({required this.country, this.region, required this.plants});
 
   /// Display name like "California, USA" or "Kenya".
   String get displayName {
@@ -154,13 +150,36 @@ class RegionPlantService {
 
     final matches = <String>[];
     for (final entry in _entries) {
-      final grows = entry.plants.any((p) =>
-          p.commonName.toLowerCase().contains(cropL) ||
-          p.scientificName.toLowerCase().contains(cropL) ||
-          p.raw.toLowerCase().contains(cropL));
+      final grows = entry.plants.any(
+        (p) =>
+            p.commonName.toLowerCase().contains(cropL) ||
+            p.scientificName.toLowerCase().contains(cropL) ||
+            p.raw.toLowerCase().contains(cropL),
+      );
       if (grows) matches.add(entry.displayName);
     }
     return matches;
+  }
+
+  /// Lower-case common, scientific and raw names for every plant listed in a
+  /// matching region.
+  ///
+  /// The recipe form (#20) uses this only to rank candidate-plant suggestions;
+  /// a location is never a recipe-tool argument.
+  Set<String> plantNameTermsForLocation(String query) {
+    if (!_isInitialized || query.trim().isEmpty) return <String>{};
+    final terms = <String>{};
+    for (final entry in findRegions(query)) {
+      for (final plant in entry.plants) {
+        final common = plant.commonName.toLowerCase();
+        final scientific = plant.scientificName.toLowerCase();
+        final raw = plant.raw.toLowerCase();
+        if (common.isNotEmpty) terms.add(common);
+        if (scientific.isNotEmpty) terms.add(scientific);
+        if (raw.isNotEmpty) terms.add(raw);
+      }
+    }
+    return terms;
   }
 
   /// Parse "Genus species (Common Name)" into a RegionPlant.

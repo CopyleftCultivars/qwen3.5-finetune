@@ -13,12 +13,14 @@ import 'services/region_plant_service.dart';
 import 'services/tool_executor.dart';
 import 'services/bioaccumulator_ratio_service.dart';
 import 'services/recipe_lookup_service.dart';
+import 'services/recipe_form.dart';
 import 'services/recipe_prompt.dart';
 import 'services/recipe_tool_service.dart';
 import 'services/recipe_turn.dart';
 import 'services/session_store.dart';
 import 'services/embedding_service.dart';
 import 'widgets/recipe_card.dart';
+import 'widgets/recipe_form_tab.dart';
 
 export 'models/chat_session.dart';
 
@@ -60,9 +62,11 @@ class ChatScreen extends StatefulWidget {
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenState extends State<ChatScreen>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  late final TabController _tabController;
 
   /// Always the active session's own message list.
   List<ChatMessage> _messages = [];
@@ -96,6 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
     _formulationService = FertilizerFormulationService(
       regionService: _regionPlantService,
       plantLookupService: _plantLookupService,
@@ -350,39 +355,6 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollToBottom();
   }
 
-  String _deterministicRecipeSummary(Map<String, dynamic> result) {
-    if (result['status'] != 'ok') {
-      final error = (result['error'] as Map<String, dynamic>?) ?? const {};
-      return 'Recipe tool error (${error['code']}): ${error['message']}';
-    }
-    final candidate = result['candidate_plant'] as Map<String, dynamic>;
-    final crop = result['crop'] as Map<String, dynamic>;
-    final input = result['input'] as Map<String, dynamic>;
-    final nutrition = result['nutrition_track'] as Map<String, dynamic>;
-    final nutrients = nutrition['nutrients'] as Map<String, dynamic>;
-    final coverageText = ['N', 'P', 'K']
-        .where((nutrient) => nutrients[nutrient]['coverage_percent'] != null)
-        .map(
-          (nutrient) =>
-              '$nutrient ${(nutrients[nutrient]['coverage_percent'] as num).toDouble().toStringAsFixed(1)}%',
-        )
-        .join(', ');
-    final recipes = ((result['booster_track'] as Map<String, dynamic>)['recipes']
-            as List)
-        .cast<Map<String, dynamic>>();
-    final booster = recipes
-        .where((recipe) => recipe['computable'] == true)
-        .map((recipe) => '${recipe['recipe_abbrev']} (${recipe['recipe_name']})')
-        .join(', ');
-    return 'Bioaccumulator recipe for ${candidate['common_name']} on '
-        '${crop['common_name']}, ${input['quantity']} m2.\n'
-        'Nutrition (no overshoot): ${nutrition['sizing_nutrient']} sizing, '
-        '${nutrition['sizing_fresh_plant_material_kg']} kg fresh material '
-        '(${nutrition['sizing_fresh_plant_material_kg_per_m2']} kg/m2). '
-        'Coverage: $coverageText.\n'
-        'Booster: ${booster.isEmpty ? 'no standard batch is computable' : booster}.';
-  }
-
   /// Build the active session's full conversation history in runner order.
   ///
   /// The runner appends every earlier turn's user message and its complete
@@ -438,7 +410,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (recipeResult != null) {
       if (_detailedRecipeMode) {
         return (
-          text: _deterministicRecipeSummary(recipeResult),
+          text: buildDeterministicRecipeSummary(recipeResult),
           recipe: recipeResult,
         );
       }
@@ -475,6 +447,49 @@ class _ChatScreenState extends State<ChatScreen> {
       '[TOOL_DEBUG] Synthesis complete (${synthesis.response.length} chars)',
     );
     return (text: synthesis.response, recipe: null);
+  }
+
+  /// The only model call on the recipe-form path: QUICK instructions.
+  ///
+  /// The form supplies the canonical trigger, its synthesized `<tool_call>`
+  /// turn and the served-view tool context. History is empty because the form
+  /// is a fresh request, exactly like a single-turn chat trigger.
+  Future<String> _generateFormRecipeInstructions({
+    required String userMessage,
+    required String assistantToolCallResponse,
+    required String toolResultContext,
+  }) async {
+    final messages = buildRecipeInstructionMessages(
+      userMessage: userMessage,
+      history: const [],
+      assistantToolCallResponse: assistantToolCallResponse,
+      toolResultContext: toolResultContext,
+    );
+    final result = await _modelService.generateCompletionFromMessages(
+      messages: messages,
+      tools: ModelService.farmingTools,
+    );
+    return result.response.trim();
+  }
+
+  /// "Continue chat?" from #20: seed a new session with the form turn.
+  Future<void> _continueChatFromRecipe({
+    required String userMessage,
+    required String assistantReply,
+    required Map<String, dynamic> recipe,
+  }) async {
+    if (_isLoading) return;
+    final session = await _sessionStore.createSessionFromRecipe(
+      userMessage: userMessage,
+      assistantReply: assistantReply,
+      recipe: recipe,
+    );
+    setState(() {
+      _messages = session.messages;
+    });
+    await _saveChatHistory();
+    _tabController.animateTo(0);
+    _scrollToBottom();
   }
 
   void _scrollToBottom() {
@@ -603,6 +618,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     _textController.dispose();
     _scrollController.dispose();
+    _tabController.dispose();
     _modelService.dispose();
     _embeddingService.dispose();
     super.dispose();
@@ -630,6 +646,13 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const [
+            Tab(icon: Icon(Icons.chat_bubble_outline), text: 'Chat'),
+            Tab(icon: Icon(Icons.edit_note), text: 'Recipe form'),
+          ],
+        ),
         actions: [
           if (_isLoading)
             const Padding(
@@ -643,11 +666,27 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
       drawer: _buildDrawer(),
-      body: Column(
+      body: TabBarView(
+        controller: _tabController,
         children: [
-          _buildRecipeHint(),
-          Expanded(child: _buildMessageList()),
-          _buildInputArea(),
+          Column(
+            children: [
+              _buildRecipeHint(),
+              Expanded(child: _buildMessageList()),
+              _buildInputArea(),
+            ],
+          ),
+          RecipeFormTab(
+            recipeToolService: _recipeToolService,
+            regionPlantService: _regionPlantService,
+            toolExecutor: _toolExecutor,
+            quickMode: !_detailedRecipeMode,
+            onModeChanged: (quick) {
+              setState(() => _detailedRecipeMode = !quick);
+            },
+            generateInstructions: _generateFormRecipeInstructions,
+            onContinueChat: _continueChatFromRecipe,
+          ),
         ],
       ),
     );
