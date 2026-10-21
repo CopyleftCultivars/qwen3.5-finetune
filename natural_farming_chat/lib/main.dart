@@ -1,9 +1,11 @@
-import 'dart:convert';
 import 'package:cactus/cactus.dart' as cactus;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show appFlavor;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'models/chat_session.dart';
+import 'services/conversation_history.dart';
 import 'services/model_service.dart';
+import 'services/memory_service.dart';
 import 'services/plant_lookup_service.dart';
 import 'services/calculator_service.dart';
 import 'services/fertilizer_formulation_service.dart';
@@ -14,8 +16,11 @@ import 'services/recipe_lookup_service.dart';
 import 'services/recipe_prompt.dart';
 import 'services/recipe_tool_service.dart';
 import 'services/recipe_turn.dart';
+import 'services/session_store.dart';
 import 'services/embedding_service.dart';
 import 'widgets/recipe_card.dart';
+
+export 'models/chat_session.dart';
 
 void main() {
   runApp(const NaturalFarmingChatApp());
@@ -47,39 +52,6 @@ class NaturalFarmingChatApp extends StatelessWidget {
   }
 }
 
-/// Represents a chat message
-class ChatMessage {
-  final String content;
-  final bool isUser;
-  final DateTime timestamp;
-
-  /// Full deterministic recipe-tool result for the "Show full recipe" card.
-  final Map<String, dynamic>? recipe;
-
-  ChatMessage({
-    required this.content,
-    required this.isUser,
-    DateTime? timestamp,
-    this.recipe,
-  }) : timestamp = timestamp ?? DateTime.now();
-
-  /// Convert to JSON for persistence
-  Map<String, dynamic> toJson() => {
-    'content': content,
-    'isUser': isUser,
-    'timestamp': timestamp.toIso8601String(),
-    if (recipe != null) 'recipe': recipe,
-  };
-
-  /// Create from JSON
-  factory ChatMessage.fromJson(Map<String, dynamic> json) => ChatMessage(
-    content: json['content'] as String,
-    isUser: json['isUser'] as bool,
-    timestamp: DateTime.parse(json['timestamp'] as String),
-    recipe: json['recipe'] as Map<String, dynamic>?,
-  );
-}
-
 /// Main chat screen
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -91,9 +63,13 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final List<ChatMessage> _messages = [];
 
+  /// Always the active session's own message list.
+  List<ChatMessage> _messages = [];
+
+  late final SessionStore _sessionStore;
   final ModelService _modelService = ModelService();
+  MemoryService _memoryService = const NoopMemoryService();
   final PlantLookupService _plantLookupService = PlantLookupService();
   final CalculatorService _calculatorService = CalculatorService();
   final RegionPlantService _regionPlantService = RegionPlantService();
@@ -115,7 +91,6 @@ class _ChatScreenState extends State<ChatScreen> {
   bool _detailedRecipeMode = false;
 
   // Persistence keys
-  static const String _chatHistoryKey = 'chat_history';
   static const String _qwen35ModelSlugKey = 'qwen35_model_slug';
 
   @override
@@ -156,31 +131,18 @@ class _ChatScreenState extends State<ChatScreen> {
       ModelService.configureQwen35Model(configuredModel);
     }
 
-    // Load chat history
-    final savedHistory = prefs.getString(_chatHistoryKey);
-    if (savedHistory != null) {
-      try {
-        final List<dynamic> jsonList = jsonDecode(savedHistory);
-        final loadedMessages = jsonList
-            .map((json) => ChatMessage.fromJson(json as Map<String, dynamic>))
-            .toList();
-        if (loadedMessages.isNotEmpty) {
-          setState(() {
-            _messages.clear();
-            _messages.addAll(loadedMessages);
-          });
-        }
-      } catch (e) {
-        // Ignore invalid saved data
-      }
-    }
+    // Restore the last active session. SessionStore migrates the old
+    // single-conversation `chat_history` value on first launch.
+    _sessionStore = await SessionStore.open(preferences: prefs);
+    final active = _sessionStore.activeSession;
+    setState(() {
+      _messages = active.messages;
+    });
   }
 
-  /// Save chat history to SharedPreferences
+  /// Persist the active session's messages.
   Future<void> _saveChatHistory() async {
-    final prefs = await SharedPreferences.getInstance();
-    final jsonList = _messages.map((m) => m.toJson()).toList();
-    await prefs.setString(_chatHistoryKey, jsonEncode(jsonList));
+    await _sessionStore.saveActiveSession();
   }
 
   Future<void> _initializeServices() async {
@@ -194,6 +156,21 @@ class _ChatScreenState extends State<ChatScreen> {
           });
         },
       );
+
+      // Initialize optional long-term memory after the chat model. A storage
+      // failure leaves the chat usable with memory disabled.
+      try {
+        final memoryService = createMemoryService(appFlavor);
+        await memoryService.initialize();
+        _memoryService = memoryService;
+        if (_memoryService.enabled) {
+          debugPrint('[MEMORY] Keyword-only memlocal database opened');
+        }
+      } catch (error, stackTrace) {
+        debugPrint('[MEMORY] Initialization failed; memory disabled: $error');
+        debugPrint(stackTrace.toString());
+        _memoryService = const NoopMemoryService();
+      }
 
       // Get device info
       final deviceInfo = await _modelService.getDeviceInfo();
@@ -300,10 +277,11 @@ class _ChatScreenState extends State<ChatScreen> {
         }
       }
 
+      final needsWelcome = _messages.isEmpty;
       setState(() {
         _isInitialized = true;
-        // Only add welcome message if no history was loaded
-        if (_messages.isEmpty) {
+        // Only add welcome message if the active session has no history.
+        if (needsWelcome) {
           _messages.add(
             ChatMessage(
               content:
@@ -315,6 +293,9 @@ class _ChatScreenState extends State<ChatScreen> {
           );
         }
       });
+      if (needsWelcome) {
+        await _saveChatHistory();
+      }
     } catch (e) {
       setState(() {
         _initStatus = 'Error: $e';
@@ -402,25 +383,14 @@ class _ChatScreenState extends State<ChatScreen> {
         'Booster: ${booster.isEmpty ? 'no standard batch is computable' : booster}.';
   }
 
-  /// Build the full conversation history in runner order.
+  /// Build the active session's full conversation history in runner order.
   ///
   /// The runner appends every earlier turn's user message and its complete
   /// final answer, in order, with no character budget. The app's welcome
-  /// message is UI-only, so it is excluded.
-  List<cactus.ChatMessage> _buildConversationHistory() {
-    final history = <cactus.ChatMessage>[];
-    for (var i = 0; i < _messages.length; i++) {
-      final message = _messages[i];
-      if (i == 0 && !message.isUser) continue;
-      history.add(
-        cactus.ChatMessage(
-          content: message.content,
-          role: message.isUser ? 'user' : 'assistant',
-        ),
-      );
-    }
-    return history;
-  }
+  /// message is UI-only, so it is excluded. Messages from other sessions are
+  /// never visible here: `_messages` is the active session's own list.
+  List<cactus.ChatMessage> _buildConversationHistory() =>
+      buildSessionConversationHistory(_messages);
 
   /// Two-phase generation with tool calling support.
   ///
@@ -519,6 +489,103 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  ChatMessage _welcomeMessage() => ChatMessage(
+    content:
+        'Hello! I\'m your Natural Farming assistant. '
+        'Ask me anything about organic farming, composting, '
+        'fermented plant juice, or nutrient requirements for plants.',
+    isUser: false,
+  );
+
+  /// Start a new session with the same UI-only welcome message as first launch.
+  Future<void> _createSession() async {
+    if (_isLoading) return;
+    final session = await _sessionStore.createSession();
+    _messages = session.messages..add(_welcomeMessage());
+    await _saveChatHistory();
+    setState(() {});
+    _scrollToBottom();
+  }
+
+  Future<void> _switchSession(ChatSession session) async {
+    if (_isLoading || session.id == _sessionStore.activeSessionId) return;
+    await _sessionStore.switchSession(session.id);
+    setState(() {
+      _messages = _sessionStore.activeSession.messages;
+    });
+    _scrollToBottom();
+  }
+
+  Future<void> _renameSession(ChatSession session) async {
+    final controller = TextEditingController(text: session.title);
+    final title = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Rename chat'),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          maxLength: 60,
+          textCapitalization: TextCapitalization.sentences,
+          decoration: const InputDecoration(labelText: 'Session name'),
+          onSubmitted: (value) => Navigator.pop(dialogContext, value),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, controller.text),
+            child: const Text('Rename'),
+          ),
+        ],
+      ),
+    );
+    controller.dispose();
+    if (title == null || title.trim().isEmpty) return;
+    await _sessionStore.renameSession(session.id, title);
+    setState(() {});
+  }
+
+  Future<void> _deleteSession(ChatSession session) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Delete chat?'),
+        content: Text(
+          '"${session.title}" and its messages will be removed from this '
+          'device.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
+    await _sessionStore.deleteSession(session.id);
+    _messages = _sessionStore.activeSession.messages;
+    if (_messages.isEmpty) {
+      _messages.add(_welcomeMessage());
+      await _saveChatHistory();
+    }
+    setState(() {});
+    _scrollToBottom();
+  }
+
+  String _sessionSubtitle(ChatSession session) {
+    final count = session.messages.length;
+    return count == 1 ? '1 message' : '$count messages';
+  }
+
   void _clearHistory() {
     setState(() {
       _messages.clear();
@@ -549,7 +616,19 @@ class _ChatScreenState extends State<ChatScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Natural Farming Chat'),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Natural Farming Chat', style: TextStyle(fontSize: 18)),
+            Text(
+              _sessionStore.activeSession.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+        ),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           if (_isLoading)
@@ -603,6 +682,36 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  Widget _buildSessionTile(ChatSession session) {
+    final isActive = session.id == _sessionStore.activeSessionId;
+    return ListTile(
+      selected: isActive,
+      leading: Icon(isActive ? Icons.chat_bubble : Icons.chat_bubble_outline),
+      title: Text(session.title, maxLines: 1, overflow: TextOverflow.ellipsis),
+      subtitle: Text(_sessionSubtitle(session)),
+      enabled: !_isLoading,
+      onTap: () {
+        _switchSession(session);
+        Navigator.pop(context);
+      },
+      trailing: PopupMenuButton<String>(
+        tooltip: 'Chat actions',
+        enabled: !_isLoading,
+        onSelected: (value) async {
+          if (value == 'rename') {
+            await _renameSession(session);
+          } else if (value == 'delete') {
+            await _deleteSession(session);
+          }
+        },
+        itemBuilder: (context) => const [
+          PopupMenuItem(value: 'rename', child: Text('Rename')),
+          PopupMenuItem(value: 'delete', child: Text('Delete')),
+        ],
+      ),
+    );
+  }
+
   Widget _buildDrawer() {
     return Drawer(
       child: ListView(
@@ -635,9 +744,32 @@ class _ChatScreenState extends State<ChatScreen> {
             subtitle: Text(_deviceInfo ?? 'Unknown'),
           ),
           const Divider(),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
+            child: Text(
+              'CHATS',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1.1,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_comment_outlined),
+            title: const Text('New chat'),
+            enabled: !_isLoading,
+            onTap: () {
+              _createSession();
+              Navigator.pop(context);
+            },
+          ),
+          for (final session in _sessionStore.sessions)
+            _buildSessionTile(session),
+          const Divider(),
           ListTile(
             leading: const Icon(Icons.delete_outline),
-            title: const Text('Clear Chat History'),
+            title: const Text('Clear Current Chat'),
             onTap: () {
               _clearHistory();
               Navigator.pop(context);
