@@ -34,16 +34,17 @@ class ModelService {
   // by Android flavor. Qwen3.5 is staged locally until a hosted bundle is set up.
   static const String _productionModelSlug =
       'qwen3-nf-distill-v2-cact-int4-ios';
-  static const String _defaultQwen35ModelSlug = 'qwen35-combined-cq4';
+  static const String _defaultQwen35ModelSlug = 'qwen35-recipe-v5-cactus-cq4-hessian';
   static String _qwen35ModelSlug = _defaultQwen35ModelSlug;
   static const String _productionModelDownloadUrl =
       'https://huggingface.co/CopyleftCultivars/localNFchatbot-cactus/resolve/main/qwen3-distill-v2-calibrated-cact-int4-ios.zip';
 
   /// The Qwen3.5 recipe bundle is configurable without rebuilding the app.
   ///
-  /// The default stays the current bundle until the operator switches it to
-  /// candidate 4's CQ4 bundle (`qwen35-recipe-v5-cactus-cq4`), staged under
-  /// `/data/local/tmp/<slug>`.
+  /// The default is candidate 4's Hessian-calibrated CQ4 bundle
+  /// (`qwen35-recipe-v5-cactus-cq4-hessian`), staged under
+  /// `/data/local/tmp/<slug>`. `configureQwen35Model`/`resetQwen35Model`
+  /// still allow switching bundles without rebuilding.
   static void configureQwen35Model(String slug) {
     final trimmed = slug.trim();
     if (trimmed.isNotEmpty) _qwen35ModelSlug = trimmed;
@@ -114,7 +115,10 @@ class ModelService {
           ).exists()) {
             throw ModelServiceException(
               'Qwen3.5 bundle is missing $requiredPath under '
-              '${qwen35StagingFolder.path}. Stage outputs/qwen35-combined-cactus-cq4 there with adb push.',
+              '${qwen35StagingFolder.path}. Stage '
+              'outputs/qwen35-recipe-v5-cactus-cq4-hessian there with adb push, '
+              'including components/, optimized_ir*.json and raw_ir*.json '
+              'copied from outputs/qwen35-combined-cactus-cq4.',
             );
           }
         }

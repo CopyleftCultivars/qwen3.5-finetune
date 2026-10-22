@@ -48,8 +48,9 @@ Reference: `../bioaccumulator-benchmark-workspace` (read-only)
   proposal, and the three v2/v1 JSON schemas.
 * Configurable Qwen3.5 bundle: `ModelService.configureQwen35Model(slug)` (and
   the persisted `qwen35_model_slug` preference). The default remains the current
-  `qwen35-combined-cq4`; candidate 4 is selected by setting
-  `qwen35-recipe-v5-cactus-cq4` when its CQ4 bundle is staged.
+  `qwen35-recipe-v5-cactus-cq4-hessian` (candidate 4's Hessian-calibrated
+  CQ4 bundle); override with `configureQwen35Model(slug)` /
+  `resetQwen35Model()` and the persisted `qwen35_model_slug` preference.
 
 ## Operator changes A–F
 
