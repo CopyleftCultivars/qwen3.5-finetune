@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- Make the calibrated candidate-4 bundle the app's default model (#24): `ModelService._defaultQwen35ModelSlug` is now `qwen35-recipe-v5-cactus-cq4-hessian`; `configureQwen35Model`/`resetQwen35Model` and the `qwen35_model_slug` preference still work. Staging docs updated (README) including that the Cactus graph files (`components/`, `optimized_ir*.json`, `raw_ir*.json`) are architecture-only and were copied byte-identical from `qwen35-combined-cactus-cq4` for #67. Unit test pins the default slug.
 - Recipe form tab: fill the trigger template, post the result as a chat reply, offer 'Continue chat?' (#20)
 - Recipe form tab (#20): a separate `Recipe form` mode validates crop, candidate plant and area with the recipe tool's own public `resolveCrop`/`resolvePlant` (no model call), runs the deterministic calculation live to show computability or the tool's own error code/message, treats an optional location as a suggestion-ranking hint only, and posts the result as a chat-style reply with the full recipe card plus QUICK instructions. `Continue chat?` seeds a new session through `SessionStore.createSessionFromRecipe`. The form synthesizes the trained `<tool_call>` assistant turn and its QUICK instruction prompt is byte-identical to candidate 4 on all 42 exact-trigger development turns (14 cases × `issue_64_ckpt423_seed_{42,43,44}`); the existing chat parity remains 120/120, 80/80, 80/80 and 120/120. Report: `docs/issue-20-recipe-form-2026-10-21.md`.
 - Per-session memory and session management UI (#21)
@@ -22,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 ### Changed
+- Make the calibrated candidate-4 bundle the app's default model (#24)
 - Epic: Qwen3.5-2B finetune + tool-calling + on-device benchmark (#1)
 - Run 210-item natural_fertilizers ladder benchmark on the new Qwen3.5 model (#6)
 - Cactus-convert the trained Qwen3.5-2B LoRA adapter (#5)
