@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 ### Changed
+- Make the calibrated candidate-4 bundle the app's default model (#24)
 - Epic: Qwen3.5-2B finetune + tool-calling + on-device benchmark (#1)
 - Run 210-item natural_fertilizers ladder benchmark on the new Qwen3.5 model (#6)
 - Cactus-convert the trained Qwen3.5-2B LoRA adapter (#5)
