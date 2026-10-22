@@ -13,7 +13,18 @@ For local Qwen3.5 development, stage the converted bundle on the device and run
 that flavor:
 
 ```sh
-adb push ../outputs/qwen35-combined-cactus-cq4/. /data/local/tmp/qwen35-combined-cq4/
+# Stage the calibrated candidate-4 bundle (weights from the Hessian bundle).
+adb push ../outputs/qwen35-recipe-v5-cactus-cq4-hessian/. \
+  /data/local/tmp/qwen35-recipe-v5-cactus-cq4-hessian/
+# The Cactus graph files are architecture-only and were copied (byte-identical)
+# from the combined bundle for #67: components/, optimized_ir*.json,
+# raw_ir*.json. Copy them into the staged bundle if they are not already there:
+adb push ../outputs/qwen35-combined-cactus-cq4/components \
+  /data/local/tmp/qwen35-recipe-v5-cactus-cq4-hessian/
+for f in ../outputs/qwen35-combined-cactus-cq4/optimized_ir*.json \
+         ../outputs/qwen35-combined-cactus-cq4/raw_ir*.json; do
+  adb push "$f" /data/local/tmp/qwen35-recipe-v5-cactus-cq4-hessian/
+done
 flutter run --flavor qwen35 -d <device-id>
 ```
 
