@@ -16,21 +16,6 @@ wandb/
 .aws/
 .mcp.json
 
-# Flutter-generated files from the nested app and plugin example.
-**/.dart_tool/
-**/.flutter-plugins-dependencies
-**/.packages
-**/build/
-**/.gradle/
-**/local.properties
-**/ephemeral/
-**/Generated.xcconfig
-**/GeneratedPluginRegistrant.java
-**/GeneratedPluginRegistrant.h
-**/GeneratedPluginRegistrant.m
-**/flutter_export_environment.sh
-natural_farming_chat/packages/cactus/example/pubspec.lock
-
 # Keep binary assets and generated model outputs out of source history.
 *.png
 *.jpg

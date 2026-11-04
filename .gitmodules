@@ -3,3 +3,6 @@
 	url = git@github.com:CopyleftCultivars/cactus.git
 	branch = qwen35-rotary-fix
 	shallow = true
+[submodule "natural_farming_chat"]
+	path = natural_farming_chat
+	url = git@github.com:CopyleftCultivars/pixel7-cactus-qwen3.5.git

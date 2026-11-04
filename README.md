@@ -5,6 +5,14 @@ for rationale data, RLM trajectories, and Cactus-native tool calls. Training
 uses the native `Qwen/Qwen3.5-2B` checkpoint with BF16 weights and LoRA
 adapters. The model is not loaded in 4-bit.
 
+## The app
+
+The Android app that runs the resulting model is its own repository,
+[`pixel7-cactus-qwen3.5`](https://github.com/CopyleftCultivars/pixel7-cactus-qwen3.5), checked out here as the submodule
+`natural_farming_chat/` (with the Cactus fork as a submodule of its own). Clone with
+`git clone --recurse-submodules`, or run `git submodule update --init natural_farming_chat` in an existing checkout.
+Training, data, evaluation and the Cactus conversion scripts stay in this repository; the app, its tests and its build tools live there.
+
 ## Training environment
 
 Reuse the existing isolated Transformers 5 environment when the sibling
