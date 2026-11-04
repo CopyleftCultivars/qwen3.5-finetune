@@ -1,0 +1,6970 @@
+{
+ "fill_cases": [
+  {
+   "ended": true,
+   "filled": true,
+   "message": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+   "previous": "Bioaccumulator recipe: PlantA for my CropB",
+   "text": "It is 6 m2."
+  },
+  {
+   "ended": true,
+   "filled": true,
+   "message": "Bioaccumulator recipe: PlantA for my CropB, 2.5 sq m",
+   "previous": "Bioaccumulator recipe: PlantA for my CropB",
+   "text": "2.5 sq m"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB",
+   "text": "It is 6 hectares."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB",
+   "text": "I think it is 6 m2"
+  },
+  {
+   "ended": true,
+   "filled": true,
+   "message": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+   "previous": "Bioaccumulator recipe: PlantA for my CropB,",
+   "text": "It is 6 m2."
+  },
+  {
+   "ended": true,
+   "filled": true,
+   "message": "Bioaccumulator recipe: PlantA for my CropB, 2.5 sq m",
+   "previous": "Bioaccumulator recipe: PlantA for my CropB,",
+   "text": "2.5 sq m"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB,",
+   "text": "It is 6 hectares."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB,",
+   "text": "I think it is 6 m2"
+  },
+  {
+   "ended": true,
+   "filled": true,
+   "message": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, m2",
+   "text": "It is 6 m2."
+  },
+  {
+   "ended": true,
+   "filled": true,
+   "message": "Bioaccumulator recipe: PlantA for my CropB, 2.5 sq m",
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, m2",
+   "text": "2.5 sq m"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, m2",
+   "text": "It is 6 hectares."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, m2",
+   "text": "I think it is 6 m2"
+  },
+  {
+   "ended": true,
+   "filled": true,
+   "message": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, some area",
+   "text": "It is 6 m2."
+  },
+  {
+   "ended": true,
+   "filled": true,
+   "message": "Bioaccumulator recipe: PlantA for my CropB, 2.5 sq m",
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, some area",
+   "text": "2.5 sq m"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, some area",
+   "text": "It is 6 hectares."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, some area",
+   "text": "I think it is 6 m2"
+  },
+  {
+   "ended": false,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB",
+   "text": "It is 6 m2."
+  },
+  {
+   "ended": false,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB",
+   "text": "2.5 sq m"
+  },
+  {
+   "ended": false,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB",
+   "text": "It is 6 hectares."
+  },
+  {
+   "ended": false,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB",
+   "text": "I think it is 6 m2"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe PlantA for my CropB, 6 m2",
+   "text": "It is 6 m2."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe PlantA for my CropB, 6 m2",
+   "text": "2.5 sq m"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe PlantA for my CropB, 6 m2",
+   "text": "It is 6 hectares."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe PlantA for my CropB, 6 m2",
+   "text": "I think it is 6 m2"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "What can I make from PlantA for my CropB?",
+   "text": "It is 6 m2."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "What can I make from PlantA for my CropB?",
+   "text": "2.5 sq m"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "What can I make from PlantA for my CropB?",
+   "text": "It is 6 hectares."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "What can I make from PlantA for my CropB?",
+   "text": "I think it is 6 m2"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, 5 m2",
+   "text": "It is 6 m2."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, 5 m2",
+   "text": "2.5 sq m"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, 5 m2",
+   "text": "It is 6 hectares."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA for my CropB, 5 m2",
+   "text": "I think it is 6 m2"
+  },
+  {
+   "ended": true,
+   "filled": true,
+   "message": "Bioaccumulator recipe: Plant A for my Crop B, 6 m2",
+   "previous": "Bioaccumulator recipe: Plant A for my Crop B",
+   "text": "It is 6 m2."
+  },
+  {
+   "ended": true,
+   "filled": true,
+   "message": "Bioaccumulator recipe: Plant A for my Crop B, 2.5 sq m",
+   "previous": "Bioaccumulator recipe: Plant A for my Crop B",
+   "text": "2.5 sq m"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: Plant A for my Crop B",
+   "text": "It is 6 hectares."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: Plant A for my Crop B",
+   "text": "I think it is 6 m2"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA2 for my CropB",
+   "text": "It is 6 m2."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA2 for my CropB",
+   "text": "2.5 sq m"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA2 for my CropB",
+   "text": "It is 6 hectares."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": "Bioaccumulator recipe: PlantA2 for my CropB",
+   "text": "I think it is 6 m2"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": null,
+   "text": "It is 6 m2."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": null,
+   "text": "2.5 sq m"
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": null,
+   "text": "It is 6 hectares."
+  },
+  {
+   "ended": true,
+   "filled": false,
+   "message": null,
+   "previous": null,
+   "text": "I think it is 6 m2"
+  }
+ ],
+ "fill_version": "followup_fill_v1",
+ "format_g": [
+  {
+   "text": "12",
+   "value": 12.0
+  },
+  {
+   "text": "2.5",
+   "value": 2.5
+  },
+  {
+   "text": "0.75",
+   "value": 0.75
+  },
+  {
+   "text": "100",
+   "value": 100.0
+  },
+  {
+   "text": "1234.57",
+   "value": 1234.5678
+  },
+  {
+   "text": "0.000123",
+   "value": 0.000123
+  },
+  {
+   "text": "1.5e+06",
+   "value": 1500000.0
+  },
+  {
+   "text": "0.5",
+   "value": 0.5
+  },
+  {
+   "text": "3",
+   "value": 3.0
+  },
+  {
+   "text": "0.1",
+   "value": 0.1
+  },
+  {
+   "text": "99999.9",
+   "value": 99999.9
+  },
+  {
+   "text": "123457",
+   "value": 123456.7
+  },
+  {
+   "text": "1e-05",
+   "value": 1e-05
+  }
+ ],
+ "generated_by": "scripts/generate_routed_history_goldens.py",
+ "ledger_cases": [
+  {
+   "expected": [],
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only"
+  },
+  {
+   "expected": [],
+   "messages": [],
+   "name": "empty"
+  },
+  {
+   "expected": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantC for CropD, 2.5 m2\nYour notes since then:\n- after request 1: Thanks, what is composting?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note"
+  },
+  {
+   "expected": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2 (replaced by request 2)\n2. PlantA for CropB, 30 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession"
+  },
+  {
+   "expected": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantA for CropB, 12 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice"
+  },
+  {
+   "expected": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. P1 for C1, 0.75 m2\n2. P2 for C2, 100 m2\n3. P3 for C3, 1234.57 m2\n4. P4 for C4, 0.000123 m2\n5. P5 for C5, 1.5e+06 m2\n6. P6 for C6, 0.5 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats"
+  },
+  {
+   "expected": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. a request -> no recipe error=unknown_crop\n2. another request -> result not readable",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved"
+  },
+  {
+   "expected": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: hello there\n- after request 0: what is a ferment?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only"
+  },
+  {
+   "expected": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 4 m2\nYour notes since then:\n- after request 0: hello there",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe"
+  },
+  {
+   "expected": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal"
+  },
+  {
+   "expected": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantC for CropD, 9 m2\nYour notes since then:\n- after request 1: Bioaccumulator recipe: PlantA for my CropB, some area",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe"
+  },
+  {
+   "expected": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 6 m2\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe"
+  }
+ ],
+ "ledger_version": "context_ledger_v1.1",
+ "route_cases": [
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "It is 3 m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "it's 3 m²",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "12 sq m",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "The area is 8 square metres.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Area: 4 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    }
+   ],
+   "name": "welcome_only/11",
+   "text": "It is 6 hectares."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [],
+   "name": "empty/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [],
+   "name": "empty/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [],
+   "name": "empty/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [],
+   "name": "empty/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [],
+   "name": "empty/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "It is 3 m2.",
+   "expected_route": "ledger",
+   "messages": [],
+   "name": "empty/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "it's 3 m²",
+   "expected_route": "ledger",
+   "messages": [],
+   "name": "empty/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "12 sq m",
+   "expected_route": "ledger",
+   "messages": [],
+   "name": "empty/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "The area is 8 square metres.",
+   "expected_route": "ledger",
+   "messages": [],
+   "name": "empty/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Area: 4 m2",
+   "expected_route": "ledger",
+   "messages": [],
+   "name": "empty/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [],
+   "name": "empty/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [],
+   "name": "empty/11",
+   "text": "It is 6 hectares."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantC for CropD, 2.5 m2\nYour notes since then:\n- after request 1: Thanks, what is composting?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantC for CropD, 2.5 m2\nYour notes since then:\n- after request 1: Thanks, what is composting?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantC for CropD, 2.5 m2\nYour notes since then:\n- after request 1: Thanks, what is composting?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantC for CropD, 2.5 m2\nYour notes since then:\n- after request 1: Thanks, what is composting?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 3 m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantC for CropD, 2.5 m2\nYour notes since then:\n- after request 1: Thanks, what is composting?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "it's 3 m²",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantC for CropD, 2.5 m2\nYour notes since then:\n- after request 1: Thanks, what is composting?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "12 sq m",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantC for CropD, 2.5 m2\nYour notes since then:\n- after request 1: Thanks, what is composting?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "The area is 8 square metres.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantC for CropD, 2.5 m2\nYour notes since then:\n- after request 1: Thanks, what is composting?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Area: 4 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantC for CropD, 2.5 m2\nYour notes since then:\n- after request 1: Thanks, what is composting?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantC for CropD, 2.5 m2\nYour notes since then:\n- after request 1: Thanks, what is composting?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Thanks, what is composting?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 2.5 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 2.5,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "two_recipes_and_a_note/11",
+   "text": "It is 6 hectares."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2 (replaced by request 2)\n2. PlantA for CropB, 30 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2 (replaced by request 2)\n2. PlantA for CropB, 30 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2 (replaced by request 2)\n2. PlantA for CropB, 30 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2 (replaced by request 2)\n2. PlantA for CropB, 30 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 3 m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2 (replaced by request 2)\n2. PlantA for CropB, 30 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "it's 3 m²",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2 (replaced by request 2)\n2. PlantA for CropB, 30 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "12 sq m",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2 (replaced by request 2)\n2. PlantA for CropB, 30 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "The area is 8 square metres.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2 (replaced by request 2)\n2. PlantA for CropB, 30 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Area: 4 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2 (replaced by request 2)\n2. PlantA for CropB, 30 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2 (replaced by request 2)\n2. PlantA for CropB, 30 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 30 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 30.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "supersession/11",
+   "text": "It is 6 hectares."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantA for CropB, 12 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantA for CropB, 12 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantA for CropB, 12 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantA for CropB, 12 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 3 m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantA for CropB, 12 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "it's 3 m²",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantA for CropB, 12 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "12 sq m",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantA for CropB, 12 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "The area is 8 square metres.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantA for CropB, 12 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Area: 4 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantA for CropB, 12 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 12 m2\n2. PlantA for CropB, 12 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 12 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 12.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "same_area_twice/11",
+   "text": "It is 6 hectares."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. P1 for C1, 0.75 m2\n2. P2 for C2, 100 m2\n3. P3 for C3, 1234.57 m2\n4. P4 for C4, 0.000123 m2\n5. P5 for C5, 1.5e+06 m2\n6. P6 for C6, 0.5 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. P1 for C1, 0.75 m2\n2. P2 for C2, 100 m2\n3. P3 for C3, 1234.57 m2\n4. P4 for C4, 0.000123 m2\n5. P5 for C5, 1.5e+06 m2\n6. P6 for C6, 0.5 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. P1 for C1, 0.75 m2\n2. P2 for C2, 100 m2\n3. P3 for C3, 1234.57 m2\n4. P4 for C4, 0.000123 m2\n5. P5 for C5, 1.5e+06 m2\n6. P6 for C6, 0.5 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. P1 for C1, 0.75 m2\n2. P2 for C2, 100 m2\n3. P3 for C3, 1234.57 m2\n4. P4 for C4, 0.000123 m2\n5. P5 for C5, 1.5e+06 m2\n6. P6 for C6, 0.5 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 3 m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. P1 for C1, 0.75 m2\n2. P2 for C2, 100 m2\n3. P3 for C3, 1234.57 m2\n4. P4 for C4, 0.000123 m2\n5. P5 for C5, 1.5e+06 m2\n6. P6 for C6, 0.5 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "it's 3 m²",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. P1 for C1, 0.75 m2\n2. P2 for C2, 100 m2\n3. P3 for C3, 1234.57 m2\n4. P4 for C4, 0.000123 m2\n5. P5 for C5, 1.5e+06 m2\n6. P6 for C6, 0.5 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "12 sq m",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. P1 for C1, 0.75 m2\n2. P2 for C2, 100 m2\n3. P3 for C3, 1234.57 m2\n4. P4 for C4, 0.000123 m2\n5. P5 for C5, 1.5e+06 m2\n6. P6 for C6, 0.5 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "The area is 8 square metres.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. P1 for C1, 0.75 m2\n2. P2 for C2, 100 m2\n3. P3 for C3, 1234.57 m2\n4. P4 for C4, 0.000123 m2\n5. P5 for C5, 1.5e+06 m2\n6. P6 for C6, 0.5 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Area: 4 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. P1 for C1, 0.75 m2\n2. P2 for C2, 100 m2\n3. P3 for C3, 1234.57 m2\n4. P4 for C4, 0.000123 m2\n5. P5 for C5, 1.5e+06 m2\n6. P6 for C6, 0.5 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. P1 for C1, 0.75 m2\n2. P2 for C2, 100 m2\n3. P3 for C3, 1234.57 m2\n4. P4 for C4, 0.000123 m2\n5. P5 for C5, 1.5e+06 m2\n6. P6 for C6, 0.5 m2",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "r1",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.75,
+      "candidate_plant": "P1",
+      "crop": "C1",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 100.0,
+      "candidate_plant": "P2",
+      "crop": "C2",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r3",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1234.5678,
+      "candidate_plant": "P3",
+      "crop": "C3",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r4",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.000123,
+      "candidate_plant": "P4",
+      "crop": "C4",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r5",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 1500000.0,
+      "candidate_plant": "P5",
+      "crop": "C5",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "r6",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 0.5,
+      "candidate_plant": "P6",
+      "crop": "C6",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "number_formats/11",
+   "text": "It is 6 hectares."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. a request -> no recipe error=unknown_crop\n2. another request -> result not readable",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. a request -> no recipe error=unknown_crop\n2. another request -> result not readable",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. a request -> no recipe error=unknown_crop\n2. another request -> result not readable",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. a request -> no recipe error=unknown_crop\n2. another request -> result not readable",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 3 m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. a request -> no recipe error=unknown_crop\n2. another request -> result not readable",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "it's 3 m²",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. a request -> no recipe error=unknown_crop\n2. another request -> result not readable",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "12 sq m",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. a request -> no recipe error=unknown_crop\n2. another request -> result not readable",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "The area is 8 square metres.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. a request -> no recipe error=unknown_crop\n2. another request -> result not readable",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Area: 4 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. a request -> no recipe error=unknown_crop\n2. another request -> result not readable",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. a request -> no recipe error=unknown_crop\n2. another request -> result not readable",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "a request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "error": {
+       "code": "unknown_crop",
+       "message": "m"
+      },
+      "status": "error"
+     }
+    },
+    {
+     "content": "another request",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "error_and_unresolved/11",
+   "text": "It is 6 hectares."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: hello there\n- after request 0: what is a ferment?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: hello there\n- after request 0: what is a ferment?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: hello there\n- after request 0: what is a ferment?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: hello there\n- after request 0: what is a ferment?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 3 m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: hello there\n- after request 0: what is a ferment?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "it's 3 m²",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: hello there\n- after request 0: what is a ferment?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "12 sq m",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: hello there\n- after request 0: what is a ferment?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "The area is 8 square metres.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: hello there\n- after request 0: what is a ferment?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Area: 4 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: hello there\n- after request 0: what is a ferment?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: hello there\n- after request 0: what is a ferment?",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "what is a ferment?",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    }
+   ],
+   "name": "notes_only/11",
+   "text": "It is 6 hectares."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 4 m2\nYour notes since then:\n- after request 0: hello there",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 4 m2\nYour notes since then:\n- after request 0: hello there",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 4 m2\nYour notes since then:\n- after request 0: hello there",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 4 m2\nYour notes since then:\n- after request 0: hello there",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 3 m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 4 m2\nYour notes since then:\n- after request 0: hello there",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "it's 3 m²",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 4 m2\nYour notes since then:\n- after request 0: hello there",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "12 sq m",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 4 m2\nYour notes since then:\n- after request 0: hello there",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "The area is 8 square metres.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 4 m2\nYour notes since then:\n- after request 0: hello there",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Area: 4 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 4 m2\nYour notes since then:\n- after request 0: hello there",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 4 m2\nYour notes since then:\n- after request 0: hello there",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "hello there",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 4.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "note_before_first_recipe/11",
+   "text": "It is 6 hectares."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantA for my CropB, 3 m2",
+   "expected_route": "followup_fill",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantA for my CropB, 3 m²",
+   "expected_route": "followup_fill",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantA for my CropB, 12 sq m",
+   "expected_route": "followup_fill",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantA for my CropB, 8 square metres",
+   "expected_route": "followup_fill",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+   "expected_route": "followup_fill",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal/11",
+   "text": "It is 6 hectares."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantC for CropD, 9 m2\nYour notes since then:\n- after request 1: Bioaccumulator recipe: PlantA for my CropB, some area",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantC for CropD, 9 m2\nYour notes since then:\n- after request 1: Bioaccumulator recipe: PlantA for my CropB, some area",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantC for CropD, 9 m2\nYour notes since then:\n- after request 1: Bioaccumulator recipe: PlantA for my CropB, some area",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantA for my CropB, 3 m2",
+   "expected_route": "followup_fill",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantA for my CropB, 3 m²",
+   "expected_route": "followup_fill",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantA for my CropB, 12 sq m",
+   "expected_route": "followup_fill",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantA for my CropB, 8 square metres",
+   "expected_route": "followup_fill",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantA for my CropB, 4 m2",
+   "expected_route": "followup_fill",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantC for CropD, 9 m2\nYour notes since then:\n- after request 1: Bioaccumulator recipe: PlantA for my CropB, some area",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantC for CropD, 9 m2\nYour notes since then:\n- after request 1: Bioaccumulator recipe: PlantA for my CropB, some area",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantC for my CropD, 9 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 9.0,
+      "candidate_plant": "PlantC",
+      "crop": "CropD",
+      "status": "ok"
+     }
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, some area",
+     "isUser": true
+    },
+    {
+     "content": "Please send it in the format.",
+     "isUser": false
+    }
+   ],
+   "name": "after_refusal_with_earlier_recipe/11",
+   "text": "It is 6 hectares."
+  },
+  {
+   "expected_history": [],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/0",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 m2"
+  },
+  {
+   "expected_history": [],
+   "expected_question": "bioaccumulator recipe: plante for my cropf, 7 m2",
+   "expected_route": "trigger_empty",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/1",
+   "text": "bioaccumulator recipe: plante for my cropf, 7 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 6 m2\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/2",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 7 hectares"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 6 m2\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Bioaccumulator recipe: PlantE for my CropF, 0 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/3",
+   "text": "Bioaccumulator recipe: PlantE for my CropF, 0 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 6 m2\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "What did we make first?",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/4",
+   "text": "What did we make first?"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 6 m2\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 3 m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/5",
+   "text": "It is 3 m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 6 m2\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "it's 3 m²",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/6",
+   "text": "it's 3 m²"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 6 m2\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "12 sq m",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/7",
+   "text": "12 sq m"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 6 m2\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "The area is 8 square metres.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/8",
+   "text": "The area is 8 square metres."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 6 m2\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "Area: 4 m2",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/9",
+   "text": "Area: 4 m2"
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 6 m2\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is six m2.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/10",
+   "text": "It is six m2."
+  },
+  {
+   "expected_history": [
+    {
+     "content": "Earlier in this conversation (from the recorded tool results):\n1. PlantA for CropB, 6 m2\nYour notes since then:\n- after request 0: Bioaccumulator recipe: PlantA for my CropB",
+     "role": "user"
+    },
+    {
+     "content": "Understood.",
+     "role": "assistant"
+    }
+   ],
+   "expected_question": "It is 6 hectares.",
+   "expected_route": "ledger",
+   "messages": [
+    {
+     "content": "Welcome.",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB",
+     "isUser": true
+    },
+    {
+     "content": "x",
+     "isUser": false
+    },
+    {
+     "content": "Bioaccumulator recipe: PlantA for my CropB, 6 m2",
+     "isUser": true
+    },
+    {
+     "content": "An answer.",
+     "isUser": false,
+     "recipe": {
+      "area_m2": 6.0,
+      "candidate_plant": "PlantA",
+      "crop": "CropB",
+      "status": "ok"
+     }
+    }
+   ],
+   "name": "after_recipe/11",
+   "text": "It is 6 hectares."
+  }
+ ]
+}
