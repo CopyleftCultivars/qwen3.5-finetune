@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 
@@ -6,6 +7,7 @@ import 'package:ffi/ffi.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'farming_tools.dart';
+import 'model_downloader.dart';
 import 'recipe_prompt.dart';
 
 /// Service for managing CactusLM model operations
@@ -26,16 +28,41 @@ class ModelService {
   /// Default maximum tokens for completions (increased from 512 to prevent truncation)
   static const int defaultMaxTokens = 2048;
 
-  // The Qwen3.5 recipe bundle is staged locally until a hosted bundle is set up.
   static const String _defaultQwen35ModelSlug = 'qwen35-recipe-v5-cactus-cq4-hessian';
   static String _qwen35ModelSlug = _defaultQwen35ModelSlug;
+
+  /// Where the model bundle comes from on first launch, chosen at build time
+  /// with `--dart-define=MODEL_SOURCE=auto|hosted|staged` (see `tool/build.sh`).
+  ///
+  /// * `auto` (default): use a complete bundle staged under
+  ///   `/data/local/tmp/<slug>` if there is one (developer and benchmark
+  ///   phones), otherwise download the hosted bundle. A phone that never had a
+  ///   bundle staged always downloads.
+  /// * `hosted`: always download, even when a staged bundle exists.
+  /// * `staged`: only use the staged bundle; fail if it is missing.
+  static const String _modelSourceName = String.fromEnvironment(
+    'MODEL_SOURCE',
+    defaultValue: 'auto',
+  );
+
+  static ModelSource get modelSource => parseModelSource(_modelSourceName);
+
+  static ModelSource parseModelSource(String name) {
+    for (final source in ModelSource.values) {
+      if (source.name == name) return source;
+    }
+    throw ModelServiceException(
+      'Unknown MODEL_SOURCE "$name"; use auto, hosted or staged.',
+    );
+  }
 
   /// The Qwen3.5 recipe bundle is configurable without rebuilding the app.
   ///
   /// The default is candidate 4's Hessian-calibrated CQ4 bundle
-  /// (`qwen35-recipe-v5-cactus-cq4-hessian`), staged under
-  /// `/data/local/tmp/<slug>`. `configureQwen35Model`/`resetQwen35Model`
-  /// still allow switching bundles without rebuilding.
+  /// (`qwen35-recipe-v5-cactus-cq4-hessian`), hosted at [hostedQwen35Model] and
+  /// optionally staged under `/data/local/tmp/<slug>`.
+  /// `configureQwen35Model`/`resetQwen35Model` still allow switching the slug
+  /// of a staged bundle without rebuilding.
   static void configureQwen35Model(String slug) {
     final trimmed = slug.trim();
     if (trimmed.isNotEmpty) _qwen35ModelSlug = trimmed;
@@ -65,7 +92,8 @@ class ModelService {
   /// The underlying CactusLM instance; null until the model is initialized.
   CactusLM? get lm => _lm;
 
-  /// Copy the staged Qwen3.5 bundle into the app's private storage.
+  /// Put the Qwen3.5 bundle into the app's private storage: keep an installed
+  /// copy, else copy a staged one, else download the hosted one.
   /// Bypasses Cactus's slug registry since our model is not a built-in model.
   Future<void> downloadModel({
     required void Function(double progress, String status) onProgress,
@@ -79,50 +107,105 @@ class ModelService {
     _lm = CactusLM(enableToolFiltering: false);
 
     try {
+      final source = modelSource;
       final appDocDir = await getApplicationDocumentsDirectory();
       final modelFolder = Directory('${appDocDir.path}/models/$modelSlug');
+      final marker = File('${modelFolder.path}.install.json');
 
       final configFile = File('${modelFolder.path}/config.txt');
       if (await configFile.exists()) {
-        onProgress(1.0, 'Model already downloaded');
-        return;
+        if (await _installedCopyIsCurrent(marker)) {
+          onProgress(1.0, 'Model already downloaded');
+          return;
+        }
+        // A hosted copy of an older revision: replace it.
+        onProgress(0.0, 'A newer model is available; replacing the old copy...');
       }
 
-      // The Qwen3.5 bundle is staged locally until it is hosted. Validate it
-      // before replacing an incomplete private copy.
       final qwen35StagingFolder = Directory(qwen35StagingPath);
-      for (final requiredPath in [
-        'config.txt',
-        'vocab.txt',
-        'components/manifest.json',
-      ]) {
-        if (!await File(
-          '${qwen35StagingFolder.path}/$requiredPath',
-        ).exists()) {
-          throw ModelServiceException(
-            'Qwen3.5 bundle is missing $requiredPath under '
-            '${qwen35StagingFolder.path}. Stage '
-            'outputs/qwen35-recipe-v5-cactus-cq4-hessian there with adb push, '
-            'including components/, optimized_ir*.json and raw_ir*.json '
-            'copied from outputs/qwen35-combined-cactus-cq4 '
-            '(tool/stage_model.sh does this).',
-          );
+      final useStaged = switch (source) {
+        ModelSource.staged => true,
+        ModelSource.hosted => false,
+        ModelSource.auto => await _stagedBundleIsComplete(qwen35StagingFolder),
+      };
+
+      if (useStaged) {
+        // Validate the staged bundle before replacing any private copy.
+        for (final requiredPath in requiredBundleFiles) {
+          if (!await File(
+            '${qwen35StagingFolder.path}/$requiredPath',
+          ).exists()) {
+            throw ModelServiceException(
+              'Qwen3.5 bundle is missing $requiredPath under '
+              '${qwen35StagingFolder.path}. Stage '
+              'outputs/qwen35-recipe-v5-cactus-cq4-hessian there with adb push, '
+              'including components/, optimized_ir*.json and raw_ir*.json '
+              'copied from outputs/qwen35-combined-cactus-cq4 '
+              '(tool/stage_model.sh does this).',
+            );
+          }
         }
       }
 
-      // Clean up any partial copy before starting fresh.
+      // Clean up any previous copy before starting fresh. A half-finished hosted
+      // download (`<folder>.partial`) is kept so it can resume.
       if (await modelFolder.exists()) {
         await modelFolder.delete(recursive: true);
       }
-      await modelFolder.create(recursive: true);
+      if (await marker.exists()) await marker.delete();
+      await modelFolder.parent.create(recursive: true);
 
-      await _copyQwen35Bundle(
-        source: qwen35StagingFolder,
-        destination: modelFolder,
-        onProgress: onProgress,
-      );
+      if (useStaged) {
+        final partial = Directory('${modelFolder.path}.partial');
+        if (await partial.exists()) await partial.delete(recursive: true);
+        await modelFolder.create(recursive: true);
+        await _copyQwen35Bundle(
+          source: qwen35StagingFolder,
+          destination: modelFolder,
+          onProgress: onProgress,
+        );
+      } else {
+        try {
+          await ModelDownloader(model: hostedQwen35Model).download(
+            destination: modelFolder,
+            onProgress: onProgress,
+          );
+        } on ModelDownloadException catch (error) {
+          throw ModelServiceException(
+            '${error.message} Check the internet connection and open the app '
+            'again; the download continues where it stopped.',
+          );
+        }
+        await marker.writeAsString(
+          jsonEncode({
+            'source': 'hosted',
+            'repo': hostedQwen35Model.repo,
+            'revision': hostedQwen35Model.revision,
+          }),
+        );
+      }
     } finally {
       _isDownloading = false;
+    }
+  }
+
+  /// True when the bundle under [folder] has everything the app checks for.
+  Future<bool> _stagedBundleIsComplete(Directory folder) async {
+    for (final requiredPath in requiredBundleFiles) {
+      if (!await File('${folder.path}/$requiredPath').exists()) return false;
+    }
+    return true;
+  }
+
+  /// A copy with no install record (staged by a developer) is kept. A hosted
+  /// copy is kept only while its revision is the one this build pins.
+  Future<bool> _installedCopyIsCurrent(File marker) async {
+    if (!await marker.exists()) return true;
+    try {
+      final record = jsonDecode(await marker.readAsString());
+      return record is Map && record['revision'] == hostedQwen35Model.revision;
+    } catch (_) {
+      return false;
     }
   }
 
@@ -928,6 +1011,9 @@ class CompletionResultWithTools {
 }
 
 /// Exception thrown by ModelService
+/// Where the model bundle comes from; see [ModelService.modelSource].
+enum ModelSource { auto, hosted, staged }
+
 class ModelServiceException implements Exception {
   final String message;
 
