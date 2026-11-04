@@ -105,20 +105,46 @@ void main() {
     });
   });
 
-  test('chat never pre-routes the trigger prefix or shrinks history', () {
+  test('chat never pre-routes the tool decision; it only routes the history (#116)', () {
     final source = File('lib/main.dart').readAsStringSync();
 
-    // (A) The model decides: no prefix pre-router in chat.
+    // (A) The model still decides whether to call: no prefix pre-router that
+    // runs the recipe in chat. The trigger parser is used once, through
+    // _triggerCode, only to choose the history (routeTurn).
     expect(source, isNot(contains('hasTriggerPrefix')));
     expect(source, isNot(contains('_handleRecipeTrigger')));
-    expect(source, isNot(contains('parseTrigger')));
+    expect('parseTrigger('.allMatches(source).length, 1);
+    expect(source, contains('routeTurn('));
 
     // (C) The full six-tool catalog is passed explicitly, so _routeTools
     // cannot reduce it on the phone.
     expect(source, contains('generateCompletionWithTools('));
     expect(source, contains('tools: ModelService.farmingTools'));
 
-    // (D) Full history, no character-budget truncation.
+    // (D) No character-budget truncation.
     expect(source, isNot(contains('maxChars')));
+  });
+
+  test('the send path runs the shared guard, answer check and turn limit (#119)', () {
+    final source = File('lib/main.dart').readAsStringSync();
+
+    // The guard sits between the decision and the executor, with the alias
+    // groups built from the bundled catalogs; a blocked call never runs.
+    expect(source, contains('grounding.applyGuard('));
+    expect(source, contains('loadGuardAliasGroups()'));
+    expect(source.indexOf('grounding.applyGuard('), lessThan(source.indexOf('_toolExecutor.executeAll(')));
+
+    // The answer check repairs the instruction text of a recipe turn only.
+    expect(source, contains('repairAnswer('));
+    expect(source.indexOf('instructions.response.trim()'), lessThan(source.indexOf('repairAnswer(')));
+
+    // The turn limit stops sending before any routing or model call.
+    expect(source, contains('turnLimitStatus('));
+    expect(source.indexOf('_turnLimitStatus().stopped'), lessThan(source.indexOf('routeTurn(')));
+
+    // Logs carry counts and kinds only, never message text or argument values.
+    expect(source, contains('[ARGUMENT_GUARD]'));
+    expect(source, contains('[ANSWER_CHECK]'));
+    expect(source, contains('_turnLimitStatus().logLine'));
   });
 }

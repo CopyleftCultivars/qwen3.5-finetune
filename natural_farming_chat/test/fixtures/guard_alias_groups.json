@@ -1,0 +1,3034 @@
+{
+"crop": [
+[
+"Rice",
+"Oryza sativa"
+],
+[
+"Corn",
+"Zea mays"
+],
+[
+"Jalapeno Peppers",
+"Capsicum annuum"
+],
+[
+"Snap Peas",
+"Pisum sativum var. macrocarpon"
+],
+[
+"Banana",
+"Musa spp."
+],
+[
+"Mango",
+"Mangifera indica"
+],
+[
+"Grapes",
+"Vitis vinifera"
+],
+[
+"Anise",
+"Pimpinella anisum"
+],
+[
+"Bay Leaf",
+"Laurus nobilis"
+],
+[
+"Chamomile",
+"Matricaria chamomilla"
+],
+[
+"Coriander",
+"Coriandrum sativum"
+],
+[
+"Dill",
+"Anethum graveolens"
+],
+[
+"Horseradish",
+"Armoracia rusticana"
+],
+[
+"Lavender",
+"Lavandula angustifolia"
+],
+[
+"Mint",
+"Mentha spicata"
+],
+[
+"Oregano",
+"Origanum vulgare"
+],
+[
+"Parsley",
+"Petroselinum crispum"
+],
+[
+"Rosemary",
+"Rosmarinus officinalis"
+],
+[
+"Sage",
+"Salvia officinalis"
+],
+[
+"Thyme",
+"Thymus vulgaris"
+],
+[
+"Bergamot",
+"Citrus bergamia"
+],
+[
+"Black Pepper",
+"Piper nigrum"
+],
+[
+"Cardamom",
+"Elettaria cardamomum"
+],
+[
+"Clove",
+"Syzygium aromaticum"
+],
+[
+"Cocoa",
+"Theobroma cacao"
+],
+[
+"Coffee",
+"Coffea arabica"
+],
+[
+"Ginger",
+"Zingiber officinale"
+],
+[
+"Lemongrass",
+"Cymbopogon citratus"
+],
+[
+"Nutmeg",
+"Myristica fragrans"
+],
+[
+"Saffron",
+"Crocus sativus"
+],
+[
+"Turmeric",
+"Curcuma longa"
+],
+[
+"Vanilla",
+"Vanilla planifolia"
+],
+[
+"Wasabi",
+"Eutrema japonicum"
+],
+[
+"Astragalus membranaceus",
+"Astragalus membranaceus"
+],
+[
+"Atractylodes lancea",
+"Atractylodes lancea"
+],
+[
+"Avena sativa",
+"Avena sativa"
+],
+[
+"Averrhoa bilimbi",
+"Averrhoa bilimbi"
+],
+[
+"Averrhoa carambola",
+"Averrhoa carambola"
+],
+[
+"Azadirachta indica",
+"Azadirachta indica"
+],
+[
+"Bacopa monnieri",
+"Bacopa monnieri"
+],
+[
+"Bactris gasipaes",
+"Bactris gasipaes"
+],
+[
+"Balanites aegyptiacus",
+"Balanites aegyptiacus"
+],
+[
+"Barosma betulina",
+"Barosma betulina"
+],
+[
+"Basella alba",
+"Basella alba"
+],
+[
+"Belamcanda chinensis",
+"Belamcanda chinensis"
+],
+[
+"Artichoke",
+"Cynara scolymus"
+],
+[
+"Asparagus",
+"Asparagus officinalis"
+],
+[
+"Brussels Sprouts",
+"Brassica oleracea var. gemmifera"
+],
+[
+"Eggplant",
+"Solanum melongena"
+],
+[
+"Fennel",
+"Foeniculum vulgare"
+],
+[
+"Okra",
+"Abelmoschus esculentus"
+],
+[
+"Parsnip",
+"Pastinaca sativa"
+],
+[
+"Rhubarb",
+"Rheum rhabarbarum"
+],
+[
+"Rutabaga",
+"Brassica napus var. napobrassica"
+],
+[
+"Turnip",
+"Brassica rapa subsp. rapa"
+],
+[
+"Watercress",
+"Nasturtium officinale"
+],
+[
+"Zucchini",
+"Cucurbita pepo var. cylindrica"
+],
+[
+"Alfalfa",
+"Medicago sativa"
+],
+[
+"Cabbage",
+"Brassica oleracea var. capitata"
+],
+[
+"Cauliflower",
+"Brassica oleracea var. botrytis"
+],
+[
+"Celery",
+"Apium graveolens"
+],
+[
+"Chard",
+"Beta vulgaris subsp. vulgaris"
+],
+[
+"Collards",
+"Brassica oleracea var. viridis"
+],
+[
+"Kale",
+"Brassica oleracea var. sabellica"
+],
+[
+"Leek",
+"Allium ampeloprasum var. porrum"
+],
+[
+"Mustard Greens",
+"Brassica juncea"
+],
+[
+"Parsley",
+"Petroselinum crispum"
+],
+[
+"Pumpkin",
+"Cucurbita pepo"
+],
+[
+"Radish",
+"Raphanus sativus"
+],
+[
+"Hemp",
+"Cannabis sativa"
+],
+[
+"Wheat",
+"Triticum aestivum"
+],
+[
+"Barley",
+"Hordeum vulgare"
+],
+[
+"Soybean",
+"Glycine max"
+],
+[
+"Sunflower",
+"Helianthus annuus"
+],
+[
+"Sorghum",
+"Sorghum bicolor"
+],
+[
+"Rye",
+"Secale cereale"
+],
+[
+"Oats",
+"Avena sativa"
+],
+[
+"Peas",
+"Pisum sativum"
+],
+[
+"Lentils",
+"Lens culinaris"
+],
+[
+"Chickpeas",
+"Cicer arietinum"
+],
+[
+"Quinoa",
+"Chenopodium quinoa"
+],
+[
+"Peppermint",
+"Mentha \u00d7 piperita"
+],
+[
+"Basil",
+"Ocimum basilicum"
+],
+[
+"Lavender",
+"Lavandula"
+],
+[
+"Rosemary",
+"Rosmarinus officinalis"
+],
+[
+"Sweet Potato",
+"Ipomoea batatas"
+],
+[
+"Onion",
+"Allium cepa"
+],
+[
+"Garlic",
+"Allium sativum"
+],
+[
+"Beetroot",
+"Beta vulgaris"
+],
+[
+"Tomato",
+"Solanum lycopersicum"
+],
+[
+"Lettuce",
+"Lactuca sativa"
+],
+[
+"Strawberry",
+"Fragaria \u00d7 ananassa"
+],
+[
+"Carrot",
+"Daucus carota subsp. sativus"
+],
+[
+"Cucumber",
+"Cucumis sativus"
+],
+[
+"Spinach",
+"Spinacia oleracea"
+],
+[
+"Broccoli",
+"Brassica oleracea var. italica"
+],
+[
+"Potato",
+"Solanum tuberosum"
+]
+],
+"plant": [
+[
+"Okra",
+"Abelmoschus esculentus"
+],
+[
+"Sunset Hibiscus",
+"Abelmoschus manihot"
+],
+[
+"Abies spectabilis",
+"Abies spectabilis"
+],
+[
+"Abrus precatorius",
+"Abrus precatorius"
+],
+[
+"Acacia catechu",
+"Acacia catechu"
+],
+[
+"Sweet Acacia",
+"Acacia farnesiana"
+],
+[
+"Acacia senegal",
+"Acacia senegal"
+],
+[
+"Acacia tortilis",
+"Acacia tortilis"
+],
+[
+"Acalypha indica",
+"Acalypha indica"
+],
+[
+"Acanthopanax gracilistylis",
+"Acanthopanax gracilistylis"
+],
+[
+"Yarrow",
+"Achillea millefolium"
+],
+[
+"Achyranthes bidentata",
+"Achyranthes bidentata"
+],
+[
+"Aconitum carmichaelii",
+"Aconitum carmichaelii"
+],
+[
+"Acorus calamus",
+"Acorus calamus"
+],
+[
+"Acrocomia totai",
+"Acrocomia totai"
+],
+[
+"Actaea dahurica",
+"Actaea dahurica"
+],
+[
+"Actaea racemosa",
+"Actaea racemosa"
+],
+[
+"Kiwifruit",
+"Actinidia chinensis"
+],
+[
+"Bael",
+"Aegle marmelos"
+],
+[
+"Aframomum melegueta",
+"Aframomum melegueta"
+],
+[
+"Agathosma betulina",
+"Agathosma betulina"
+],
+[
+"Akebia quinata",
+"Akebia quinata"
+],
+[
+"Albizia julibrissin",
+"Albizia julibrissin"
+],
+[
+"Albizia lebbeck",
+"Albizia lebbeck"
+],
+[
+"Aleurites moluccana",
+"Aleurites moluccana"
+],
+[
+"Alisma plantago-aquatica",
+"Alisma plantago-aquatica"
+],
+[
+"Leek",
+"Allium ampeloprasum"
+],
+[
+"Onion",
+"Allium cepa"
+],
+[
+"Garlic",
+"Allium sativum var. sativum"
+],
+[
+"Chives",
+"Allium schoenoprasum"
+],
+[
+"Alocasia macrorrhiza",
+"Alocasia macrorrhiza"
+],
+[
+"Aloe spp.",
+"Aloe spp."
+],
+[
+"Aloe Vera",
+"Aloe vera"
+],
+[
+"Alpinia galanga",
+"Alpinia galanga"
+],
+[
+"Marshmallow",
+"Althaea officinalis"
+],
+[
+"Amaranth",
+"Amaranthus sp."
+],
+[
+"Spiny Amaranth",
+"Amaranthus spinosus"
+],
+[
+"Amomum xanthioides",
+"Amomum xanthioides"
+],
+[
+"Amorphophallus campanulatus",
+"Amorphophallus campanulatus"
+],
+[
+"Amorphophallus konjac",
+"Amorphophallus konjac"
+],
+[
+"Amphicarpaea bracteata",
+"Amphicarpaea bracteata"
+],
+[
+"Anacardium occidentale",
+"Anacardium occidentale"
+],
+[
+"Pineapple",
+"Ananas comosus"
+],
+[
+"Anemarrhena asphodeloides",
+"Anemarrhena asphodeloides"
+],
+[
+"Dill",
+"Anethum graveolens"
+],
+[
+"Angelica dahurica",
+"Angelica dahurica"
+],
+[
+"Angelica laxiflora",
+"Angelica laxiflora"
+],
+[
+"Dong Quai",
+"Angelica sinensis"
+],
+[
+"Annona cherimola",
+"Annona cherimola"
+],
+[
+"Annona diversifolia",
+"Annona diversifolia"
+],
+[
+"Annona glabra",
+"Annona glabra"
+],
+[
+"Annona muricata",
+"Annona muricata"
+],
+[
+"Annona reticulata",
+"Annona reticulata"
+],
+[
+"Annona squamosa",
+"Annona squamosa"
+],
+[
+"Anogeissus latifolia",
+"Anogeissus latifolia"
+],
+[
+"Anthriscus cerefolium",
+"Anthriscus cerefolium"
+],
+[
+"Celery",
+"Apium graveolens"
+],
+[
+"Peanut",
+"Arachis hypogaea"
+],
+[
+"Aralia cordata",
+"Aralia cordata"
+],
+[
+"Burdock",
+"Arctium lappa"
+],
+[
+"Arctostaphylos uva-ursi",
+"Arctostaphylos uva-ursi"
+],
+[
+"Areca catechu",
+"Areca catechu"
+],
+[
+"Arisaema consanguineum",
+"Arisaema consanguineum"
+],
+[
+"Aristolochia debilis",
+"Aristolochia debilis"
+],
+[
+"Horseradish",
+"Armoracia rusticana"
+],
+[
+"Arracacia xanthorrhiza",
+"Arracacia xanthorrhiza"
+],
+[
+"Artemisia capillaris",
+"Artemisia capillaris"
+],
+[
+"Tarragon",
+"Artemisia dracunculus"
+],
+[
+"Artemisia herba-alba",
+"Artemisia herba-alba"
+],
+[
+"Mugwort",
+"Artemisia vulgaris"
+],
+[
+"Artocarpus altilis",
+"Artocarpus altilis"
+],
+[
+"Artocarpus heterophyllus",
+"Artocarpus heterophyllus"
+],
+[
+"Arundo donax",
+"Arundo donax"
+],
+[
+"Asiasarum heterotropoides",
+"Asiasarum heterotropoides"
+],
+[
+"Asiasarum sieboldii",
+"Asiasarum sieboldii"
+],
+[
+"Asimina triloba",
+"Asimina triloba"
+],
+[
+"Aspalathus linearis",
+"Aspalathus linearis"
+],
+[
+"Asparagus lucidus",
+"Asparagus lucidus"
+],
+[
+"Asparagus",
+"Asparagus officinalis"
+],
+[
+"Astragalus",
+"Astragalus membranaceus"
+],
+[
+"Atractylodes lancea",
+"Atractylodes lancea"
+],
+[
+"Atractylodes ovata",
+"Atractylodes ovata"
+],
+[
+"Oat",
+"Avena sativa"
+],
+[
+"Averrhoa bilimbi",
+"Averrhoa bilimbi"
+],
+[
+"Averrhoa carambola",
+"Averrhoa carambola"
+],
+[
+"Neem",
+"Azadirachta indica"
+],
+[
+"Bacopa monnieri",
+"Bacopa monnieri"
+],
+[
+"Bactris gasipaes",
+"Bactris gasipaes"
+],
+[
+"Balanites aegyptiacus",
+"Balanites aegyptiacus"
+],
+[
+"Barosma betulina",
+"Barosma betulina"
+],
+[
+"Basella alba",
+"Basella alba"
+],
+[
+"Belamcanda chinensis",
+"Belamcanda chinensis"
+],
+[
+"Benincasa hispida",
+"Benincasa hispida"
+],
+[
+"Berberis vulgaris",
+"Berberis vulgaris"
+],
+[
+"Bertholletia excelsa",
+"Bertholletia excelsa"
+],
+[
+"Beet",
+"Beta vulgaris"
+],
+[
+"Bixa orellana",
+"Bixa orellana"
+],
+[
+"Blechnum orientale",
+"Blechnum orientale"
+],
+[
+"Bletilla striata",
+"Bletilla striata"
+],
+[
+"Blighia sapida",
+"Blighia sapida"
+],
+[
+"Boehmeria nivea",
+"Boehmeria nivea"
+],
+[
+"Borage",
+"Borago officinalis"
+],
+[
+"Brassica chinensis",
+"Brassica chinensis"
+],
+[
+"Mustard",
+"Brassica juncea"
+],
+[
+"Brassica napus var. napobrassica",
+"Brassica napus var. napobrassica"
+],
+[
+"Black Mustard",
+"Brassica nigra"
+],
+[
+"Cabbage",
+"Brassica oleracea"
+],
+[
+"Brassica oleracea var. botrytis l.",
+"Brassica oleracea var. botrytis l."
+],
+[
+"Brassica oleracea var. capitata l.",
+"Brassica oleracea var. capitata l."
+],
+[
+"Brussels Sprouts",
+"Brassica oleracea var. gemmifera"
+],
+[
+"Broccoli",
+"Brassica oleracea var. italica"
+],
+[
+"Brassica oleracea var. sabellica l.",
+"Brassica oleracea var. sabellica l."
+],
+[
+"Brassica oleracea var. viridis l.",
+"Brassica oleracea var. viridis l."
+],
+[
+"Brassica pekinensis",
+"Brassica pekinensis"
+],
+[
+"Turnip",
+"Brassica rapa"
+],
+[
+"Bromelia pinguin",
+"Bromelia pinguin"
+],
+[
+"Brosimum alicastrum",
+"Brosimum alicastrum"
+],
+[
+"Broussonetia papyrifera",
+"Broussonetia papyrifera"
+],
+[
+"Bupleurum chinense",
+"Bupleurum chinense"
+],
+[
+"Byrsonima crassifolia",
+"Byrsonima crassifolia"
+],
+[
+"Pigeon Pea",
+"Cajanus cajan"
+],
+[
+"Calathea macrosepala",
+"Calathea macrosepala"
+],
+[
+"Calendula",
+"Calendula officinalis"
+],
+[
+"Tea",
+"Camellia sinensis"
+],
+[
+"Canavalia ensiformis",
+"Canavalia ensiformis"
+],
+[
+"Canna indica",
+"Canna indica"
+],
+[
+"Hemp",
+"Cannabis sativa"
+],
+[
+"Capparis spinosa",
+"Capparis spinosa"
+],
+[
+"Capsella bursa-pastoris",
+"Capsella bursa-pastoris"
+],
+[
+"Bell Pepper",
+"Capsicum annuum"
+],
+[
+"Cayenne Pepper",
+"Capsicum frutescens"
+],
+[
+"Papaya",
+"Carica papaya"
+],
+[
+"Carica pentagona",
+"Carica pentagona"
+],
+[
+"Safflower",
+"Carthamus tinctorius"
+],
+[
+"Caraway",
+"Carum carvi"
+],
+[
+"Carya glabra",
+"Carya glabra"
+],
+[
+"Carya illinoensis",
+"Carya illinoensis"
+],
+[
+"Carya ovata",
+"Carya ovata"
+],
+[
+"Casimiroa edulis",
+"Casimiroa edulis"
+],
+[
+"Cassia tora",
+"Cassia tora"
+],
+[
+"Castanea dentata",
+"Castanea dentata"
+],
+[
+"Castanea mollisima",
+"Castanea mollisima"
+],
+[
+"Castanea sativa",
+"Castanea sativa"
+],
+[
+"Catalpa ovata",
+"Catalpa ovata"
+],
+[
+"Catha edulis",
+"Catha edulis"
+],
+[
+"Caulophyllum thalictroides",
+"Caulophyllum thalictroides"
+],
+[
+"Ceiba pentandra",
+"Ceiba pentandra"
+],
+[
+"Celosia cristata",
+"Celosia cristata"
+],
+[
+"Cenchrus biflorus",
+"Cenchrus biflorus"
+],
+[
+"Gotu Kola",
+"Centella asiatica"
+],
+[
+"Chaenomeles lagenaria",
+"Chaenomeles lagenaria"
+],
+[
+"Chamaemelum nobile",
+"Chamaemelum nobile"
+],
+[
+"Chamissoa altissima",
+"Chamissoa altissima"
+],
+[
+"Lambsquarters",
+"Chenopodium album"
+],
+[
+"Chenopodium ambrosioides",
+"Chenopodium ambrosioides"
+],
+[
+"Chondrus crispus",
+"Chondrus crispus"
+],
+[
+"Chrysanthemum cinerariifolium",
+"Chrysanthemum cinerariifolium"
+],
+[
+"Chrysanthemum coronarium",
+"Chrysanthemum coronarium"
+],
+[
+"Chrysanthemum parthenium",
+"Chrysanthemum parthenium"
+],
+[
+"Chrysobalanus icaco",
+"Chrysobalanus icaco"
+],
+[
+"Chrysophyllum cainito",
+"Chrysophyllum cainito"
+],
+[
+"Chickpea",
+"Cicer arietinum"
+],
+[
+"Endive",
+"Cichorium endivia"
+],
+[
+"Chicory",
+"Cichorium intybus"
+],
+[
+"Cimicifuga dahurica",
+"Cimicifuga dahurica"
+],
+[
+"Cimicifuga racemosa",
+"Cimicifuga racemosa"
+],
+[
+"Cinnamomum aromaticum",
+"Cinnamomum aromaticum"
+],
+[
+"Cinnamomum burmannii",
+"Cinnamomum burmannii"
+],
+[
+"Cinnamomum sieboldii",
+"Cinnamomum sieboldii"
+],
+[
+"Cinnamon",
+"Cinnamomum verum"
+],
+[
+"Cistanche salsa",
+"Cistanche salsa"
+],
+[
+"Watermelon",
+"Citrullus lanatus"
+],
+[
+"Lime",
+"Citrus aurantiifolia"
+],
+[
+"Citrus aurantium",
+"Citrus aurantium"
+],
+[
+"Lemon",
+"Citrus limon"
+],
+[
+"Citrus medica",
+"Citrus medica"
+],
+[
+"Citrus mitis",
+"Citrus mitis"
+],
+[
+"Grapefruit",
+"Citrus paradisi"
+],
+[
+"Mandarin",
+"Citrus reticulata"
+],
+[
+"Orange",
+"Citrus sinensis"
+],
+[
+"Cnicus benedictus",
+"Cnicus benedictus"
+],
+[
+"Cnidium officinale",
+"Cnidium officinale"
+],
+[
+"Cnidoscolus chayamansa",
+"Cnidoscolus chayamansa"
+],
+[
+"Coccinia grandis",
+"Coccinia grandis"
+],
+[
+"Coconut",
+"Cocos nucifera"
+],
+[
+"Coffee",
+"Coffea arabica"
+],
+[
+"Coix lacryma-jobi",
+"Coix lacryma-jobi"
+],
+[
+"Cola acuminata",
+"Cola acuminata"
+],
+[
+"Taro",
+"Colocasia esculenta"
+],
+[
+"Colubrina texensis",
+"Colubrina texensis"
+],
+[
+"Commelina benghalensis",
+"Commelina benghalensis"
+],
+[
+"Coptis chinensis",
+"Coptis chinensis"
+],
+[
+"Coptis japonica",
+"Coptis japonica"
+],
+[
+"Coptis spp",
+"Coptis spp"
+],
+[
+"Corchorus olitorius",
+"Corchorus olitorius"
+],
+[
+"Coriander",
+"Coriandrum sativum"
+],
+[
+"Cornus florida",
+"Cornus florida"
+],
+[
+"Cornus officinalis",
+"Cornus officinalis"
+],
+[
+"Hazelnut",
+"Corylus avellana"
+],
+[
+"Crataegus cuneata",
+"Crataegus cuneata"
+],
+[
+"Crataegus laevigata",
+"Crataegus laevigata"
+],
+[
+"Crataegus rhipidophylla",
+"Crataegus rhipidophylla"
+],
+[
+"Crescentia alata",
+"Crescentia alata"
+],
+[
+"Crocus sativus",
+"Crocus sativus"
+],
+[
+"Melon",
+"Cucumis melo"
+],
+[
+"Cucumber",
+"Cucumis sativus"
+],
+[
+"Cucurbita foetidissima",
+"Cucurbita foetidissima"
+],
+[
+"Winter Squash",
+"Cucurbita maxima"
+],
+[
+"Pumpkin",
+"Cucurbita pepo"
+],
+[
+"Cucurbita spp",
+"Cucurbita spp"
+],
+[
+"Cumin",
+"Cuminum cyminum"
+],
+[
+"Turmeric",
+"Curcuma longa"
+],
+[
+"Cyamopsis tetragonoloba",
+"Cyamopsis tetragonoloba"
+],
+[
+"Cyclanthera pedata",
+"Cyclanthera pedata"
+],
+[
+"Cydonia oblonga",
+"Cydonia oblonga"
+],
+[
+"Cymbopogon citratus",
+"Cymbopogon citratus"
+],
+[
+"Cynanchum atratum",
+"Cynanchum atratum"
+],
+[
+"Artichoke",
+"Cynara cardunculus"
+],
+[
+"Cyperus rotundus",
+"Cyperus rotundus"
+],
+[
+"Cyphomandra betacea",
+"Cyphomandra betacea"
+],
+[
+"Cypripedium pubescens",
+"Cypripedium pubescens"
+],
+[
+"Cyrtosperma chamissonis",
+"Cyrtosperma chamissonis"
+],
+[
+"Carrot",
+"Daucus carota"
+],
+[
+"Dendrobium nobile",
+"Dendrobium nobile"
+],
+[
+"Dioscorea alata",
+"Dioscorea alata"
+],
+[
+"Dioscorea bulbifera",
+"Dioscorea bulbifera"
+],
+[
+"Dioscorea pentaphylla",
+"Dioscorea pentaphylla"
+],
+[
+"Dioscorea sp.",
+"Dioscorea sp."
+],
+[
+"Dioscorea villosa",
+"Dioscorea villosa"
+],
+[
+"Diospyros digyna",
+"Diospyros digyna"
+],
+[
+"Diospyros virginiana",
+"Diospyros virginiana"
+],
+[
+"Dipsacus fullonum",
+"Dipsacus fullonum"
+],
+[
+"Drynaria fortunei",
+"Drynaria fortunei"
+],
+[
+"Durio zibethinus",
+"Durio zibethinus"
+],
+[
+"Purple Coneflower",
+"Echinacea purpurea"
+],
+[
+"Echinacea spp",
+"Echinacea spp"
+],
+[
+"Elaeagnus commutata",
+"Elaeagnus commutata"
+],
+[
+"Elaeagnus umbellatus",
+"Elaeagnus umbellatus"
+],
+[
+"Oil Palm",
+"Elaeis guineensis"
+],
+[
+"Eleocharis dulcis",
+"Eleocharis dulcis"
+],
+[
+"Cardamom",
+"Elettaria cardamomum"
+],
+[
+"Eleutherococcus senticosus",
+"Eleutherococcus senticosus"
+],
+[
+"Elytrigia repens",
+"Elytrigia repens"
+],
+[
+"Ephedra nevadensis",
+"Ephedra nevadensis"
+],
+[
+"Ephedra sinica",
+"Ephedra sinica"
+],
+[
+"Ephedra spp",
+"Ephedra spp"
+],
+[
+"Horsetail",
+"Equisetum arvense"
+],
+[
+"Equisetum hyemale",
+"Equisetum hyemale"
+],
+[
+"Eriobotrya japonica",
+"Eriobotrya japonica"
+],
+[
+"Eriocaulon sp",
+"Eriocaulon sp"
+],
+[
+"Eriodictyon californicum",
+"Eriodictyon californicum"
+],
+[
+"Eryngium floridanum",
+"Eryngium floridanum"
+],
+[
+"Erythrina berteroana",
+"Erythrina berteroana"
+],
+[
+"Erythrina fusca",
+"Erythrina fusca"
+],
+[
+"Erythroxylum coca",
+"Erythroxylum coca"
+],
+[
+"Erythroxylum novogranatense",
+"Erythroxylum novogranatense"
+],
+[
+"Eucommia ulmoides",
+"Eucommia ulmoides"
+],
+[
+"Eugenia brasiliensis",
+"Eugenia brasiliensis"
+],
+[
+"Eugenia floribunda",
+"Eugenia floribunda"
+],
+[
+"Eugenia uniflora",
+"Eugenia uniflora"
+],
+[
+"Euodia rutaecarpa",
+"Euodia rutaecarpa"
+],
+[
+"Eupatorium odoratum",
+"Eupatorium odoratum"
+],
+[
+"Eupatorium perfoliatum",
+"Eupatorium perfoliatum"
+],
+[
+"Euphrasia officinalis",
+"Euphrasia officinalis"
+],
+[
+"Fagopyrum esculentum",
+"Fagopyrum esculentum"
+],
+[
+"Fallopia japonica",
+"Fallopia japonica"
+],
+[
+"Feijoa sellowiana",
+"Feijoa sellowiana"
+],
+[
+"Fig",
+"Ficus carica"
+],
+[
+"Firmiana simplex",
+"Firmiana simplex"
+],
+[
+"Fennel",
+"Foeniculum vulgare"
+],
+[
+"Forsythia suspensa",
+"Forsythia suspensa"
+],
+[
+"Fragaria spp",
+"Fragaria spp"
+],
+[
+"Frangula purshiana",
+"Frangula purshiana"
+],
+[
+"Fraxinus rhynchophylla",
+"Fraxinus rhynchophylla"
+],
+[
+"Fritillaria thunbergii",
+"Fritillaria thunbergii"
+],
+[
+"Fucus vesiculosus",
+"Fucus vesiculosus"
+],
+[
+"Galeopsis segetum",
+"Galeopsis segetum"
+],
+[
+"Mangosteen",
+"Garcinia mangostana"
+],
+[
+"Gardenia jasminoides",
+"Gardenia jasminoides"
+],
+[
+"Gastrodia elata",
+"Gastrodia elata"
+],
+[
+"Genipa americana",
+"Genipa americana"
+],
+[
+"Gentiana lutea",
+"Gentiana lutea"
+],
+[
+"Gentiana scabra",
+"Gentiana scabra"
+],
+[
+"Geranium thunbergii",
+"Geranium thunbergii"
+],
+[
+"Ginkgo",
+"Ginkgo biloba"
+],
+[
+"Glechoma hederacea",
+"Glechoma hederacea"
+],
+[
+"Gleditsia triacanthos",
+"Gleditsia triacanthos"
+],
+[
+"Glehnia littoralis",
+"Glehnia littoralis"
+],
+[
+"Gliricidia sepium",
+"Gliricidia sepium"
+],
+[
+"Soybean",
+"Glycine max"
+],
+[
+"Licorice",
+"Glycyrrhiza glabra"
+],
+[
+"Glycyrrhiza uralensis",
+"Glycyrrhiza uralensis"
+],
+[
+"Gymnema sylvestre",
+"Gymnema sylvestre"
+],
+[
+"Harpagophytum procumbens",
+"Harpagophytum procumbens"
+],
+[
+"Sunflower",
+"Helianthus annuus"
+],
+[
+"Jerusalem Artichoke",
+"Helianthus tuberosus"
+],
+[
+"Hibiscus rosa-sinensis",
+"Hibiscus rosa-sinensis"
+],
+[
+"Roselle",
+"Hibiscus sabdariffa"
+],
+[
+"Barley",
+"Hordeum vulgare"
+],
+[
+"Houttuynia cordata",
+"Houttuynia cordata"
+],
+[
+"Hops",
+"Humulus lupulus"
+],
+[
+"Hydrangea arborescens",
+"Hydrangea arborescens"
+],
+[
+"Hydrastis canadensis",
+"Hydrastis canadensis"
+],
+[
+"Hylocereus guatemalensis",
+"Hylocereus guatemalensis"
+],
+[
+"Hylocereus undatus",
+"Hylocereus undatus"
+],
+[
+"Hyoscyamus niger",
+"Hyoscyamus niger"
+],
+[
+"St. John's Wort",
+"Hypericum perforatum"
+],
+[
+"Hyssopus officinalis",
+"Hyssopus officinalis"
+],
+[
+"Ilex paraguariensis",
+"Ilex paraguariensis"
+],
+[
+"Indigofera tinctoria",
+"Indigofera tinctoria"
+],
+[
+"Inga edulis",
+"Inga edulis"
+],
+[
+"Inga feuillei",
+"Inga feuillei"
+],
+[
+"Inula helenium",
+"Inula helenium"
+],
+[
+"Water Spinach",
+"Ipomoea aquatica"
+],
+[
+"Sweet Potato",
+"Ipomoea batatas"
+],
+[
+"Isatis tinctoria",
+"Isatis tinctoria"
+],
+[
+"Juglans cinerea",
+"Juglans cinerea"
+],
+[
+"Black Walnut",
+"Juglans nigra"
+],
+[
+"English Walnut",
+"Juglans regia"
+],
+[
+"Juncus effusus",
+"Juncus effusus"
+],
+[
+"Juniperus communis",
+"Juniperus communis"
+],
+[
+"Juniperus virginiana",
+"Juniperus virginiana"
+],
+[
+"Jussiaea repens",
+"Jussiaea repens"
+],
+[
+"Justicia pectoralis",
+"Justicia pectoralis"
+],
+[
+"Kalmia latifolia",
+"Kalmia latifolia"
+],
+[
+"Lablab purpureus",
+"Lablab purpureus"
+],
+[
+"Lettuce",
+"Lactuca sativa"
+],
+[
+"Lagenaria siceraria",
+"Lagenaria siceraria"
+],
+[
+"Lantana camara",
+"Lantana camara"
+],
+[
+"Larrea tridentata",
+"Larrea tridentata"
+],
+[
+"Bay Laurel",
+"Laurus nobilis"
+],
+[
+"Lentil",
+"Lens culinaris"
+],
+[
+"Lepidium meyenii",
+"Lepidium meyenii"
+],
+[
+"Lepidium sativum",
+"Lepidium sativum"
+],
+[
+"Licania platypus",
+"Licania platypus"
+],
+[
+"Ligustrum japonicum",
+"Ligustrum japonicum"
+],
+[
+"Ligustrum lucidum",
+"Ligustrum lucidum"
+],
+[
+"Limonia acidissima",
+"Limonia acidissima"
+],
+[
+"Flax",
+"Linum usitatissimum"
+],
+[
+"Liquidambar styraciflua",
+"Liquidambar styraciflua"
+],
+[
+"Lobelia inflata",
+"Lobelia inflata"
+],
+[
+"Lonicera japonica",
+"Lonicera japonica"
+],
+[
+"Lophatherum gracile",
+"Lophatherum gracile"
+],
+[
+"Luffa aegyptiaca",
+"Luffa aegyptiaca"
+],
+[
+"Lupinus albus",
+"Lupinus albus"
+],
+[
+"Lupinus mutabilis",
+"Lupinus mutabilis"
+],
+[
+"Lycium chinense",
+"Lycium chinense"
+],
+[
+"Tomato",
+"Lycopersicon esculentum"
+],
+[
+"Lycopodium clavatum",
+"Lycopodium clavatum"
+],
+[
+"Lygodium japonicum",
+"Lygodium japonicum"
+],
+[
+"Macadamia spp",
+"Macadamia spp"
+],
+[
+"Maclura pomifera",
+"Maclura pomifera"
+],
+[
+"Magnolia denudata",
+"Magnolia denudata"
+],
+[
+"Magnolia fargesii",
+"Magnolia fargesii"
+],
+[
+"Magnolia kobus",
+"Magnolia kobus"
+],
+[
+"Magnolia officinalis",
+"Magnolia officinalis"
+],
+[
+"Malpighia glabra",
+"Malpighia glabra"
+],
+[
+"Apple",
+"Malus domestica"
+],
+[
+"Malva neglecta",
+"Malva neglecta"
+],
+[
+"Malva parviflora",
+"Malva parviflora"
+],
+[
+"Malva sylvestris",
+"Malva sylvestris"
+],
+[
+"Mammea americana",
+"Mammea americana"
+],
+[
+"Mango",
+"Mangifera indica"
+],
+[
+"Cassava",
+"Manihot esculenta"
+],
+[
+"Manilkara zapota",
+"Manilkara zapota"
+],
+[
+"Maranta arundinacea",
+"Maranta arundinacea"
+],
+[
+"Mauritia flexuosa",
+"Mauritia flexuosa"
+],
+[
+"Alfalfa",
+"Medicago sativa"
+],
+[
+"Melaleuca leucadendra",
+"Melaleuca leucadendra"
+],
+[
+"Melia azedarach",
+"Melia azedarach"
+],
+[
+"Melicoccus bijugatas",
+"Melicoccus bijugatas"
+],
+[
+"Melilotus alba",
+"Melilotus alba"
+],
+[
+"Melilotus indica",
+"Melilotus indica"
+],
+[
+"Mentha arvensis var. piperascens",
+"Mentha arvensis var. piperascens"
+],
+[
+"Mentha pulegium",
+"Mentha pulegium"
+],
+[
+"Spearmint",
+"Mentha spicata"
+],
+[
+"Mentha x piperita",
+"Mentha x piperita"
+],
+[
+"Mentha x rotundifolia",
+"Mentha x rotundifolia"
+],
+[
+"Mimosa pudica",
+"Mimosa pudica"
+],
+[
+"Mimulus glabratus",
+"Mimulus glabratus"
+],
+[
+"Momordica charantia",
+"Momordica charantia"
+],
+[
+"Morinda citrifolia",
+"Morinda citrifolia"
+],
+[
+"Morinda sp",
+"Morinda sp"
+],
+[
+"Moringa",
+"Moringa oleifera"
+],
+[
+"White Mulberry",
+"Morus alba"
+],
+[
+"Mucuna pruriens",
+"Mucuna pruriens"
+],
+[
+"Muntingia calabura",
+"Muntingia calabura"
+],
+[
+"Murraya koenigii",
+"Murraya koenigii"
+],
+[
+"Murraya sp",
+"Murraya sp"
+],
+[
+"Banana",
+"Musa x paradisiaca"
+],
+[
+"Myrciaria cauliflora",
+"Myrciaria cauliflora"
+],
+[
+"Myrciaria dubia",
+"Myrciaria dubia"
+],
+[
+"Myrica cerifera",
+"Myrica cerifera"
+],
+[
+"Myristica fragrans",
+"Myristica fragrans"
+],
+[
+"Nardostachys chinensis",
+"Nardostachys chinensis"
+],
+[
+"Watercress",
+"Nasturtium officinale"
+],
+[
+"Nelumbo nucifera",
+"Nelumbo nucifera"
+],
+[
+"Nepeta cataria",
+"Nepeta cataria"
+],
+[
+"Nicotiana tabacum",
+"Nicotiana tabacum"
+],
+[
+"Black Cumin",
+"Nigella sativa"
+],
+[
+"Notopterygium incisum",
+"Notopterygium incisum"
+],
+[
+"Nyssa sylvatica",
+"Nyssa sylvatica"
+],
+[
+"Basil",
+"Ocimum basilicum"
+],
+[
+"Ocimum tenuiflorum",
+"Ocimum tenuiflorum"
+],
+[
+"Oenothera biennis",
+"Oenothera biennis"
+],
+[
+"Olive",
+"Olea europaea"
+],
+[
+"Ophiopogon japonicus",
+"Ophiopogon japonicus"
+],
+[
+"Prickly Pear",
+"Opuntia ficus-indica"
+],
+[
+"Origanum majorana",
+"Origanum majorana"
+],
+[
+"Origanum onites",
+"Origanum onites"
+],
+[
+"Oregano",
+"Origanum vulgare"
+],
+[
+"Rice",
+"Oryza sativa"
+],
+[
+"Oxalis tuberosa",
+"Oxalis tuberosa"
+],
+[
+"Pachira macrocarpa",
+"Pachira macrocarpa"
+],
+[
+"Pachyrhizus erosus",
+"Pachyrhizus erosus"
+],
+[
+"Paeonia lactiflora",
+"Paeonia lactiflora"
+],
+[
+"Paeonia moutan",
+"Paeonia moutan"
+],
+[
+"Paeonia suffruticosa",
+"Paeonia suffruticosa"
+],
+[
+"Ginseng",
+"Panax ginseng"
+],
+[
+"Panax japonicus",
+"Panax japonicus"
+],
+[
+"Panax quinquefolius",
+"Panax quinquefolius"
+],
+[
+"Panicum maximum",
+"Panicum maximum"
+],
+[
+"Papaver somniferum",
+"Papaver somniferum"
+],
+[
+"Parthenium integrifolium",
+"Parthenium integrifolium"
+],
+[
+"Passion Fruit",
+"Passiflora edulis"
+],
+[
+"Passiflora foetida",
+"Passiflora foetida"
+],
+[
+"Passiflora incarnata",
+"Passiflora incarnata"
+],
+[
+"Passiflora ligularis",
+"Passiflora ligularis"
+],
+[
+"Passiflora mollissima",
+"Passiflora mollissima"
+],
+[
+"Passiflora quadrangularis",
+"Passiflora quadrangularis"
+],
+[
+"Pastinaca sativa",
+"Pastinaca sativa"
+],
+[
+"Peganum harmala",
+"Peganum harmala"
+],
+[
+"Peperomia pelucida",
+"Peperomia pelucida"
+],
+[
+"Peperomia pereskiifolia",
+"Peperomia pereskiifolia"
+],
+[
+"Pereskia aculeata",
+"Pereskia aculeata"
+],
+[
+"Perideridia gairdneri",
+"Perideridia gairdneri"
+],
+[
+"Perilla frutescens",
+"Perilla frutescens"
+],
+[
+"Avocado",
+"Persea americana"
+],
+[
+"Persea schiedeana",
+"Persea schiedeana"
+],
+[
+"Petasites japonicus",
+"Petasites japonicus"
+],
+[
+"Parsley",
+"Petroselinum crispum"
+],
+[
+"Peucedanum decursivum",
+"Peucedanum decursivum"
+],
+[
+"Phaseolus acutifolius",
+"Phaseolus acutifolius"
+],
+[
+"Phaseolus coccineus",
+"Phaseolus coccineus"
+],
+[
+"Lima Bean",
+"Phaseolus lunatus"
+],
+[
+"Common Bean",
+"Phaseolus vulgaris"
+],
+[
+"Phellodendron amurense",
+"Phellodendron amurense"
+],
+[
+"Date Palm",
+"Phoenix dactylifera"
+],
+[
+"Phragmites australis",
+"Phragmites australis"
+],
+[
+"Phyllanthus acidus",
+"Phyllanthus acidus"
+],
+[
+"Phyllanthus emblica",
+"Phyllanthus emblica"
+],
+[
+"Physalis angulata",
+"Physalis angulata"
+],
+[
+"Physalis ixocarpa",
+"Physalis ixocarpa"
+],
+[
+"Physalis peruviana",
+"Physalis peruviana"
+],
+[
+"Phytelephas aequatorialis",
+"Phytelephas aequatorialis"
+],
+[
+"Phytolacca americana",
+"Phytolacca americana"
+],
+[
+"Pimenta dioica",
+"Pimenta dioica"
+],
+[
+"Anise",
+"Pimpinella anisum"
+],
+[
+"Pinellia ternata",
+"Pinellia ternata"
+],
+[
+"Pinus cembroides",
+"Pinus cembroides"
+],
+[
+"Pinus echinata",
+"Pinus echinata"
+],
+[
+"Pinus edulis",
+"Pinus edulis"
+],
+[
+"Pinus gerardiana",
+"Pinus gerardiana"
+],
+[
+"Pinus pinea",
+"Pinus pinea"
+],
+[
+"Piper auritum",
+"Piper auritum"
+],
+[
+"Piper betel",
+"Piper betel"
+],
+[
+"Black Pepper",
+"Piper nigrum"
+],
+[
+"Pistacia vera",
+"Pistacia vera"
+],
+[
+"Pea",
+"Pisum sativum"
+],
+[
+"Plantago asiatica",
+"Plantago asiatica"
+],
+[
+"Plantain",
+"Plantago major"
+],
+[
+"Plantago psyllium",
+"Plantago psyllium"
+],
+[
+"Platonia insignis",
+"Platonia insignis"
+],
+[
+"Platycodon grandiflorum",
+"Platycodon grandiflorum"
+],
+[
+"Plectranthus amboinicus",
+"Plectranthus amboinicus"
+],
+[
+"Polygala tenuifolia",
+"Polygala tenuifolia"
+],
+[
+"Polygonum multiflorum",
+"Polygonum multiflorum"
+],
+[
+"Polymnia edulis",
+"Polymnia edulis"
+],
+[
+"Polystichum polyblepharum",
+"Polystichum polyblepharum"
+],
+[
+"Portulaca oleracea",
+"Portulaca oleracea"
+],
+[
+"Pothomorphe sp.",
+"Pothomorphe sp."
+],
+[
+"Pourouma cecropiaefolia",
+"Pourouma cecropiaefolia"
+],
+[
+"Pouteria caimito",
+"Pouteria caimito"
+],
+[
+"Pouteria campechiana",
+"Pouteria campechiana"
+],
+[
+"Pouteria viridis",
+"Pouteria viridis"
+],
+[
+"Prosopis juliflora",
+"Prosopis juliflora"
+],
+[
+"Prunella vulgaris",
+"Prunella vulgaris"
+],
+[
+"Apricot",
+"Prunus armeniaca"
+],
+[
+"Sweet Cherry",
+"Prunus avium"
+],
+[
+"Prunus cerasus",
+"Prunus cerasus"
+],
+[
+"Plum",
+"Prunus domestica"
+],
+[
+"Almond",
+"Prunus dulcis"
+],
+[
+"Peach",
+"Prunus persica"
+],
+[
+"Prunus salicifolia",
+"Prunus salicifolia"
+],
+[
+"Prunus serotina",
+"Prunus serotina"
+],
+[
+"Psidium cattleianum",
+"Psidium cattleianum"
+],
+[
+"Guava",
+"Psidium guajava"
+],
+[
+"Psophocarpus tetragonolobus",
+"Psophocarpus tetragonolobus"
+],
+[
+"Psoralea esculenta",
+"Psoralea esculenta"
+],
+[
+"Pteridium aquilinum",
+"Pteridium aquilinum"
+],
+[
+"Pterocarpus marsupium",
+"Pterocarpus marsupium"
+],
+[
+"Pueraria montana",
+"Pueraria montana"
+],
+[
+"Pueraria pseudohirsuta",
+"Pueraria pseudohirsuta"
+],
+[
+"Pulsatilla chinensis",
+"Pulsatilla chinensis"
+],
+[
+"Pomegranate",
+"Punica granatum"
+],
+[
+"Pear",
+"Pyrus communis"
+],
+[
+"Quararibea cordata",
+"Quararibea cordata"
+],
+[
+"Quercus alba",
+"Quercus alba"
+],
+[
+"Quercus phellos",
+"Quercus phellos"
+],
+[
+"Quercus rubra",
+"Quercus rubra"
+],
+[
+"Quercus stellata",
+"Quercus stellata"
+],
+[
+"Quercus velutina",
+"Quercus velutina"
+],
+[
+"Quisqualis indica",
+"Quisqualis indica"
+],
+[
+"Radish",
+"Raphanus sativus"
+],
+[
+"Rauvolfia serpentina",
+"Rauvolfia serpentina"
+],
+[
+"Rehmannia glutinosa",
+"Rehmannia glutinosa"
+],
+[
+"Rheum palmatum",
+"Rheum palmatum"
+],
+[
+"Rhubarb",
+"Rheum rhabarbarum"
+],
+[
+"Rhizophora mangle",
+"Rhizophora mangle"
+],
+[
+"Rhodymenia palmata",
+"Rhodymenia palmata"
+],
+[
+"Rhus copallina",
+"Rhus copallina"
+],
+[
+"Rhus glabra",
+"Rhus glabra"
+],
+[
+"Rhynchosia minima",
+"Rhynchosia minima"
+],
+[
+"Ribes nigrum",
+"Ribes nigrum"
+],
+[
+"Ribes rubrum",
+"Ribes rubrum"
+],
+[
+"Ribes uva-crispa",
+"Ribes uva-crispa"
+],
+[
+"Castor Bean",
+"Ricinus communis"
+],
+[
+"Robinia pseudoacacia",
+"Robinia pseudoacacia"
+],
+[
+"Rollinia mucosa",
+"Rollinia mucosa"
+],
+[
+"Rose Hip",
+"Rosa canina"
+],
+[
+"Rosa laevigata",
+"Rosa laevigata"
+],
+[
+"Rosemary",
+"Rosmarinus officinalis"
+],
+[
+"Rubia cordifolia",
+"Rubia cordifolia"
+],
+[
+"Rubus chamaemorus",
+"Rubus chamaemorus"
+],
+[
+"Rubus chingii",
+"Rubus chingii"
+],
+[
+"Rubus fruticosus",
+"Rubus fruticosus"
+],
+[
+"Raspberry",
+"Rubus idaeus"
+],
+[
+"Sorrel",
+"Rumex acetosa"
+],
+[
+"Rumex crispus",
+"Rumex crispus"
+],
+[
+"Ruscus aculeatus",
+"Ruscus aculeatus"
+],
+[
+"Salix alba",
+"Salix alba"
+],
+[
+"Salvia miltiorrhiza",
+"Salvia miltiorrhiza"
+],
+[
+"Sage",
+"Salvia officinalis"
+],
+[
+"Sambucus canadensis",
+"Sambucus canadensis"
+],
+[
+"Elderberry",
+"Sambucus nigra"
+],
+[
+"Santalum acuminatum",
+"Santalum acuminatum"
+],
+[
+"Sassafras albidum",
+"Sassafras albidum"
+],
+[
+"Satureja hortensis",
+"Satureja hortensis"
+],
+[
+"Satureja montana",
+"Satureja montana"
+],
+[
+"Schisandra chinensis",
+"Schisandra chinensis"
+],
+[
+"Schizonepeta tenuifolia",
+"Schizonepeta tenuifolia"
+],
+[
+"Sclerocarya caffra",
+"Sclerocarya caffra"
+],
+[
+"Scrophularia buergeriana",
+"Scrophularia buergeriana"
+],
+[
+"Scutellaria baicalensis",
+"Scutellaria baicalensis"
+],
+[
+"Scutellaria lateriflora",
+"Scutellaria lateriflora"
+],
+[
+"Secale cereale",
+"Secale cereale"
+],
+[
+"Sechium edule",
+"Sechium edule"
+],
+[
+"Senna alexandrina",
+"Senna alexandrina"
+],
+[
+"Senna obtusifolia",
+"Senna obtusifolia"
+],
+[
+"Senna occidentalis",
+"Senna occidentalis"
+],
+[
+"Serenoa repens",
+"Serenoa repens"
+],
+[
+"Sesame",
+"Sesamum indicum"
+],
+[
+"Sicana odorifera",
+"Sicana odorifera"
+],
+[
+"Sida rhombifolia",
+"Sida rhombifolia"
+],
+[
+"Siegesbeckia orientalis",
+"Siegesbeckia orientalis"
+],
+[
+"Silybum marianum",
+"Silybum marianum"
+],
+[
+"Simmondsia chinensis",
+"Simmondsia chinensis"
+],
+[
+"Sinapis alba",
+"Sinapis alba"
+],
+[
+"Sinomenium acutum",
+"Sinomenium acutum"
+],
+[
+"Smilax officinalis",
+"Smilax officinalis"
+],
+[
+"Smilax spp",
+"Smilax spp"
+],
+[
+"Eggplant",
+"Solanum melongena"
+],
+[
+"Solanum nigrum",
+"Solanum nigrum"
+],
+[
+"Solanum quitoensis",
+"Solanum quitoensis"
+],
+[
+"Solanum sessiliflorum",
+"Solanum sessiliflorum"
+],
+[
+"Solanum torvum",
+"Solanum torvum"
+],
+[
+"Potato",
+"Solanum tuberosum"
+],
+[
+"Sonchus oleraceus",
+"Sonchus oleraceus"
+],
+[
+"Sophora angustifolia",
+"Sophora angustifolia"
+],
+[
+"Sophora japonica",
+"Sophora japonica"
+],
+[
+"Sophora secundiflora",
+"Sophora secundiflora"
+],
+[
+"Sophora subprostrata",
+"Sophora subprostrata"
+],
+[
+"Sorbus aucubaria",
+"Sorbus aucubaria"
+],
+[
+"Spartium junceum",
+"Spartium junceum"
+],
+[
+"Sphenostylis stenocarpa",
+"Sphenostylis stenocarpa"
+],
+[
+"Spinach",
+"Spinacia oleracea"
+],
+[
+"Spirulina pratensis",
+"Spirulina pratensis"
+],
+[
+"Spirulina spp.",
+"Spirulina spp."
+],
+[
+"Spondias dulcis",
+"Spondias dulcis"
+],
+[
+"Spondias mombin",
+"Spondias mombin"
+],
+[
+"Spondias pinnata",
+"Spondias pinnata"
+],
+[
+"Spondias purpurea",
+"Spondias purpurea"
+],
+[
+"Spondias tuberosa",
+"Spondias tuberosa"
+],
+[
+"Stachys officinalis",
+"Stachys officinalis"
+],
+[
+"Chickweed",
+"Stellaria media"
+],
+[
+"Stevia rebaudiana",
+"Stevia rebaudiana"
+],
+[
+"Stillingia sylvatica",
+"Stillingia sylvatica"
+],
+[
+"Symphoricarpos orbiculatus",
+"Symphoricarpos orbiculatus"
+],
+[
+"Comfrey",
+"Symphytum officinale"
+],
+[
+"Clove",
+"Syzygium aromaticum"
+],
+[
+"Syzygium cumini",
+"Syzygium cumini"
+],
+[
+"Syzygium jambos",
+"Syzygium jambos"
+],
+[
+"Syzygium malaccense",
+"Syzygium malaccense"
+],
+[
+"Tabebuia heptaphylla",
+"Tabebuia heptaphylla"
+],
+[
+"Tamarind",
+"Tamarindus indica"
+],
+[
+"Tanacetum parthenium",
+"Tanacetum parthenium"
+],
+[
+"Taraxacum mongolicum",
+"Taraxacum mongolicum"
+],
+[
+"Dandelion",
+"Taraxacum officinale"
+],
+[
+"Tephrosia candida",
+"Tephrosia candida"
+],
+[
+"Tephrosia purpurea",
+"Tephrosia purpurea"
+],
+[
+"Terminalia bellirica",
+"Terminalia bellirica"
+],
+[
+"Terminalia catappa",
+"Terminalia catappa"
+],
+[
+"Tetragonia tetragonioides",
+"Tetragonia tetragonioides"
+],
+[
+"Tetrapanax papyrifera",
+"Tetrapanax papyrifera"
+],
+[
+"Theobroma bicolor",
+"Theobroma bicolor"
+],
+[
+"Cacao",
+"Theobroma cacao"
+],
+[
+"Theobroma speciosum",
+"Theobroma speciosum"
+],
+[
+"Thyme",
+"Thymus vulgaris"
+],
+[
+"Trachyspermum ammi",
+"Trachyspermum ammi"
+],
+[
+"Tragopogon porrifolius",
+"Tragopogon porrifolius"
+],
+[
+"Tribulus terrestris",
+"Tribulus terrestris"
+],
+[
+"Trichosanthes anguina",
+"Trichosanthes anguina"
+],
+[
+"Red Clover",
+"Trifolium pratense"
+],
+[
+"Fenugreek",
+"Trigonella foenum-graecum"
+],
+[
+"Wheat",
+"Triticum aestivum"
+],
+[
+"Tropaeolum majus",
+"Tropaeolum majus"
+],
+[
+"Tropaeolum tuberosum",
+"Tropaeolum tuberosum"
+],
+[
+"Turnera diffusa",
+"Turnera diffusa"
+],
+[
+"Tussilago farfara",
+"Tussilago farfara"
+],
+[
+"Ullucus tuberosus",
+"Ullucus tuberosus"
+],
+[
+"Ulmus rubra",
+"Ulmus rubra"
+],
+[
+"Stinging Nettle",
+"Urtica dioica"
+],
+[
+"Blueberry",
+"Vaccinium corymbosum"
+],
+[
+"Cranberry",
+"Vaccinium macrocarpon"
+],
+[
+"Vaccinium myrtillus",
+"Vaccinium myrtillus"
+],
+[
+"Vaccinium vitis-idaea",
+"Vaccinium vitis-idaea"
+],
+[
+"Valerian",
+"Valeriana officinalis"
+],
+[
+"Valerianella locusta",
+"Valerianella locusta"
+],
+[
+"Valerianella radicata",
+"Valerianella radicata"
+],
+[
+"Vanilla planifolia",
+"Vanilla planifolia"
+],
+[
+"Verbascum thapsus",
+"Verbascum thapsus"
+],
+[
+"Vetiveria zizanioides",
+"Vetiveria zizanioides"
+],
+[
+"Viburnum opulus",
+"Viburnum opulus"
+],
+[
+"Fava Bean",
+"Vicia faba"
+],
+[
+"Vigna aconitifolia",
+"Vigna aconitifolia"
+],
+[
+"Vigna angularis",
+"Vigna angularis"
+],
+[
+"Vigna mungo",
+"Vigna mungo"
+],
+[
+"Vigna radiata",
+"Vigna radiata"
+],
+[
+"Vigna subterranea",
+"Vigna subterranea"
+],
+[
+"Cowpea",
+"Vigna unguiculata"
+],
+[
+"Viscum album",
+"Viscum album"
+],
+[
+"Vitellaria paradoxa",
+"Vitellaria paradoxa"
+],
+[
+"Grape",
+"Vitis vinifera"
+],
+[
+"Xanthosoma sagittifolium",
+"Xanthosoma sagittifolium"
+],
+[
+"Yucca baccata",
+"Yucca baccata"
+],
+[
+"Corn",
+"Zea mays"
+],
+[
+"Ginger",
+"Zingiber officinale"
+],
+[
+"Zizyphus jujuba",
+"Zizyphus jujuba"
+],
+[
+"Zizyphus spina-christi",
+"Zizyphus spina-christi"
+],
+[
+"epidium meyenii",
+"epidium meyenii"
+]
+]
+}

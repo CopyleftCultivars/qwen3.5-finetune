@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show appFlavor;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/chat_session.dart';
+import 'services/answer_check.dart';
+import 'services/argument_grounding.dart' as grounding;
 import 'services/conversation_history.dart';
+import 'services/guard_aliases.dart';
 import 'services/model_service.dart';
 import 'services/memory_service.dart';
 import 'services/plant_lookup_service.dart';
@@ -17,7 +20,9 @@ import 'services/recipe_form.dart';
 import 'services/recipe_prompt.dart';
 import 'services/recipe_tool_service.dart';
 import 'services/recipe_turn.dart';
+import 'services/routed_history.dart';
 import 'services/session_store.dart';
+import 'services/turn_limit.dart';
 import 'services/embedding_service.dart';
 import 'widgets/recipe_card.dart';
 import 'widgets/recipe_form_tab.dart';
@@ -86,6 +91,14 @@ class _ChatScreenState extends State<ChatScreen>
 
   bool _isLoading = false;
   bool _isInitialized = false;
+
+  /// Alias groups of the argument-grounding guard, built from the bundled
+  /// plant and crop catalogs (#119).
+  Map<String, List<List<String>>> _guardAliasGroups = const {};
+
+  /// Decision-prompt token count of the last turn of the active chat; the
+  /// token backstop of the turn limit (#119). Counts only, never text.
+  int _lastPromptTokens = 0;
   String _initStatus = 'Starting...';
   double _initProgress = 0.0;
   String? _deviceInfo;
@@ -246,6 +259,7 @@ class _ChatScreenState extends State<ChatScreen>
       });
 
       await _recipeToolService.initialize();
+      _guardAliasGroups = await loadGuardAliasGroups();
       setState(() {
         _initProgress = 0.69;
         _initStatus = 'Recipe tool ready';
@@ -310,11 +324,27 @@ class _ChatScreenState extends State<ChatScreen>
 
   Future<void> _sendMessage(String text) async {
     if (text.trim().isEmpty || _isLoading) return;
+    // Hard stop (#119): 20 finished turns, or a decision prompt over the token
+    // ceiling. Sending is disabled in the UI too; this keeps a keyboard submit
+    // from getting past it.
+    if (_turnLimitStatus().stopped) return;
 
-    // Build the runner-style history before adding the current user message,
-    // so the turn is not duplicated in the model prompt.
-    final history = _buildConversationHistory();
+    // Route before adding the current user message, so the turn is not
+    // duplicated in the model prompt (#116): a trigger message is decided with an
+    // empty history, a bare area after a missing-area refusal is rebuilt into the
+    // full trigger message, every other message sees the compact ledger.
     final trimmed = text.trim();
+    final routed = routeTurn(
+      messages: _messages,
+      text: trimmed,
+      servedView: _recipeToolService.servedView,
+      triggerCode: _triggerCode,
+    );
+    // Count-only audit: the route and ledger sizes, never message text.
+    print(
+      '[ROUTED_HISTORY] route=${routed.route} '
+      'ledger_entries=${routed.audit['ledger_entries']} notes=${routed.audit['notes']}',
+    );
     final userMessage = ChatMessage(content: trimmed, isUser: true);
     setState(() {
       _messages.add(userMessage);
@@ -324,9 +354,9 @@ class _ChatScreenState extends State<ChatScreen>
     _scrollToBottom();
 
     try {
-      // Every message goes through the model with the full six-tool catalog;
-      // the app never pre-routes a message by its text.
-      final outcome = await _generateWithTools(trimmed, history);
+      // Every message goes through the model with the full six-tool catalog; the
+      // route only chooses the history (and the rebuilt text of a bare area).
+      final outcome = await _generateWithTools(routed.question, routed.history);
 
       setState(() {
         _messages.add(
@@ -336,8 +366,10 @@ class _ChatScreenState extends State<ChatScreen>
             recipe: outcome.recipe,
           ),
         );
+        _lastPromptTokens = outcome.promptTokens;
         _isLoading = false;
       });
+      print(_turnLimitStatus().logLine);
       _saveChatHistory();
     } catch (e) {
       setState(() {
@@ -349,18 +381,31 @@ class _ChatScreenState extends State<ChatScreen>
         );
         _isLoading = false;
       });
+      print(_turnLimitStatus().logLine);
       _saveChatHistory();
     }
 
     _scrollToBottom();
   }
 
-  /// Build the active session's full conversation history in runner order.
-  ///
-  /// The runner appends every earlier turn's user message and its complete
-  /// final answer, in order, with no character budget. The app's welcome
-  /// message is UI-only, so it is excluded. Messages from other sessions are
-  /// never visible here: `_messages` is the active session's own list.
+  /// The turn limit and token backstop for the active chat (#119).
+  TurnLimitStatus _turnLimitStatus() =>
+      turnLimitStatus(_messages, lastPromptTokens: _lastPromptTokens);
+
+  /// The trigger parser's error code for [text], or null when it accepts it.
+  String? _triggerCode(String text) {
+    try {
+      _recipeToolService.parseTrigger(text);
+      return null;
+    } on RecipeTriggerException catch (error) {
+      return error.code;
+    }
+  }
+
+  /// The full runner-order history (every earlier user message and final
+  /// answer, no budget). No longer used by [_sendMessage] (#116 routes instead);
+  /// kept for the parity tools that still compare against it.
+  // ignore: unused_element
   List<cactus.ChatMessage> _buildConversationHistory() =>
       buildSessionConversationHistory(_messages);
 
@@ -372,7 +417,8 @@ class _ChatScreenState extends State<ChatScreen>
   /// `[system, *history, user, assistant tool call, tool served view]`, with
   /// the same tools passed. DETAILED mode skips that instruction pass and
   /// renders the full result deterministically instead.
-  Future<({String text, Map<String, dynamic>? recipe})> _generateWithTools(
+  Future<({String text, Map<String, dynamic>? recipe, int promptTokens})>
+  _generateWithTools(
     String question,
     List<cactus.ChatMessage> history,
   ) async {
@@ -391,12 +437,49 @@ class _ChatScreenState extends State<ChatScreen>
       '[TOOL_DEBUG] Response preview: ${result.response.substring(0, result.response.length.clamp(0, 100))}...',
     );
 
+    final promptTokens = result.prefillTokens;
     if (!result.hasToolCalls) {
-      return (text: result.response, recipe: null);
+      return (text: result.response, recipe: null, promptTokens: promptTokens);
     }
 
-    print('[TOOL_DEBUG] Executing ${result.toolCalls.length} tool calls');
-    final toolResults = await _toolExecutor.executeAll(result.toolCalls);
+    // Argument-grounding guard (#119, #104): a recipe call whose plant, crop or
+    // area is not in what the model was shown does not run; the turn ends in a
+    // fixed message that names kinds of value, never a value.
+    final shown = grounding.groundingText([
+      for (final message in history)
+        {'role': message.role.toString(), 'content': message.content},
+      {'role': 'user', 'content': question},
+    ]);
+    final verdict = grounding.applyGuard(
+      [
+        for (final call in result.toolCalls)
+          {'name': call.name, 'arguments': call.arguments},
+      ],
+      shown,
+      _guardAliasGroups,
+    );
+    final blocked = {
+      for (final item in verdict['blocked'] as List) item['call_index'] as int,
+    };
+    // Counts and kinds only: no argument values.
+    print(
+      '[ARGUMENT_GUARD] fired=${verdict['fired']} blocked=${blocked.length} '
+      'slots=${{for (final item in verdict['blocked'] as List) ...(item['slots'] as List)}.join(',')}',
+    );
+    if (verdict['answer'] != null) {
+      return (
+        text: verdict['answer'] as String,
+        recipe: null,
+        promptTokens: promptTokens,
+      );
+    }
+    final runnable = [
+      for (var i = 0; i < result.toolCalls.length; i++)
+        if (!blocked.contains(i)) result.toolCalls[i],
+    ];
+
+    print('[TOOL_DEBUG] Executing ${runnable.length} tool calls');
+    final toolResults = await _toolExecutor.executeAll(runnable);
     final toolContext = _toolExecutor.formatResultsForPrompt(toolResults);
     print('[TOOL_DEBUG] Tool results formatted (${toolContext.length} chars)');
 
@@ -412,6 +495,7 @@ class _ChatScreenState extends State<ChatScreen>
         return (
           text: buildDeterministicRecipeSummary(recipeResult),
           recipe: recipeResult,
+          promptTokens: promptTokens,
         );
       }
 
@@ -426,12 +510,31 @@ class _ChatScreenState extends State<ChatScreen>
         tools: ModelService.farmingTools,
       );
       final response = instructions.response.trim();
+      if (response.isEmpty) {
+        return (
+          text:
+              'The recipe tool returned:\n'
+              '${canonicalJson(_recipeToolService.servedView(recipeResult))}',
+          recipe: recipeResult,
+          promptTokens: promptTokens,
+        );
+      }
+      // Answer check (#119, #101): shows the repaired text (a unit token
+      // corrected, fixed sentences from the tool result appended); the model's
+      // wording is never rewritten. Counts and finding kinds only in the log.
+      final repair = repairAnswer(
+        response,
+        _recipeToolService.servedView(recipeResult),
+      );
+      print(
+        '[ANSWER_CHECK] ok=${(repair['report'] as Map)['ok']} '
+        'kinds=${findingKinds(repair['report'] as Map<String, dynamic>)} '
+        'changed=${repair['changed']}',
+      );
       return (
-        text: response.isEmpty
-            ? 'The recipe tool returned:\n'
-                  '${canonicalJson(_recipeToolService.servedView(recipeResult))}'
-            : response,
+        text: repair['answer'] as String,
         recipe: recipeResult,
+        promptTokens: promptTokens,
       );
     }
 
@@ -446,7 +549,7 @@ class _ChatScreenState extends State<ChatScreen>
     print(
       '[TOOL_DEBUG] Synthesis complete (${synthesis.response.length} chars)',
     );
-    return (text: synthesis.response, recipe: null);
+    return (text: synthesis.response, recipe: null, promptTokens: promptTokens);
   }
 
   /// The only model call on the recipe-form path: QUICK instructions.
@@ -486,6 +589,7 @@ class _ChatScreenState extends State<ChatScreen>
     );
     setState(() {
       _messages = session.messages;
+      _lastPromptTokens = 0;
     });
     await _saveChatHistory();
     _tabController.animateTo(0);
@@ -517,6 +621,7 @@ class _ChatScreenState extends State<ChatScreen>
     if (_isLoading) return;
     final session = await _sessionStore.createSession();
     _messages = session.messages..add(_welcomeMessage());
+    _lastPromptTokens = 0;
     await _saveChatHistory();
     setState(() {});
     _scrollToBottom();
@@ -527,6 +632,7 @@ class _ChatScreenState extends State<ChatScreen>
     await _sessionStore.switchSession(session.id);
     setState(() {
       _messages = _sessionStore.activeSession.messages;
+      _lastPromptTokens = 0;
     });
     _scrollToBottom();
   }
@@ -603,6 +709,7 @@ class _ChatScreenState extends State<ChatScreen>
 
   void _clearHistory() {
     setState(() {
+      _lastPromptTokens = 0;
       _messages.clear();
       _messages.add(
         ChatMessage(
@@ -896,7 +1003,40 @@ class _ChatScreenState extends State<ChatScreen>
     );
   }
 
+  /// Shown in place of the text field once the hard stop applies (#119): the
+  /// fixed, value-free message and a "New chat" action. Sending is off.
+  Widget _buildLimitReachedArea(TurnLimitStatus limit) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 4,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        child: Row(
+          children: [
+            Expanded(child: Text(limit.message!)),
+            const SizedBox(width: 8),
+            FilledButton.icon(
+              onPressed: _isLoading ? null : _createSession,
+              icon: const Icon(Icons.add_comment_outlined),
+              label: const Text('New chat'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildInputArea() {
+    final limit = _turnLimitStatus();
+    if (limit.stopped) return _buildLimitReachedArea(limit);
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
