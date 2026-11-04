@@ -15,7 +15,7 @@
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DEFAULT_PYTHON="${PROJECT_ROOT}/../localllm-qwen3.5/retry-evidence/q1-isolated/venv/bin/python"
+DEFAULT_PYTHON="${PROJECT_ROOT}/.venv-training/bin/python"
 TRAIN_PYTHON="${QWEN35_PYTHON:-${DEFAULT_PYTHON}}"
 TARGETED_CORPUS="${TARGETED_CORPUS:-${PROJECT_ROOT}/../bioaccumulator-benchmark-workspace/corpus/targeted_v5}"
 OUTPUT_DIR="${OUTPUT_DIR:-${PROJECT_ROOT}/outputs/lora-adapter-qwen35-recipe-v5}"

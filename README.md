@@ -5,24 +5,28 @@ for rationale data, RLM trajectories, and Cactus-native tool calls. Training
 uses the native `Qwen/Qwen3.5-2B` checkpoint with BF16 weights and LoRA
 adapters. The model is not loaded in 4-bit.
 
+## The app
+
+The Android app that runs the resulting model is its own repository,
+[`pixel7-cactus-qwen3.5`](https://github.com/CopyleftCultivars/pixel7-cactus-qwen3.5), checked out here as the submodule
+`natural_farming_chat/` (with the Cactus fork as a submodule of its own). Clone with
+`git clone --recurse-submodules`, or run `git submodule update --init natural_farming_chat` in an existing checkout.
+Training, data, evaluation and the Cactus conversion scripts stay in this repository; the app, its tests and its build tools live there.
+
 ## Training environment
 
-Reuse the existing isolated Transformers 5 environment when the sibling
-`localllm-qwen3.5` checkout is available:
+The launchers use `.venv-training/bin/python` in this repository (git-ignored). On this
+machine it is a venv with Transformers 5.5.0 layered on the `qwen3-train` Conda
+environment for shared packages such as Unsloth 2026.6.9, PyTorch 2.10, and TRL 0.24.0:
 
 ```bash
 ./scripts/run_qwen35_sft.sh
 ```
 
-By default the launcher uses
-`../localllm-qwen3.5/retry-evidence/q1-isolated/venv/bin/python`. On this
-machine that environment provides Transformers 5.5.0 and uses the
-`qwen3-train` Conda environment for shared packages such as Unsloth 2026.6.9,
-PyTorch 2.10, and TRL 0.24.0. Set `QWEN35_PYTHON` to select another compatible
-Python executable.
+Set `QWEN35_PYTHON` to select another compatible Python executable.
 
-If that environment is unavailable, install a CUDA-matched PyTorch build first,
-then install `requirements-training.txt`. Qwen3.5 requires Transformers 5.2.0 or
+To create the environment on another machine, install a CUDA-matched PyTorch build first,
+then `python -m venv .venv-training && .venv-training/bin/pip install -r requirements-training.txt`. Qwen3.5 requires Transformers 5.2.0 or
 newer. Training stops when CUDA or BF16 support is unavailable; it does not
 switch to FP16. Unsloth keeps selected Qwen3.5 Gated DeltaNet layers in FP32 to
 avoid unstable FP16 gradient norms.
@@ -143,7 +147,7 @@ with the same system prompt, question prompt, 16-token greedy decode limit, and
 answer extraction as the Flutter ladder harness:
 
 ```bash
-../localllm-qwen3.5/retry-evidence/q1-isolated/venv/bin/python \
+.venv-training/bin/python \
   scripts/run_natural_fertilizers_ladder.py \
   --benchmark ../benchmark-workspace/benchmarks/natural_fertilizers/natural_fertilizers_benchmark_v1_graded.jsonl
 ```
@@ -157,7 +161,7 @@ used for scoring and is not included in the model prompt.
 Once training is complete, run the local Cactus converter with the adapter:
 
 ```bash
-../localllm-qwen3.5/retry-evidence/q1-isolated/venv/bin/python \
+.venv-training/bin/python \
   scripts/merge_qwen35_lora_for_cactus.py
 QWEN35_MERGED_MODEL_DIR=outputs/qwen35-combined-merged \
   ./scripts/run_cactus_qwen35_combined_convert.sh

@@ -1,6 +1,0 @@
-targets:
-  $default:
-    sources:
-      exclude:
-        - example/**
-        - "**/.*/**"  # Exclude hidden directories like .symlinks
