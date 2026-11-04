@@ -98,6 +98,7 @@ class _ChatScreenState extends State<ChatScreen>
   int _lastPromptTokens = 0;
   String _initStatus = 'Starting...';
   double _initProgress = 0.0;
+  bool _initFailed = false;
   String? _deviceInfo;
 
   /// QUICK lets the model write instructions from the compact served view.
@@ -288,9 +289,21 @@ class _ChatScreenState extends State<ChatScreen>
       }
     } catch (e) {
       setState(() {
-        _initStatus = 'Error: $e';
+        _initFailed = true;
+        _initStatus = e is ModelServiceException ? e.message : 'Error: $e';
       });
     }
+  }
+
+  /// Run start-up again after a failure. A model download that stopped part
+  /// way continues where it left off.
+  Future<void> _retryInitialization() async {
+    setState(() {
+      _initFailed = false;
+      _initProgress = 0.0;
+      _initStatus = 'Starting...';
+    });
+    await _initializeServices();
   }
 
   Future<void> _sendMessage(String text) async {
@@ -776,13 +789,20 @@ class _ChatScreenState extends State<ChatScreen>
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 32),
-              LinearProgressIndicator(value: _initProgress),
+              LinearProgressIndicator(value: _initFailed ? 0.0 : _initProgress),
               const SizedBox(height: 16),
               Text(
                 _initStatus,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
+              if (_initFailed) ...[
+                const SizedBox(height: 16),
+                FilledButton(
+                  onPressed: _retryInitialization,
+                  child: const Text('Try again'),
+                ),
+              ],
             ],
           ),
         ),
