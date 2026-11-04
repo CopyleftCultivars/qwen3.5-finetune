@@ -2,7 +2,7 @@
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DEFAULT_PYTHON="${PROJECT_ROOT}/../localllm-qwen3.5/retry-evidence/q1-isolated/venv/bin/python"
+DEFAULT_PYTHON="${PROJECT_ROOT}/.venv-training/bin/python"
 TRAIN_PYTHON="${QWEN35_PYTHON:-${DEFAULT_PYTHON}}"
 
 if [[ ! -x "${TRAIN_PYTHON}" ]]; then
