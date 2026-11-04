@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'models/chat_session.dart';
 import 'services/answer_check.dart';
 import 'services/argument_grounding.dart' as grounding;
-import 'services/conversation_history.dart';
 import 'services/guard_aliases.dart';
 import 'services/model_service.dart';
 import 'services/memory_service.dart';
@@ -23,7 +22,6 @@ import 'services/recipe_turn.dart';
 import 'services/routed_history.dart';
 import 'services/session_store.dart';
 import 'services/turn_limit.dart';
-import 'services/embedding_service.dart';
 import 'widgets/recipe_card.dart';
 import 'widgets/recipe_form_tab.dart';
 
@@ -85,7 +83,6 @@ class _ChatScreenState extends State<ChatScreen>
   late final BioaccumulatorRatioService _bioaccumulatorRatioService;
   late final RecipeLookupService _recipeLookupService;
   final RecipeToolService _recipeToolService = RecipeToolService();
-  final EmbeddingService _embeddingService = EmbeddingService();
   late final FertilizerFormulationService _formulationService;
   late final ToolExecutor _toolExecutor;
 
@@ -265,36 +262,10 @@ class _ChatScreenState extends State<ChatScreen>
         _initStatus = 'Recipe tool ready';
       });
 
-      if (appFlavor == 'qwen35') {
-        // A second CactusLM context can fail on this device/engine. The Qwen3.5
-        // flavor uses the full local tool list when the embedding router is off.
-        print('[TOOL_ROUTER] Skipping embedding model for qwen35 flavor');
-        setState(() {
-          _initProgress = 1.0;
-          _initStatus = 'Local tools ready';
-        });
-      } else {
-        // Initialize the dedicated embedding model for tool routing.
-        setState(() {
-          _initProgress = 0.69;
-          _initStatus = 'Loading embedding model for tool routing...';
-        });
-
-        try {
-          await _embeddingService.initialize(
-            onProgress: (progress, status) {
-              setState(() {
-                _initProgress = 0.69 + (progress * 0.31);
-                _initStatus = status;
-              });
-            },
-          );
-        } catch (e) {
-          print(
-            '[TOOL_ROUTER] embedding model init failed, tool routing will fail open: $e',
-          );
-        }
-      }
+      setState(() {
+        _initProgress = 1.0;
+        _initStatus = 'Local tools ready';
+      });
 
       final needsWelcome = _messages.isEmpty;
       setState(() {
@@ -402,13 +373,6 @@ class _ChatScreenState extends State<ChatScreen>
     }
   }
 
-  /// The full runner-order history (every earlier user message and final
-  /// answer, no budget). No longer used by [_sendMessage] (#116 routes instead);
-  /// kept for the parity tools that still compare against it.
-  // ignore: unused_element
-  List<cactus.ChatMessage> _buildConversationHistory() =>
-      buildSessionConversationHistory(_messages);
-
   /// Two-phase generation with tool calling support.
   ///
   /// Every message goes through the model with the six trained tools; the app
@@ -427,8 +391,7 @@ class _ChatScreenState extends State<ChatScreen>
     final result = await _modelService.generateCompletionWithTools(
       question: question,
       conversationHistory: history,
-      // Explicit tools bypass embedding routing, so the recipe pipeline always
-      // receives all six tools in the trained order.
+      // The recipe pipeline always receives all six tools in the trained order.
       tools: ModelService.farmingTools,
     );
 
@@ -727,7 +690,6 @@ class _ChatScreenState extends State<ChatScreen>
     _scrollController.dispose();
     _tabController.dispose();
     _modelService.dispose();
-    _embeddingService.dispose();
     super.dispose();
   }
 

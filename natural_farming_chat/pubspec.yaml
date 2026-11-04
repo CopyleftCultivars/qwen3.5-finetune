@@ -42,7 +42,6 @@ dependencies:
   path: ^1.8.0
   memlocal:
     path: /home/goya/agent-workspace/memlocal_core/flutter
-  archive: ^4.0.7
   ffi: ^2.1.0
 
   # ObjectBox for direct database access (same schema as the Cactus RAG implementation)
@@ -76,7 +75,6 @@ flutter:
 
   # Pre-built RAG database (kept for potential future use)
   assets:
-    - assets/rag_db/
     - assets/plant_data/
     - assets/recipe_tool/
     - assets/recipe_tool/schemas/

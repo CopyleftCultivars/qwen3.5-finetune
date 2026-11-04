@@ -1,7 +1,7 @@
 /// A single chat message, including an optional deterministic recipe result.
 ///
 /// The model history is built from these messages by
-/// `buildSessionConversationHistory`; [recipe] is only UI state for the
+/// `routeTurn`; [recipe] is only UI state for the
 /// "Show full recipe" card and is never sent to the model.
 class ChatMessage {
   final String content;
@@ -38,7 +38,7 @@ class ChatMessage {
 /// One locally persisted conversation.
 ///
 /// A session owns its own message list. Switching sessions therefore swaps the
-/// whole list, and `buildSessionConversationHistory` only ever sees the active
+/// whole list, and `routeTurn` only ever sees the active
 /// session's turns.
 class ChatSession {
   final String id;

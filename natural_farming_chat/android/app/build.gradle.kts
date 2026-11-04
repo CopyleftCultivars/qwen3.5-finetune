@@ -32,10 +32,6 @@ android {
 
     flavorDimensions += "model"
     productFlavors {
-        create("production") {
-            dimension = "model"
-            manifestPlaceholders["appLabel"] = "Natural Farming Chat"
-        }
         create("qwen35") {
             dimension = "model"
             applicationIdSuffix = ".qwen35"
