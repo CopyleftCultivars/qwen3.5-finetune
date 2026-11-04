@@ -7,7 +7,7 @@ void main() {
       expect(createMemoryService('qwen35'), isA<KeywordMemoryService>());
     });
 
-    test('selects no-op memory for production', () {
+    test('selects no-op memory for any other flavor name', () {
       expect(createMemoryService('production'), isA<NoopMemoryService>());
     });
 

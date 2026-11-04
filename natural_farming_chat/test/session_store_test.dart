@@ -2,9 +2,19 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:natural_farming_chat/models/chat_session.dart';
-import 'package:natural_farming_chat/services/conversation_history.dart';
+import 'package:natural_farming_chat/services/routed_history.dart';
 import 'package:natural_farming_chat/services/session_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+/// What the model would see of a session for the next message: the routed history
+/// (ledger of recipe results plus the user's own notes), built from that session's
+/// own messages only.
+String historyText(List<ChatMessage> messages) => routeTurn(
+      messages: messages,
+      text: 'Next question.',
+      servedView: (recipe) => recipe,
+      triggerCode: (_) => 'trigger_not_matched',
+    ).history.map((message) => message.content).join('\n');
 
 void main() {
   setUp(() {
@@ -67,22 +77,17 @@ void main() {
       ..add(ChatMessage(content: 'Before flowering.', isUser: false));
     await store.saveActiveSession();
 
-    final firstHistory = buildSessionConversationHistory(first.messages);
-    expect(firstHistory.map((message) => message.role), ['user', 'assistant']);
-    expect(
-      firstHistory.map((message) => message.content),
-      ['How much compost?', 'Two handfuls.'],
-      reason: 'the UI-only welcome message is excluded',
-    );
+    final firstHistory = historyText(first.messages);
+    expect(firstHistory, contains('How much compost?'));
+    expect(firstHistory, isNot(contains('Welcome')), reason: 'the UI-only welcome message is excluded');
+    expect(firstHistory, isNot(contains('Two handfuls.')), reason: 'earlier answers are not sent');
 
-    final secondHistory = buildSessionConversationHistory(second.messages);
-    expect(secondHistory.map((message) => message.content), [
-      'When do I cut nettles?',
-      'Before flowering.',
-    ]);
+    final secondHistory = historyText(second.messages);
+    expect(secondHistory, contains('When do I cut nettles?'));
     expect(
-      firstHistory.map((message) => message.content),
+      firstHistory,
       isNot(contains('When do I cut nettles?')),
+      reason: 'another session is never visible',
     );
 
     final reloaded = await SessionStore.open();
@@ -130,10 +135,11 @@ void main() {
       expect(session.messages.last.isUser, isFalse);
       expect(session.messages.last.recipe, recipe);
 
-      final history = buildSessionConversationHistory(session.messages);
-      expect(history.map((message) => message.role), ['user', 'assistant']);
-      expect(history.first.content, session.messages.first.content);
-      expect(history.last.content, session.messages.last.content);
+      expect(
+        historyText(session.messages),
+        contains(session.messages.first.content),
+        reason: 'the seeded request is in the ledger of the continued chat',
+      );
 
       final reloaded = await SessionStore.open();
       final restored = reloaded.sessions.firstWhere(

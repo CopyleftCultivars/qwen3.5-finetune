@@ -1,16 +1,12 @@
 import 'dart:ffi';
 import 'dart:io';
 
-import 'package:archive/archive_io.dart';
 import 'package:cactus/cactus.dart';
 import 'package:ffi/ffi.dart';
-import 'package:flutter/services.dart' show appFlavor;
 import 'package:path_provider/path_provider.dart';
 
-import 'embedding_service.dart';
 import 'farming_tools.dart';
 import 'recipe_prompt.dart';
-import 'tool_router.dart' as tool_router;
 
 /// Service for managing CactusLM model operations
 class ModelService {
@@ -30,14 +26,9 @@ class ModelService {
   /// Default maximum tokens for completions (increased from 512 to prevent truncation)
   static const int defaultMaxTokens = 2048;
 
-  // Keep the production Qwen3 model and experimental Qwen3.5 bundle isolated
-  // by Android flavor. Qwen3.5 is staged locally until a hosted bundle is set up.
-  static const String _productionModelSlug =
-      'qwen3-nf-distill-v2-cact-int4-ios';
+  // The Qwen3.5 recipe bundle is staged locally until a hosted bundle is set up.
   static const String _defaultQwen35ModelSlug = 'qwen35-recipe-v5-cactus-cq4-hessian';
   static String _qwen35ModelSlug = _defaultQwen35ModelSlug;
-  static const String _productionModelDownloadUrl =
-      'https://huggingface.co/CopyleftCultivars/localNFchatbot-cactus/resolve/main/qwen3-distill-v2-calibrated-cact-int4-ios.zip';
 
   /// The Qwen3.5 recipe bundle is configurable without rebuilding the app.
   ///
@@ -57,9 +48,7 @@ class ModelService {
   static String get qwen35ModelSlug => _qwen35ModelSlug;
   static String get qwen35StagingPath => '/data/local/tmp/$_qwen35ModelSlug';
 
-  static bool get _isQwen35Flavor => appFlavor == 'qwen35';
-  static String get modelSlug =>
-      _isQwen35Flavor ? _qwen35ModelSlug : _productionModelSlug;
+  static String get modelSlug => _qwen35ModelSlug;
   static const String systemPrompt = recipeBaseSystemPrompt;
 
   /// The six tools candidate 4 was trained and gated on, in runner order.
@@ -73,13 +62,11 @@ class ModelService {
   double get downloadProgress => _downloadProgress;
   String get downloadStatus => _downloadStatus;
 
-  /// Get the underlying CactusLM instance for use by RagService
-  /// Returns null if model is not downloaded yet
+  /// The underlying CactusLM instance; null until the model is initialized.
   CactusLM? get lm => _lm;
 
-  /// Download the fine-tuned model directly from HuggingFace storage.
-  /// Bypasses Cactus's Supabase slug registry since our model is not
-  /// a built-in Cactus model.
+  /// Copy the staged Qwen3.5 bundle into the app's private storage.
+  /// Bypasses Cactus's slug registry since our model is not a built-in model.
   Future<void> downloadModel({
     required void Function(double progress, String status) onProgress,
   }) async {
@@ -104,97 +91,36 @@ class ModelService {
       // The Qwen3.5 bundle is staged locally until it is hosted. Validate it
       // before replacing an incomplete private copy.
       final qwen35StagingFolder = Directory(qwen35StagingPath);
-      if (_isQwen35Flavor) {
-        for (final requiredPath in [
-          'config.txt',
-          'vocab.txt',
-          'components/manifest.json',
-        ]) {
-          if (!await File(
-            '${qwen35StagingFolder.path}/$requiredPath',
-          ).exists()) {
-            throw ModelServiceException(
-              'Qwen3.5 bundle is missing $requiredPath under '
-              '${qwen35StagingFolder.path}. Stage '
-              'outputs/qwen35-recipe-v5-cactus-cq4-hessian there with adb push, '
-              'including components/, optimized_ir*.json and raw_ir*.json '
-              'copied from outputs/qwen35-combined-cactus-cq4.',
-            );
-          }
+      for (final requiredPath in [
+        'config.txt',
+        'vocab.txt',
+        'components/manifest.json',
+      ]) {
+        if (!await File(
+          '${qwen35StagingFolder.path}/$requiredPath',
+        ).exists()) {
+          throw ModelServiceException(
+            'Qwen3.5 bundle is missing $requiredPath under '
+            '${qwen35StagingFolder.path}. Stage '
+            'outputs/qwen35-recipe-v5-cactus-cq4-hessian there with adb push, '
+            'including components/, optimized_ir*.json and raw_ir*.json '
+            'copied from outputs/qwen35-combined-cactus-cq4 '
+            '(tool/stage_model.sh does this).',
+          );
         }
       }
 
-      // Clean up any partial download/copy before starting fresh.
+      // Clean up any partial copy before starting fresh.
       if (await modelFolder.exists()) {
         await modelFolder.delete(recursive: true);
       }
       await modelFolder.create(recursive: true);
 
-      if (_isQwen35Flavor) {
-        await _copyQwen35Bundle(
-          source: qwen35StagingFolder,
-          destination: modelFolder,
-          onProgress: onProgress,
-        );
-        return;
-      }
-
-      // Production Qwen3 bundle download.
-      final zipPath = '${appDocDir.path}/models/$modelSlug.zip';
-      final client = HttpClient();
-      try {
-        onProgress(0.0, 'Starting download...');
-        final request = await client.getUrl(
-          Uri.parse(_productionModelDownloadUrl),
-        );
-        final response = await request.close();
-
-        if (response.statusCode != 200) {
-          throw ModelServiceException(
-            'Download failed: HTTP ${response.statusCode}',
-          );
-        }
-
-        final contentLength = response.contentLength;
-        final sink = File(zipPath).openWrite();
-        int bytesReceived = 0;
-
-        await for (final chunk in response) {
-          sink.add(chunk);
-          bytesReceived += chunk.length;
-          if (contentLength > 0) {
-            // Reserve 0–0.85 for download, 0.85–1.0 for extraction
-            final downloadProgress = (bytesReceived / contentLength) * 0.85;
-            _downloadProgress = downloadProgress;
-            _downloadStatus =
-                'Downloaded ${bytesReceived ~/ (1024 * 1024)} MB...';
-            onProgress(_downloadProgress, _downloadStatus);
-          }
-        }
-        await sink.close();
-      } finally {
-        client.close();
-      }
-
-      // Extract zip directly into the model folder
-      onProgress(0.85, 'Extracting model files...');
-      final inputStream = InputFileStream(zipPath);
-      try {
-        final archive = ZipDecoder().decodeStream(inputStream);
-        for (final file in archive) {
-          if (!file.isFile) continue;
-          final outPath = '${modelFolder.path}/${file.name}';
-          await File(outPath).parent.create(recursive: true);
-          final outStream = OutputFileStream(outPath);
-          file.writeContent(outStream);
-          outStream.closeSync();
-        }
-      } finally {
-        inputStream.close();
-      }
-
-      await File(zipPath).delete();
-      onProgress(1.0, 'Download complete');
+      await _copyQwen35Bundle(
+        source: qwen35StagingFolder,
+        destination: modelFolder,
+        onProgress: onProgress,
+      );
     } finally {
       _isDownloading = false;
     }
@@ -473,7 +399,6 @@ class ModelService {
     String? context,
     List<CactusTool>? tools,
     List<ChatMessage>? conversationHistory,
-    EmbeddingService? embeddingService,
     bool resetContextBeforeTools = true,
     String? nativePrefillProfileLabel,
   }) async {
@@ -484,8 +409,7 @@ class ModelService {
     }
 
     final systemContent = _buildSystemContentForTools(context);
-    final effectiveTools =
-        tools ?? await _routeTools(question, embeddingService);
+    final effectiveTools = tools ?? farmingTools;
     final messages = [
       ChatMessage(content: systemContent, role: 'system'),
       if (conversationHistory != null) ...conversationHistory,
@@ -633,7 +557,6 @@ class ModelService {
     String? context,
     List<CactusTool>? tools,
     List<ChatMessage>? conversationHistory,
-    EmbeddingService? embeddingService,
     bool resetContextBeforeTools = true,
   }) async {
     if (!_isInitialized) {
@@ -643,8 +566,7 @@ class ModelService {
     }
 
     final systemContent = _buildSystemContentForTools(context);
-    final effectiveTools =
-        tools ?? await _routeTools(question, embeddingService);
+    final effectiveTools = tools ?? farmingTools;
 
     print('[TOOL_DEBUG] generateCompletionWithTools called');
     print('[TOOL_DEBUG] Question: $question');
@@ -742,55 +664,6 @@ class ModelService {
       decodeTokens: result.decodeTokens,
       totalTokens: result.totalTokens,
     );
-  }
-
-  /// Select which of [farmingTools] are relevant to `question`, using our
-  /// own query-based router (`tool_router.dart`, a faithful Dart port of
-  /// `qwen3-finetune/rlm_slice/tool_router.py`) -- NOT Cactus's own
-  /// `select_relevant_tools`/`ToolFilterService`, both of which are known-
-  /// weak and unused elsewhere in this app (chainlink #177 investigation).
-  ///
-  /// #175's dual-relevant eval found routed top-1 selection and inject-all-
-  /// viable statistically indistinguishable, so the exact top-k/threshold
-  /// here doesn't need fine-tuning. top-2 is used as a defensible default:
-  /// wide enough that a query relevant to a domain tool doesn't lose it to
-  /// an overly strict top-1 cut against the three original utility tools,
-  /// narrow enough to keep the now-5-tool list small for the 0.6B model
-  /// (which G9/#156 already found cannot reliably self-initiate tool calls
-  /// at all -- fewer, more relevant options matters more here than an
-  /// optimally-tuned k).
-  ///
-  /// Retrieval (`RagService`) is intentionally NOT part of this list --
-  /// it stays a separate, always-on step, mirroring how the GPU harness
-  /// kept `retrieve_rag_context` and `select_relevant_tools` as two
-  /// distinct mechanisms (see `multi_tool_context.py`'s docstring).
-  Future<List<CactusTool>> _routeTools(
-    String question,
-    EmbeddingService? embeddingService,
-  ) async {
-    if (embeddingService == null || !embeddingService.isInitialized) {
-      // No embedding model available to route with -- fail open to the
-      // full tool list rather than silently dropping tool access.
-      return farmingTools;
-    }
-
-    try {
-      final routing = await tool_router.selectRelevantTools(
-        question,
-        farmingTools,
-        embedFn: embeddingService.generateEmbedding,
-      );
-      final selectedNames = routing.selected(topK: 2).toSet();
-      final selected = farmingTools
-          .where((t) => selectedNames.contains(t.name))
-          .toList();
-      return selected.isEmpty ? farmingTools : selected;
-    } catch (e) {
-      // Routing is a refinement, not a requirement -- if embedding
-      // generation fails for any reason, fail open to the full tool list.
-      print('[TOOL_ROUTER] routing failed, falling back to full tool list: $e');
-      return farmingTools;
-    }
   }
 
   String _buildSystemContentForTools(String? context) {
