@@ -13,6 +13,14 @@ The Android app that runs the resulting model is its own repository,
 `git clone --recurse-submodules`, or run `git submodule update --init natural_farming_chat` in an existing checkout.
 Training, data, evaluation and the Cactus conversion scripts stay in this repository; the app, its tests and its build tools live there.
 
+## Local-only training data
+
+The chatbot conversations behind the training sets (`data/sources/gemma4/hf_dataset`) and the distillation sets built from them
+(`data/train_distill.jsonl`, `data/val_distill.jsonl`) are not in this repository or its history. They live in a folder outside every
+repository (`../training-data/qwen3.5-finetune`, or `QWEN35_TRAINING_DATA_DIR`) and are linked into place, git-ignored, with
+`scripts/link_local_training_data.sh` (paths in `data/local_paths.txt`). Everything else here, including the G6 trajectory splits and the
+combined SFT sets, is tracked.
+
 ## Training environment
 
 The launchers use `.venv-training/bin/python` in this repository (git-ignored). On this

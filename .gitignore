@@ -51,3 +51,8 @@ wandb/
 *.xcframework/
 results/
 unsloth_compiled_cache/
+
+# Training data derived from real chatbot conversations stays outside git (see scripts/link_local_training_data.sh)
+/data/sources/gemma4/hf_dataset
+/data/train_distill.jsonl
+/data/val_distill.jsonl
